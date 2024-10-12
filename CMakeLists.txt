@@ -6,3 +6,5 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(Assignment main.cpp)
 
 add_executable(gptv1 gptv1.cpp)
+
+add_executable(new new.cpp)

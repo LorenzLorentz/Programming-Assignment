@@ -37,11 +37,15 @@ public:
         }
     }
 
-    bool inputProcess(const string &command,const int &param) {
+    bool inputProcess(const string &command,const int &param,bool &jumpInputJudge) {
         if(command=="inbox") {
-            if(inboxBar.empty()) {
-                cout<<"Inbox is empty"<<endl;
-                return false;
+            if(!jumpInputJudge) {
+                if(inboxBar.empty()) {
+                    cout<<"Inbox is empty"<<endl;
+                    return false;
+                }
+            } else {
+                jumpInputJudge=false;
             }
             string input=inboxBar.back();
             inboxBar.pop_back();
@@ -60,7 +64,6 @@ public:
                 cout<<"Nothing to store"<<endl;
                 return false;
             }
-            //int index=(int)param[0]-32;
             if(param<0||param>=carpetBar.size()) {
                 cout<<"Invalid index"<<endl;
                 return false;
@@ -109,9 +112,10 @@ public:
     void playGame() {
         cout<<"Level Information"<<levelInfo<<endl;
         cout<<"Goal:"<<goal<<endl;
-        for (const auto &hint : hint) {
-            cout<<hint<<" ";
-        }cout<<endl;
+
+        for(int i=0;i<hint.size();++i) {
+            cout<<hint[i]<<" ";
+        } cout<<endl;
 
         Gamestate gamestate;
 
@@ -119,9 +123,10 @@ public:
         int numSteps=0;
         int doStep=0;
         int actualSteps=0;
-        vector<string> command;
-        vector<int> param;
+        vector<string> command(100);
+        vector<int> param(100);
         bool startRun=false;
+        bool jumpInputJudge=false;
 
         while(!startRun) {
             getline(cin,inputCommand[numSteps]);
@@ -136,14 +141,15 @@ public:
 
         while(doStep<numSteps) {
             if(command[doStep]=="jumpto"||command[doStep]=="jumpifzero") {
-                if(!gamestate.inputProcess(command[doStep],param[doStep])) {
+                if(!gamestate.inputProcess(command[doStep],param[doStep],jumpInputJudge)) {
                     cout<<"Invalid input"<<endl;
                     return;
                 }
+                jumpInputJudge=true;
                 doStep=param[doStep];
                 ++actualSteps;
             } else {
-                if(!gamestate.inputProcess(command[doStep],param[doStep])) {
+                if(!gamestate.inputProcess(command[doStep],param[doStep],jumpInputJudge)) {
                     cout<<"Invalid input"<<endl;
                     return;
                 }

@@ -106,6 +106,39 @@ build gptv1.exe: CXX_EXECUTABLE_LINKER__gptv1_Debug CMakeFiles/gptv1.dir/gptv1.c
   TARGET_IMPLIB = libgptv1.dll.a
   TARGET_PDB = gptv1.exe.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target new
+
+
+#############################################
+# Order-only phony target for new
+
+build cmake_object_order_depends_target_new: phony || .
+
+build CMakeFiles/new.dir/new.cpp.obj: CXX_COMPILER__new_unscanned_Debug C$:/Users/LorenzLorentz/seadrive_root/王鹏杰/My$ Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/new.cpp || cmake_object_order_depends_target_new
+  DEP_FILE = CMakeFiles\new.dir\new.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\new.dir
+  OBJECT_FILE_DIR = CMakeFiles\new.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target new
+
+
+#############################################
+# Link the executable new.exe
+
+build new.exe: CXX_EXECUTABLE_LINKER__new_Debug CMakeFiles/new.dir/new.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\new.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = new.exe
+  TARGET_IMPLIB = libnew.dll.a
+  TARGET_PDB = new.exe.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -136,6 +169,8 @@ build Assignment: phony Assignment.exe
 
 build gptv1: phony gptv1.exe
 
+build new: phony new.exe
+
 # =============================================================================
 # Folder targets.
 
@@ -144,7 +179,7 @@ build gptv1: phony gptv1.exe
 #############################################
 # Folder: C:/Users/LorenzLorentz/seadrive_root/王鹏杰/My Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug
 
-build all: phony Assignment.exe gptv1.exe
+build all: phony Assignment.exe gptv1.exe new.exe
 
 # =============================================================================
 # Built-in targets
