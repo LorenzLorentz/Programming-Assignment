@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.29"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Assignment",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Assignment::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Assignment-Release-f7ef53428b70a7168e68.json",
+					"name" : "Assignment",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gptv1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gptv1-Release-d5ad9ebaf337b7fe2854.json",
+					"name" : "gptv1",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/LorenzLorentz/seadrive_root/\u738b\u9e4f\u6770/My Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release",
+		"source" : "C:/Users/LorenzLorentz/seadrive_root/\u738b\u9e4f\u6770/My Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
