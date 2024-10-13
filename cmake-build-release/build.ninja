@@ -39,7 +39,7 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = C$:/Users/LorenzLorentz/seadrive_root/王鹏杰/My$ Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release/
+cmake_ninja_workdir = /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release/
 # =============================================================================
 # Object build statements for EXECUTABLE target Assignment
 
@@ -49,11 +49,22 @@ cmake_ninja_workdir = C$:/Users/LorenzLorentz/seadrive_root/王鹏杰/My$ Librar
 
 build cmake_object_order_depends_target_Assignment: phony || .
 
-build CMakeFiles/Assignment.dir/main.cpp.obj: CXX_COMPILER__Assignment_unscanned_Release C$:/Users/LorenzLorentz/seadrive_root/王鹏杰/My$ Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/main.cpp || cmake_object_order_depends_target_Assignment
-  DEP_FILE = CMakeFiles\Assignment.dir\main.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\Assignment.dir
-  OBJECT_FILE_DIR = CMakeFiles\Assignment.dir
+build CMakeFiles/Assignment.dir/main.cpp.o.ddi: CXX_SCAN__Assignment_Release /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/main.cpp || cmake_object_order_depends_target_Assignment
+  DEP_FILE = CMakeFiles/Assignment.dir/main.cpp.o.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles/Assignment.dir/main.cpp.o.ddi
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fdiagnostics-color=always
+  OBJ_FILE = CMakeFiles/Assignment.dir/main.cpp.o
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles/Assignment.dir/main.cpp.o.ddi.i
+
+build CMakeFiles/Assignment.dir/main.cpp.o: CXX_COMPILER__Assignment_scanned_Release /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/main.cpp | CMakeFiles/Assignment.dir/main.cpp.o.modmap || cmake_object_order_depends_target_Assignment CMakeFiles/Assignment.dir/CXX.dd
+  DEP_FILE = CMakeFiles/Assignment.dir/main.cpp.o.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles/Assignment.dir/main.cpp.o.modmap
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/Assignment.dir
+  OBJECT_FILE_DIR = CMakeFiles/Assignment.dir
+  dyndep = CMakeFiles/Assignment.dir/CXX.dd
+
+build CMakeFiles/Assignment.dir/CXX.dd | /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release/CMakeFiles/Assignment.dir/CXXModules.json CMakeFiles/Assignment.dir/main.cpp.o.modmap: CXX_DYNDEP__Assignment_Release CMakeFiles/Assignment.dir/main.cpp.o.ddi | /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release/CMakeFiles/Assignment.dir/CXXDependInfo.json
 
 
 # =============================================================================
@@ -61,17 +72,15 @@ build CMakeFiles/Assignment.dir/main.cpp.obj: CXX_COMPILER__Assignment_unscanned
 
 
 #############################################
-# Link the executable Assignment.exe
+# Link the executable Assignment
 
-build Assignment.exe: CXX_EXECUTABLE_LINKER__Assignment_Release CMakeFiles/Assignment.dir/main.cpp.obj
-  FLAGS = -O3 -DNDEBUG
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\Assignment.dir
-  POST_BUILD = cd .
-  PRE_LINK = cd .
-  TARGET_FILE = Assignment.exe
-  TARGET_IMPLIB = libAssignment.dll.a
-  TARGET_PDB = Assignment.exe.dbg
+build Assignment: CXX_EXECUTABLE_LINKER__Assignment_Release CMakeFiles/Assignment.dir/main.cpp.o
+  FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
+  OBJECT_DIR = CMakeFiles/Assignment.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = Assignment
+  TARGET_PDB = Assignment.dbg
 
 # =============================================================================
 # Object build statements for EXECUTABLE target gptv1
@@ -82,11 +91,22 @@ build Assignment.exe: CXX_EXECUTABLE_LINKER__Assignment_Release CMakeFiles/Assig
 
 build cmake_object_order_depends_target_gptv1: phony || .
 
-build CMakeFiles/gptv1.dir/gptv1.cpp.obj: CXX_COMPILER__gptv1_unscanned_Release C$:/Users/LorenzLorentz/seadrive_root/王鹏杰/My$ Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/gptv1.cpp || cmake_object_order_depends_target_gptv1
-  DEP_FILE = CMakeFiles\gptv1.dir\gptv1.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\gptv1.dir
-  OBJECT_FILE_DIR = CMakeFiles\gptv1.dir
+build CMakeFiles/gptv1.dir/gptv1.cpp.o.ddi: CXX_SCAN__gptv1_Release /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/gptv1.cpp || cmake_object_order_depends_target_gptv1
+  DEP_FILE = CMakeFiles/gptv1.dir/gptv1.cpp.o.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles/gptv1.dir/gptv1.cpp.o.ddi
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fdiagnostics-color=always
+  OBJ_FILE = CMakeFiles/gptv1.dir/gptv1.cpp.o
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles/gptv1.dir/gptv1.cpp.o.ddi.i
+
+build CMakeFiles/gptv1.dir/gptv1.cpp.o: CXX_COMPILER__gptv1_scanned_Release /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/gptv1.cpp | CMakeFiles/gptv1.dir/gptv1.cpp.o.modmap || cmake_object_order_depends_target_gptv1 CMakeFiles/gptv1.dir/CXX.dd
+  DEP_FILE = CMakeFiles/gptv1.dir/gptv1.cpp.o.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles/gptv1.dir/gptv1.cpp.o.modmap
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/gptv1.dir
+  OBJECT_FILE_DIR = CMakeFiles/gptv1.dir
+  dyndep = CMakeFiles/gptv1.dir/CXX.dd
+
+build CMakeFiles/gptv1.dir/CXX.dd | /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release/CMakeFiles/gptv1.dir/CXXModules.json CMakeFiles/gptv1.dir/gptv1.cpp.o.modmap: CXX_DYNDEP__gptv1_Release CMakeFiles/gptv1.dir/gptv1.cpp.o.ddi | /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release/CMakeFiles/gptv1.dir/CXXDependInfo.json
 
 
 # =============================================================================
@@ -94,17 +114,15 @@ build CMakeFiles/gptv1.dir/gptv1.cpp.obj: CXX_COMPILER__gptv1_unscanned_Release 
 
 
 #############################################
-# Link the executable gptv1.exe
+# Link the executable gptv1
 
-build gptv1.exe: CXX_EXECUTABLE_LINKER__gptv1_Release CMakeFiles/gptv1.dir/gptv1.cpp.obj
-  FLAGS = -O3 -DNDEBUG
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\gptv1.dir
-  POST_BUILD = cd .
-  PRE_LINK = cd .
-  TARGET_FILE = gptv1.exe
-  TARGET_IMPLIB = libgptv1.dll.a
-  TARGET_PDB = gptv1.exe.dbg
+build gptv1: CXX_EXECUTABLE_LINKER__gptv1_Release CMakeFiles/gptv1.dir/gptv1.cpp.o
+  FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
+  OBJECT_DIR = CMakeFiles/gptv1.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = gptv1
+  TARGET_PDB = gptv1.dbg
 
 # =============================================================================
 # Object build statements for EXECUTABLE target new
@@ -115,11 +133,22 @@ build gptv1.exe: CXX_EXECUTABLE_LINKER__gptv1_Release CMakeFiles/gptv1.dir/gptv1
 
 build cmake_object_order_depends_target_new: phony || .
 
-build CMakeFiles/new.dir/new.cpp.obj: CXX_COMPILER__new_unscanned_Release C$:/Users/LorenzLorentz/seadrive_root/王鹏杰/My$ Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/new.cpp || cmake_object_order_depends_target_new
-  DEP_FILE = CMakeFiles\new.dir\new.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\new.dir
-  OBJECT_FILE_DIR = CMakeFiles\new.dir
+build CMakeFiles/new.dir/new.cpp.o.ddi: CXX_SCAN__new_Release /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/new.cpp || cmake_object_order_depends_target_new
+  DEP_FILE = CMakeFiles/new.dir/new.cpp.o.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles/new.dir/new.cpp.o.ddi
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fdiagnostics-color=always
+  OBJ_FILE = CMakeFiles/new.dir/new.cpp.o
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles/new.dir/new.cpp.o.ddi.i
+
+build CMakeFiles/new.dir/new.cpp.o: CXX_COMPILER__new_scanned_Release /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/new.cpp | CMakeFiles/new.dir/new.cpp.o.modmap || cmake_object_order_depends_target_new CMakeFiles/new.dir/CXX.dd
+  DEP_FILE = CMakeFiles/new.dir/new.cpp.o.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles/new.dir/new.cpp.o.modmap
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/new.dir
+  OBJECT_FILE_DIR = CMakeFiles/new.dir
+  dyndep = CMakeFiles/new.dir/CXX.dd
+
+build CMakeFiles/new.dir/CXX.dd | /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release/CMakeFiles/new.dir/CXXModules.json CMakeFiles/new.dir/new.cpp.o.modmap: CXX_DYNDEP__new_Release CMakeFiles/new.dir/new.cpp.o.ddi | /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release/CMakeFiles/new.dir/CXXDependInfo.json
 
 
 # =============================================================================
@@ -127,24 +156,64 @@ build CMakeFiles/new.dir/new.cpp.obj: CXX_COMPILER__new_unscanned_Release C$:/Us
 
 
 #############################################
-# Link the executable new.exe
+# Link the executable new
 
-build new.exe: CXX_EXECUTABLE_LINKER__new_Release CMakeFiles/new.dir/new.cpp.obj
-  FLAGS = -O3 -DNDEBUG
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\new.dir
-  POST_BUILD = cd .
-  PRE_LINK = cd .
-  TARGET_FILE = new.exe
-  TARGET_IMPLIB = libnew.dll.a
-  TARGET_PDB = new.exe.dbg
+build new: CXX_EXECUTABLE_LINKER__new_Release CMakeFiles/new.dir/new.cpp.o
+  FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
+  OBJECT_DIR = CMakeFiles/new.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = new
+  TARGET_PDB = new.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target main1
+
+
+#############################################
+# Order-only phony target for main1
+
+build cmake_object_order_depends_target_main1: phony || .
+
+build CMakeFiles/main1.dir/main1.cpp.o.ddi: CXX_SCAN__main1_Release /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/main1.cpp || cmake_object_order_depends_target_main1
+  DEP_FILE = CMakeFiles/main1.dir/main1.cpp.o.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles/main1.dir/main1.cpp.o.ddi
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fdiagnostics-color=always
+  OBJ_FILE = CMakeFiles/main1.dir/main1.cpp.o
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles/main1.dir/main1.cpp.o.ddi.i
+
+build CMakeFiles/main1.dir/main1.cpp.o: CXX_COMPILER__main1_scanned_Release /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/main1.cpp | CMakeFiles/main1.dir/main1.cpp.o.modmap || cmake_object_order_depends_target_main1 CMakeFiles/main1.dir/CXX.dd
+  DEP_FILE = CMakeFiles/main1.dir/main1.cpp.o.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles/main1.dir/main1.cpp.o.modmap
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/main1.dir
+  OBJECT_FILE_DIR = CMakeFiles/main1.dir
+  dyndep = CMakeFiles/main1.dir/CXX.dd
+
+build CMakeFiles/main1.dir/CXX.dd | /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release/CMakeFiles/main1.dir/CXXModules.json CMakeFiles/main1.dir/main1.cpp.o.modmap: CXX_DYNDEP__main1_Release CMakeFiles/main1.dir/main1.cpp.o.ddi | /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release/CMakeFiles/main1.dir/CXXDependInfo.json
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target main1
+
+
+#############################################
+# Link the executable main1
+
+build main1: CXX_EXECUTABLE_LINKER__main1_Release CMakeFiles/main1.dir/main1.cpp.o
+  FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
+  OBJECT_DIR = CMakeFiles/main1.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = main1
+  TARGET_PDB = main1.dbg
 
 
 #############################################
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\LorenzLorentz\seadrive_root\王鹏杰\My Libraries\CSEFCloud\Notes&Homework&Assignment\Programming\Assignment\cmake-build-release" && C:\Users\LorenzLorentz\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E echo "No interactive CMake dialog available.""
+  COMMAND = cd "/Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release" && /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -155,7 +224,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\LorenzLorentz\seadrive_root\王鹏杰\My Libraries\CSEFCloud\Notes&Homework&Assignment\Programming\Assignment\cmake-build-release" && C:\Users\LorenzLorentz\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe --regenerate-during-build -S"C:\Users\LorenzLorentz\seadrive_root\王鹏杰\My Libraries\CSEFCloud\Notes&Homework&Assignment\Programming\Assignment" -B"C:\Users\LorenzLorentz\seadrive_root\王鹏杰\My Libraries\CSEFCloud\Notes&Homework&Assignment\Programming\Assignment\cmake-build-release""
+  COMMAND = cd "/Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release" && /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --regenerate-during-build -S"/Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment" -B"/Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release"
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -165,21 +234,15 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build Assignment: phony Assignment.exe
-
-build gptv1: phony gptv1.exe
-
-build new: phony new.exe
-
 # =============================================================================
 # Folder targets.
 
 # =============================================================================
 
 #############################################
-# Folder: C:/Users/LorenzLorentz/seadrive_root/王鹏杰/My Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release
+# Folder: /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-release
 
-build all: phony Assignment.exe gptv1.exe new.exe
+build all: phony Assignment gptv1 new main1
 
 # =============================================================================
 # Built-in targets
@@ -188,14 +251,14 @@ build all: phony Assignment.exe gptv1.exe new.exe
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeRCInformation.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-GNU-C.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-GNU.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-Initialize.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-windres.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/WindowsPaths.cmake C$:/Users/LorenzLorentz/seadrive_root/王鹏杰/My$ Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeRCCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeCInformation.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Compiler/GNU.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/Apple-GNU-C.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/Apple-GNU-CXX.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/Apple-GNU.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/Darwin-Initialize.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/Darwin.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeRCInformation.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-GNU-C.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-GNU.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-Initialize.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows-windres.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/Windows.cmake C$:/Users/LorenzLorentz/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.29/Modules/Platform/WindowsPaths.cmake C$:/Users/LorenzLorentz/seadrive_root/王鹏杰/My$ Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeRCCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake: phony
+build /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeCInformation.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Compiler/GNU.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/Apple-GNU-C.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/Apple-GNU-CXX.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/Apple-GNU.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/Darwin-Initialize.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/Darwin.cmake /Users/lorenzlorentz/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake /Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake: phony
 
 
 #############################################
