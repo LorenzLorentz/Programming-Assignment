@@ -1,5 +1,6 @@
-C:/Users/LorenzLorentz/seadrive_root/王鹏杰/My Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/Assignment.dir
-C:/Users/LorenzLorentz/seadrive_root/王鹏杰/My Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/gptv1.dir
-C:/Users/LorenzLorentz/seadrive_root/王鹏杰/My Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/new.dir
-C:/Users/LorenzLorentz/seadrive_root/王鹏杰/My Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/LorenzLorentz/seadrive_root/王鹏杰/My Libraries/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/Assignment.dir
+/Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/gptv1.dir
+/Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/new.dir
+/Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/main1.dir
+/Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/lorenzlorentz/Library/CloudStorage/SeaDrive-王鹏杰(cloud.tsinghua.edu.cn)/我的资料库/CSEFCloud/Notes&Homework&Assignment/Programming/Assignment/cmake-build-debug/CMakeFiles/rebuild_cache.dir

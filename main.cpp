@@ -8,14 +8,15 @@ class Game;
 
 class Gamestate {
 public:
+    vector<string> initialInbox;
     vector<string> inboxBar;
     vector<string> outboxBar;
-    vector<string> carpetBar={"","","",""};
-    vector<string> availableOps={};
+    vector<string> carpetBar;
+    vector<string> availableOps;
     string hand;
 
     Gamestate(vector<string> inboxBarSet,vector<string> availableOpsSet)
-       : inboxBar(inboxBarSet),availableOps(availableOpsSet) {}
+       : initialInbox(inboxBarSet),availableOps(availableOpsSet) {}
 
     bool goalReached(const vector<string> &goalJudge) {
         vector<string> output;
@@ -43,18 +44,19 @@ public:
         } cout<<endl;
     }
 
-    bool inputProcess(const string &command,const int &param,bool &jumpInputJudge, bool &endRun,const int &numSteps) {
-        /* bool legalOp=false;
+    bool isLegalOperation(const string& command, const vector<string>& availableOps) {
+        if(command=="") return true;
         for(int i=0;i<availableOps.size();++i) {
-            if(command==availableOps[i]) {
-                legalOp=true;
-                break;
-            }
+            if(command==availableOps[i]) return true;
         }
-        if(!legalOp) {
+        return false;
+    }
+
+    bool inputProcess(const string &command,const int &param,bool &jumpInputJudge, bool &endRun,const int &numSteps) {
+        if(!isLegalOperation(command,availableOps)) {
             cout<<"Unavailable command"<<endl;
             return false;
-        } */
+        }
 
         if(command=="inbox") {
             if(!jumpInputJudge) {
@@ -131,12 +133,13 @@ public:
             hand=to_string(stoi(hand)-stoi(carpetBar[param-1]));
             displayState();
         } else if(command=="jumpto") {
-            if(!(0<=param&&param>numSteps)) {
+            cout<<param;
+            if(!(0<=param&&param<numSteps)) {
                 cout<<"Invalid parameter"<<endl;
                 return false;
             }
         } else if(command=="jumpifzero") {
-            if(!(0<=param&&param>numSteps)) {
+            if(!(0<=param&&param<numSteps)) {
                 cout<<"Invalid parameter"<<endl;
                 return false;
             }
@@ -161,6 +164,9 @@ public:
 
     void playGame() {
         gamestate->outboxBar.clear();
+        gamestate->carpetBar={"","","",""};
+        gamestate->hand="";
+        gamestate->inboxBar=gamestate->initialInbox;
 
         cout<<"Level Information"<<levelInfo<<endl;
         cout<<"Original State:"<<originState<<endl;
@@ -240,8 +246,8 @@ public:
 
         cout<<"Success!"<<endl;
         cout<<"Data:"<<endl;
-        cout<<"Steps:"<<actualSteps<<endl;
-        cout<<"Instructions:"<<numSteps<<endl;
+        cout<<"Steps:"<<actualSteps-2<<endl;
+        cout<<"Instructions:"<<numSteps-2<<endl;
         completed=true;
     }
 };
@@ -274,9 +280,9 @@ public:
     Menu menu;
 
     Game() {
-        gamestates.emplace_back(vector<string>{"1","2"},vector<string>{"inbox","outbox"});
-        gamestates.emplace_back(vector<string>{"3","9","5","1","-2","-2","9","-9"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jump","jumpifzero"});
-        gamestates.emplace_back(vector<string>{"6","2","7","7","-9","3","-3","-3"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jump","jumpifzero"});
+        gamestates.emplace_back(vector<string>{"1","2"},vector<string>{"inbox","outbox","start"});
+        gamestates.emplace_back(vector<string>{"3","9","5","1","-2","-2","9","-9"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jumpto","jumpifzero","start"});
+        gamestates.emplace_back(vector<string>{"6","2","7","7","-9","3","-3","-3"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jumpto","jumpifzero","start"});
         //game.emplace_back("","");
 
         level.emplace_back("First Level", "1,2", "1,2", vector<string>{"1","2"}, "Use inbox, outbox", &gamestates[0]);
@@ -302,13 +308,16 @@ public:
                 } else if(ifContinue == 'y') {
                     menu.showLeveltree(level);
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                }
-                int levelChoice;
-                cin>>levelChoice;
-                if(levelChoice>0&&levelChoice<=level.size()) {
-                    level[levelChoice-1].playGame();
+                    int levelChoice;
+                    cin>>levelChoice;
+                    if(levelChoice>0&&levelChoice<=level.size()) {
+                        level[levelChoice-1].playGame();
+                    } else {
+                        cout<<"Invalid Choice"<<endl;
+                    }
                 } else {
-                    cout<<"Invalid Choice"<<endl;
+                    cout<<"Invalid input"<<endl;
+                    continue;
                 }
             }
         } else if(choice == 3) {
