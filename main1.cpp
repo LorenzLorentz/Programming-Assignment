@@ -168,14 +168,13 @@ public:
         gamestate->inboxBar = originStates;
         gamestate->carpetBar = {"", "", ""}; // 重置地毯条
         gamestate->hand = ""; // 清空手中的物品
+        int numSteps=0; //指令数目
+        int doStep=0; //实际运行的指令是第几条
+        int actualSteps=0; //运行过几条指令
         cout<<"Level Information"<<levelInfo<<endl;
         cout<<"Original State:"<<originState<<endl;
         cout<<"Goal:"<<goal<<endl;
         cout<<"Hint:"<<hint<<endl;
-
-        int numSteps=0; //指令数目
-        int doStep=0; //实际运行的指令是第几条
-        int actualSteps=0; //运行过几条指令
 
         vector<string> command; //存储指令
         vector<int> param; //存储参数
@@ -194,22 +193,29 @@ public:
             getline(cin,inputLine);
             istringstream iss(inputLine);
             iss>>cmd;
-
-            //读取参数
-            command.push_back(cmd);
-            if(iss>>par) {
-                param.push_back(par);
-            } else {
-                param.push_back(-1);
+            // 检查是否是合法的操作指令
+            bool legalOp = false;
+            for (const auto& op : gamestate->availableOps) {
+                if (cmd == op) {
+                    legalOp = true;
+                    break;
+                }
             }
-
-            //读取开始运行指令
+            // 如果是合法的操作指令，则增加 numSteps
+            if (legalOp) {
+                command.push_back(cmd);
+                if (iss >> par) {
+                    param.push_back(par);
+                } else {
+                    param.push_back(-1);
+                }
+                numSteps++;
+            }
+            
             if(cmd=="start") {
                 startRun=true;
             }
 
-            //对指令计数
-            numSteps++;
         }
 
         while(doStep<numSteps&&!endRun) {
