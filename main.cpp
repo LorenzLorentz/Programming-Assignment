@@ -138,7 +138,7 @@ public:
             }
             hand=to_string(stoi(hand)-stoi(carpetBar[param-1]));
             displayState();
-        } else if(command=="jumpto") {
+        } else if(command=="jump") {
             if(!(0<=param&&param<numSteps)) {
                 cout<<"Invalid parameter"<<endl;
                 return false;
@@ -198,6 +198,8 @@ public:
 
             //读取输入，并解析出指令
             getline(cin,inputLine);
+            if (inputLine.empty()&&numSteps!=0) 
+                continue;
             istringstream iss(inputLine);
             iss>>cmd;
 
@@ -220,13 +222,13 @@ public:
 
         while(doStep<numSteps&&!endRun) {
             //jump指令的处理
-            if(command[doStep]=="jumpto"||command[doStep]=="jumpifzero") {
+            if(command[doStep]=="jump"||command[doStep]=="jumpifzero") {
                 if(!gamestate->inputProcess(command[doStep],param[doStep],jumpInputJudge,endRun,numSteps)) {
                     cout<<"Invalid input"<<endl;
                     return;
                 }
 
-                if(command[doStep]=="jumpto"||command[doStep]=="jumpifzero"&&gamestate->hand=="0") {
+                if(command[doStep]=="jump"||command[doStep]=="jumpifzero"&&gamestate->hand=="0") {
                     jumpInputJudge=true;
                     doStep=param[doStep]; //跳跃至传输的参数指定的位置
                 } else if(command[doStep]=="jumpifzero") {
@@ -290,8 +292,8 @@ public:
 
     Game() {
         gamestates.emplace_back(vector<string>{"1","2"},vector<string>{"inbox","outbox","start"});
-        gamestates.emplace_back(vector<string>{"3","9","5","1","-2","-2","9","-9"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jumpto","jumpifzero","start"});
-        gamestates.emplace_back(vector<string>{"6","2","7","7","-9","3","-3","-3"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jumpto","jumpifzero","start"});
+        gamestates.emplace_back(vector<string>{"3","9","5","1","-2","-2","9","-9"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jump","jumpifzero","start"});
+        gamestates.emplace_back(vector<string>{"6","2","7","7","-9","3","-3","-3"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jump","jumpifzero","start"});
         //game.emplace_back("","");
 
         level.emplace_back("First Level","", "1,2", "1,2", vector<string>{"1","2"}, "Use inbox, outbox", &gamestates[0]);
