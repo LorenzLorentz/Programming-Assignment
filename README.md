@@ -34,12 +34,17 @@ start
 - jumpifzero不稳定出现无法继续的问题，目前不能稳定复现
 
 **2024/10/15/18 update**
+
 现在补充了完善了操作计数算法
+
 更正了jump指令
+
 jumpifzero在我这里比较稳定？
 
 程序update在newmain里面（我试着弄了一个pull request不知道你能不能看）
 
 **2024/10/20/22 update**
+
 现在加入了文件系统
+
 加入了available carpet机制（大作业文档中是要求的）
