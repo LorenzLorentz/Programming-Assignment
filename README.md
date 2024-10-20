@@ -39,3 +39,7 @@ start
 jumpifzero在我这里比较稳定？
 
 程序update在newmain里面（我试着弄了一个pull request不知道你能不能看）
+
+**2024/10/20/22 update**
+现在加入了文件系统
+加入了available carpet机制（大作业文档中是要求的）
