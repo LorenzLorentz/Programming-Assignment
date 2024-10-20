@@ -39,14 +39,14 @@ start
 
 更正了jump指令
 
--jumpifzero在我这里比较稳定？
+- jumpifzero在我这里比较稳定？
 
--程序update在newmain里面（我试着弄了一个pull request不知道你能不能看）
+- 程序update在newmain里面（我试着弄了一个pull request不知道你能不能看）
 
 **2024/10/20/22 update**
 
--现在加入了文件系统
+- 现在加入了文件系统
 
--加入了available carpet机制（大作业文档中是要求的）
+- 加入了available carpet机制（大作业文档中是要求的）
 
--取消了万能头文件（只是因为它在mac的命令行环境无法运行）
+- 取消了万能头文件（只是因为它在mac的命令行环境无法运行）
