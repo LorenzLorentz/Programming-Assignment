@@ -8,15 +8,17 @@ class Game;
 
 class Gamestate {
 public:
+    vector<string> initialInbox; //保持不变的inbox
     vector<string> inboxBar;
     vector<string> outboxBar;
-    vector<string> carpetBar={"","","",""};
-    vector<string> availableOps={};
+    vector<string> carpetBar;
+    vector<string> availableOps; //可以使用的操作
     string hand;
 
     Gamestate(vector<string> inboxBarSet,vector<string> availableOpsSet)
-       : inboxBar(inboxBarSet),availableOps(availableOpsSet) {}
+       : initialInbox(inboxBarSet),availableOps(availableOpsSet) {} //初始化函数设定
 
+    //目标是否完成的判断
     bool goalReached(const vector<string> &goalJudge) {
         vector<string> output;
         for(int i=0;i<outboxBar.size();++i) {
@@ -25,6 +27,7 @@ public:
         return output==goalJudge;
     }
 
+    //每一步执行后展示状态
     void displayState() {
         cout<<"Hand:"<<endl<<hand<<endl;
         cout<<"InboxBar:"<<endl;
@@ -43,19 +46,24 @@ public:
         } cout<<endl;
     }
 
-    bool inputProcess(const string &command,const int &param,bool &jumpInputJudge, bool &endRun,const int &numSteps) {
-        /* bool legalOp=false;
+    //判断操作是否合法
+    bool isLegalOperation(const string& command, const vector<string>& availableOps) {
+        if(command=="") return true;
         for(int i=0;i<availableOps.size();++i) {
-            if(command==availableOps[i]) {
-                legalOp=true;
-                break;
-            }
+            if(command==availableOps[i]) return true;
         }
-        if(!legalOp) {
+        return false;
+    }
+
+    //对操作进行处理，对操作范围进行判断
+    bool inputProcess(const string &command,const int &param,bool &jumpInputJudge, bool &endRun,const int &numSteps) {
+        //判断操作是否合法
+        if(!isLegalOperation(command,availableOps)) {
             cout<<"Unavailable command"<<endl;
             return false;
-        } */
+        }
 
+        //对操作进行处理
         if(command=="inbox") {
             if(!jumpInputJudge) {
                 if(inboxBar.empty()) {
@@ -78,7 +86,7 @@ public:
                 return false;
             }
             outboxBar.push_back(hand);
-            hand="";
+            hand.clear();
             displayState();
         } else if(command=="copyto") {
             if(param<=0||param>carpetBar.size()) {
@@ -130,13 +138,13 @@ public:
             }
             hand=to_string(stoi(hand)-stoi(carpetBar[param-1]));
             displayState();
-        } else if(command=="jumpto") {
-            if(!(0<=param&&param>numSteps)) {
+        } else if(command=="jump") {
+            if(!(0<=param&&param<numSteps)) {
                 cout<<"Invalid parameter"<<endl;
                 return false;
             }
         } else if(command=="jumpifzero") {
-            if(!(0<=param&&param>numSteps)) {
+            if(!(0<=param&&param<numSteps)) {
                 cout<<"Invalid parameter"<<endl;
                 return false;
             }
@@ -147,8 +155,8 @@ public:
 
 class Level {
 public:
-    string description;
-    string levelInfo;
+    string description; //关卡描述
+    string levelInfo; //关卡信息
     string originState;
     string goal;
     vector<string> goalJudge;
@@ -156,25 +164,24 @@ public:
     bool completed;
     Gamestate* gamestate;
 
-    Level(string desc,string ori,string goal, vector<string>gj, string hints, Gamestate* gs)
-       : description(desc), originState(ori), goal(goal), goalJudge(gj), hint(hints), completed(false), gamestate(gs) {}
+    Level(string levelName, string desc, string ori,string goal, vector<string>gj, string hints, Gamestate* gs)
+       : levelInfo(levelName), description(desc), originState(ori), goal(goal), goalJudge(gj), hint(hints), completed(false), gamestate(gs) {}
 
     void playGame() {
         gamestate->outboxBar.clear();
-        vector<string> originStates = split(originState, ','); // 假设初始状态由逗号分隔
-        gamestate->inboxBar = originStates;
-        gamestate->carpetBar = {"", "", ""}; // 重置地毯条
-        gamestate->hand = ""; // 清空手中的物品
-        gamestate->inboxBar = originStates;
-        gamestate->carpetBar = {"", "", ""}; // 重置地毯条
-        gamestate->hand = ""; // 清空手中的物品
+        gamestate->carpetBar={"","","",""};
+        gamestate->hand="";
+        gamestate->inboxBar=gamestate->initialInbox;
+
+        cout<<"Level Information:"<<levelInfo<<endl;
+        cout<<"Description:"<<description<<endl;
+        cout<<"Inputbar State:"<<originState<<endl;
+        cout<<"Goal:"<<goal<<endl;
+        cout<<"Hint:"<<hint<<endl;
+
         int numSteps=0; //指令数目
         int doStep=0; //实际运行的指令是第几条
         int actualSteps=0; //运行过几条指令
-        cout<<"Level Information"<<levelInfo<<endl;
-        cout<<"Original State:"<<originState<<endl;
-        cout<<"Goal:"<<goal<<endl;
-        cout<<"Hint:"<<hint<<endl;
 
         vector<string> command; //存储指令
         vector<int> param; //存储参数
@@ -191,44 +198,42 @@ public:
 
             //读取输入，并解析出指令
             getline(cin,inputLine);
+            if (inputLine.empty()&&numSteps!=0)
+                continue;
             istringstream iss(inputLine);
             iss>>cmd;
-            // 检查是否是合法的操作指令
-            bool legalOp = false;
-            for (const auto& op : gamestate->availableOps) {
-                if (cmd == op) {
-                    legalOp = true;
-                    break;
-                }
+
+            //读取参数
+            command.push_back(cmd);
+            if(iss>>par) {
+                param.push_back(par);
+            } else {
+                param.push_back(-1);
             }
-            // 如果是合法的操作指令，则增加 numSteps
-            if (legalOp) {
-                command.push_back(cmd);
-                if (iss >> par) {
-                    param.push_back(par);
-                } else {
-                    param.push_back(-1);
-                }
-                numSteps++;
-            }
-            
+
+            //读取开始运行指令
             if(cmd=="start") {
                 startRun=true;
             }
 
+            //对指令计数
+            numSteps++;
         }
 
         while(doStep<numSteps&&!endRun) {
             //jump指令的处理
-            if(command[doStep]=="jumpto"||command[doStep]=="jumpifzero") {
+            if(command[doStep]=="jump"||command[doStep]=="jumpifzero") {
                 if(!gamestate->inputProcess(command[doStep],param[doStep],jumpInputJudge,endRun,numSteps)) {
                     cout<<"Invalid input"<<endl;
                     return;
                 }
 
-                if(command[doStep]=="jumpto"||command[doStep]=="jumpifzero"&&gamestate->hand=="0") {
+                if(command[doStep]=="jump"||command[doStep]=="jumpifzero"&&gamestate->hand=="0") {
                     jumpInputJudge=true;
                     doStep=param[doStep]; //跳跃至传输的参数指定的位置
+                } else if(command[doStep]=="jumpifzero") {
+                    cout<<"notzero"<<endl;
+                    ++doStep;
                 }
 
                 ++actualSteps;
@@ -252,19 +257,9 @@ public:
 
         cout<<"Success!"<<endl;
         cout<<"Data:"<<endl;
-        cout<<"Steps:"<<actualSteps<<endl;
-        cout<<"Instructions:"<<numSteps<<endl;
+        cout<<"Steps:"<<actualSteps-2<<endl;
+        cout<<"Instructions:"<<numSteps-2<<endl;
         completed=true;
-    }
-    private:
-    vector<string> split(const string &s, char delimiter) {
-        vector<string> tokens;
-        string token;
-        istringstream tokenStream(s);
-        while (getline(tokenStream, token, delimiter)) {
-            tokens.push_back(token);
-        }
-        return tokens;
     }
 };
 
@@ -281,9 +276,9 @@ public:
         cout<<"-----LevelTree-----"<<endl;
         for(int i=0;i<level.size();++i) {
             if(level[i].completed) {
-                cout<<"Level #"<<i+1<<":"<<level[i].description<<" You've passed"<<endl;
+                cout<<"Level #"<<i+1<<": "<<level[i].levelInfo<<"You've passed"<<endl;
             }else {
-                cout<<"Level #"<<i+1<<": "<<level[i].description<<endl;
+                cout<<"Level #"<<i+1<<": "<<level[i].levelInfo<<endl;
             }
         }
     }
@@ -296,14 +291,14 @@ public:
     Menu menu;
 
     Game() {
-        gamestates.emplace_back(vector<string>{"1","2"},vector<string>{"inbox","outbox"});
-        gamestates.emplace_back(vector<string>{"3","9","5","1","-2","-2","9","-9"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jump","jumpifzero"});
-        gamestates.emplace_back(vector<string>{"6","2","7","7","-9","3","-3","-3"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jump","jumpifzero"});
+        gamestates.emplace_back(vector<string>{"1","2"},vector<string>{"inbox","outbox","start"});
+        gamestates.emplace_back(vector<string>{"3","9","5","1","-2","-2","9","-9"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jump","jumpifzero","start"});
+        gamestates.emplace_back(vector<string>{"6","2","7","7","-9","3","-3","-3"},vector<string>{"start","inbox","outbox","copyfrom","copyto","add","sub","jump","jumpifzero","start"});
         //game.emplace_back("","");
 
-        level.emplace_back("First Level", "1,2", "1,2", vector<string>{"1","2"}, "Use inbox, outbox", &gamestates[0]);
-        level.emplace_back("Second Level", "3,9,5,1,-2,-2,9,-9", "-6,6,4,-4,0,0,18,-18", vector<string>{"-6","6","4","-4","0","0","18","-18"}, "Use sub", &gamestates[1]);
-        level.emplace_back("Third Level","6,2,7,7,-9,3,-3,-3", "7,-3", vector<string>{"7","-3"}, "Use sub and jumpifzero", &gamestates[2]);
+        level.emplace_back("First Level","", "1,2", "1,2", vector<string>{"1","2"}, "Use inbox, outbox", &gamestates[0]);
+        level.emplace_back("Second Level","", "3,9,5,1,-2,-2,9,-9", "-6,6,4,-4,0,0,18,-18", vector<string>{"-6","6","4","-4","0","0","18","-18"}, "Use sub", &gamestates[1]);
+        level.emplace_back("Third Level","","6,2,7,7,-9,3,-3,-3", "7,-3", vector<string>{"7","-3"}, "Use sub and jumpifzero", &gamestates[2]);
         //level.emplace_back("Fourth Level","","");
     }
 
@@ -311,32 +306,58 @@ public:
         menu.showMenu();
 
         int choice;
-        cout<<"Enter your choice:";
-        cin>>choice;
+        while (true) {
+            cout<<"Enter your choice: ";
+            cin>>choice;
+
+            //判断输入有效性
+            if (cin.fail()) {
+                // 检查cin是否进入错误状态
+                cin.clear(); // 清除错误状态
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // 丢弃无效输入
+                cout<<"Invalid input. Please enter a valid number." << endl;
+            } else if(!(choice == 1 || choice == 2 || choice == 3)) {
+                cout<<"Invalid input. Please enter 1, 2, 3." << endl;
+            } else {
+                break;
+            }
+        }
 
         if(choice == 1) {
             while(true) {
                 char ifContinue;
                 cout<<"Do you want to continue?(y/n):";
                 cin>>ifContinue;
-                if(ifContinue == 'n') {
+                if(ifContinue=='n') {
                     break;
-                } else if(ifContinue == 'y') {
+                } else if(ifContinue=='y') {
                     menu.showLeveltree(level);
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                }
-                int levelChoice;
-                cin>>levelChoice;
-                if(levelChoice>0&&levelChoice<=level.size()) {
+                    int levelChoice;
+                    while (true) {
+                        cout<<"Enter level choice: ";
+                        cin>>levelChoice;
+
+                        //判断输入有效性
+                        if (cin.fail()) {
+                            // 检查cin是否进入错误状态
+                            cin.clear(); // 清除错误状态
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // 丢弃无效输入
+                            cout<<"Invalid input. Please enter a valid number." << endl;
+                        } else if(!(levelChoice>0&&levelChoice<=level.size())){
+                            cout<<"Invalid input. Please enter a valid level." << endl;
+                        } else{
+                            break;
+                        }
+                    }
                     level[levelChoice-1].playGame();
                 } else {
-                    cout<<"Invalid Choice"<<endl;
+                    cout<<"Invalid input. Please enter y/n."<<endl;
+                    continue;
                 }
             }
-        } else if(choice == 3) {
+        } else if(choice==3||choice==2) {
             exit(0);
-        } else {
-            cout<<"Invalid Choice"<<endl;
         }
     }
 };
