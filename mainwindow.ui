@@ -77,6 +77,7 @@
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="page"/>
     <widget class="QWidget" name="fail">
      <widget class="QPushButton" name="buttonFailExit">
       <property name="geometry">
@@ -185,7 +186,60 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="loadgame"/>
+    <widget class="QWidget" name="loadgame">
+     <widget class="QPushButton" name="buttonLoadgameLoadlevelinfo">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>270</y>
+        <width>121</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>LOAD LEVELINFO</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonLoadgameLoadarchive">
+      <property name="geometry">
+       <rect>
+        <x>399</x>
+        <y>270</y>
+        <width>111</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>LOAD ARCHIVE</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelLoadgameCentral">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>160</y>
+        <width>191</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; font-weight:700;&quot;&gt;Load Game&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonLoadgameBackandload">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>310</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>BACK</string>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="playgame">
      <widget class="QTextEdit" name="inputPlaygameCommand">
       <property name="geometry">
