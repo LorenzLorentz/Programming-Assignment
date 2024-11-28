@@ -1,5 +1,6 @@
 #include "game.h"
 #include <qDebug>
+#include "mainwindow.h"
 using namespace std;
 
 Game::Game(vector<string> initialInboxSet,
@@ -29,6 +30,9 @@ void Game::updateState(){
     if(onInboxbarUpdate){
         string inboxbarReturn;
         for(int tempindex=0;tempindex<inboxBar.size();++tempindex){
+            if(!inboxbarReturn.empty()){
+                inboxbarReturn+=" ";
+            }
             inboxbarReturn+=inboxBar[tempindex];
         }
         onInboxbarUpdate(inboxbarReturn);
@@ -37,6 +41,9 @@ void Game::updateState(){
     if(onOutboxbarUpdate){
         string outboxbarReturn;
         for(int tempindex=0;tempindex<outboxBar.size();++tempindex){
+            if(!outboxbarReturn.empty()){
+                outboxbarReturn+=" ";
+            }
             outboxbarReturn+=outboxBar[tempindex];
         }
         onOutboxbarUpdate(outboxbarReturn);
@@ -45,6 +52,9 @@ void Game::updateState(){
     if(onCarpetbarUpdate){
         string carpetbarReturn;
         for(int tempindex=0;tempindex<carpetBar.size();++tempindex){
+            if(!carpetbarReturn.empty()){
+                carpetbarReturn+=" ";
+            }
             carpetbarReturn+=carpetBar[tempindex];
         }
         onCarpetbarUpdate(carpetbarReturn);
@@ -197,27 +207,21 @@ bool Game::playgame(istream& inputStream) {
     fill(carpetBar.begin(), carpetBar.end(), "");
     inboxBar=initialInbox;
 
-    int m;
-    inputStream>>m;
-    inputStream.ignore();
-
     vector<string> command;
     vector<int> param;
 
-    for(int i=0;i<m;++i) {
-        string inputLine;
+    string inputLine;
+
+    while(std::getline(inputStream,inputLine)) {
+        if (inputLine.empty()) {
+            continue;
+        }
+
         string cmd;
         int par;
 
-        getline(inputStream,inputLine);
-
         istringstream iss(inputLine);
         iss>>cmd;
-
-        if(cmd==""&&i==0) {
-            i=-1;
-            continue;
-        }
 
         command.push_back(cmd);
         if(iss>>par) {
@@ -232,7 +236,7 @@ bool Game::playgame(istream& inputStream) {
     bool endRun=false;
     bool jumpInputJudge=false;
 
-    while(doStep<m&&!endRun) {
+    while(doStep<numSteps&&!endRun) {
         //jump指令的处理
         if(command[doStep]=="jump"||command[doStep]=="jumpifzero") {
             if(!inputProcess(command[doStep],param[doStep],jumpInputJudge,endRun,numSteps)) {
@@ -273,6 +277,7 @@ bool Game::playgame(istream& inputStream) {
         } else {
             qDebug()<<"回调函数未赋值";
         }
+        passed=true;
         qDebug()<<"SUCCESS!!";
         return true;
     } else {

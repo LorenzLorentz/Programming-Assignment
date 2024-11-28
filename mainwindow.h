@@ -22,13 +22,14 @@ public:
     ~MainWindow();
 
     bool ifWin;
+    int level;
     std::queue<std::string> logStateQueue;
     std::queue<std::string> inboxbarStateQueue;
     std::queue<std::string> outboxbarStateQueue;
     std::queue<std::string> carpetbarStateQueue;
     std::queue<std::string> handStateQueue;
 
-    void parselArchiveInfo(const std::string& line,std::vector<bool>& levelCompleted);
+    void parselArchiveInfo(const std::string& line,int tempIndex);
     void parselLevelInfo(const std::string& line,
                          std::vector<std::string>& levelInfoRead,
                          std::vector<std::vector<std::string>>& inboxBarSetRead,
@@ -42,17 +43,18 @@ signals:
 private slots:
     void buttonEnterClicked();
     void buttonExitClicked();
-    void buttonLevel1Clicked();
-    void buttonLevel2Clicked();
-    void buttonLevel3Clicked();
+    void buttonLoadgameClicked();
+    void buttonBackWelcomepageClicked();
     void buttonRestartClicked();
-    void buttonStartJudgeClicked(int level);
+    void buttonStartJudgeClicked();
     void buttonBackClicked();
     void updateProcessingState();
     void loadLevelinfo();
     void loadArchive();
     void loadEndBack();
+    void loadAuto();
     void loadandback();
+    void showGame();
 
 private:
     Ui::MainWindow *ui;

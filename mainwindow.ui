@@ -118,7 +118,7 @@
        <string>BACK</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="labelFailCentral">
       <property name="geometry">
        <rect>
         <x>320</x>
@@ -138,7 +138,7 @@
        <rect>
         <x>130</x>
         <y>290</y>
-        <width>100</width>
+        <width>121</width>
         <height>32</height>
        </rect>
       </property>
@@ -149,9 +149,9 @@
      <widget class="QPushButton" name="buttonLevelchoiceLevel2">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>320</x>
         <y>290</y>
-        <width>100</width>
+        <width>121</width>
         <height>32</height>
        </rect>
       </property>
@@ -164,7 +164,7 @@
        <rect>
         <x>510</x>
         <y>290</y>
-        <width>100</width>
+        <width>111</width>
         <height>32</height>
        </rect>
       </property>
@@ -185,14 +185,27 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:48pt; font-weight:700;&quot;&gt;Level Choice&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="buttonLevelchoiceBack">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>350</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Back</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="loadgame">
      <widget class="QPushButton" name="buttonLoadgameLoadlevelinfo">
       <property name="geometry">
        <rect>
-        <x>210</x>
+        <x>150</x>
         <y>270</y>
-        <width>121</width>
+        <width>131</width>
         <height>32</height>
        </rect>
       </property>
@@ -203,9 +216,9 @@
      <widget class="QPushButton" name="buttonLoadgameLoadarchive">
       <property name="geometry">
        <rect>
-        <x>399</x>
+        <x>440</x>
         <y>270</y>
-        <width>111</width>
+        <width>131</width>
         <height>32</height>
        </rect>
       </property>
@@ -237,6 +250,19 @@
       </property>
       <property name="text">
        <string>BACK</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonLoadgameAutoload">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>270</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>AUTO LOAD</string>
       </property>
      </widget>
     </widget>

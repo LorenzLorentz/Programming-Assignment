@@ -17,6 +17,7 @@ public:
     std::vector<std::string> availableOps;
     std::string hand;
     std::vector<std::string> goal;
+    bool passed;
 
     std::function<void(const std::string&)> onLogbarUpdate;
     std::function<void(const std::string&)> onInboxbarUpdate;
