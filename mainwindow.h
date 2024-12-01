@@ -6,6 +6,7 @@
 #include "game.h"
 #include <queue>
 #include <sstream>
+#include "humanmachine.h"
 extern std::vector<Game> games;
 
 QT_BEGIN_NAMESPACE
@@ -21,12 +22,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    Humanmachine *machine;
     bool ifWin;
     int level;
     std::queue<std::string> logStateQueue;
     std::queue<std::string> inboxbarStateQueue;
     std::queue<std::string> outboxbarStateQueue;
-    std::queue<std::string> carpetbarStateQueue;
+    std::queue<std::string> carpet1StateQueue;
+    std::queue<std::string> carpet2StateQueue;
+    std::queue<std::string> carpet3StateQueue;
+    std::queue<std::string> carpet4StateQueue;
     std::queue<std::string> handStateQueue;
 
     void parselArchiveInfo(const std::string& line,int tempIndex);
@@ -55,6 +60,7 @@ private slots:
     void loadAuto();
     void loadandback();
     void showGame();
+    void skiptoend();
 
 private:
     Ui::MainWindow *ui;

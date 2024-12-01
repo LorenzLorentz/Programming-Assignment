@@ -19,6 +19,8 @@ set(PROJECT_SOURCES
         mainwindow.ui
         game.cpp
         game.h
+        humanmachine.cpp
+        humanmachine.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -40,6 +42,8 @@ else()
     else()
         add_executable(HRM
             ${PROJECT_SOURCES}
+            #humanmachine.cpp
+            #humanmachine.h
             #gamestatewindow.h
             #gamestatewindow.cpp
             #game.h

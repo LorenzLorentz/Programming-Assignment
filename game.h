@@ -7,6 +7,7 @@
 #include <sstream>     // istringstream
 #include <algorithm>   // fill
 #include <functional>
+#include <queue>
 
 class Game {
 public:
@@ -19,10 +20,14 @@ public:
     std::vector<std::string> goal;
     bool passed;
 
+    std::queue<std::string> actionLog;
     std::function<void(const std::string&)> onLogbarUpdate;
     std::function<void(const std::string&)> onInboxbarUpdate;
     std::function<void(const std::string&)> onOutboxbarUpdate;
-    std::function<void(const std::string&)> onCarpetbarUpdate;
+    std::function<void(const std::string&)> onCarpet1Update;
+    std::function<void(const std::string&)> onCarpet2Update;
+    std::function<void(const std::string&)> onCarpet3Update;
+    std::function<void(const std::string&)> onCarpet4Update;
     std::function<void(const std::string&)> onHandUpdate;
 
     Game(std::vector<std::string> initialInboxSet,

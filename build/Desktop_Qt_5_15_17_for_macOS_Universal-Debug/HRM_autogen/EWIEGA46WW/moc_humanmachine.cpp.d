@@ -1,4 +1,4 @@
-/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/HRM_autogen/EWIEGA46WW/moc_mainwindow.cpp: /Users/lorenzlorentz/HRM/mainwindow.h \
+/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/HRM_autogen/EWIEGA46WW/moc_humanmachine.cpp: /Users/lorenzlorentz/HRM/humanmachine.h \
   /Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/HRM_autogen/moc_predefs.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/Availability.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityInternal.h \
@@ -91,8 +91,6 @@
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/stdio.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/syslimits.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/wait.h \
-  /Users/lorenzlorentz/HRM/game.h \
-  /Users/lorenzlorentz/HRM/humanmachine.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtCore.framework/Versions/5/Headers/QTimer \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtCore.framework/Versions/5/Headers/qalgorithms.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtCore.framework/Versions/5/Headers/qarraydata.h \
@@ -197,7 +195,6 @@
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtGui.framework/Versions/5/Headers/qvector2d.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtGui.framework/Versions/5/Headers/qwindowdefs.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/QApplication \
-  /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/QMainWindow \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/QPushButton \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/QTextBrowser \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/QVBoxLayout \
@@ -210,10 +207,8 @@
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/qgridlayout.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/qlayout.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/qlayoutitem.h \
-  /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/qmainwindow.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/qpushbutton.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/qsizepolicy.h \
-  /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/qtabwidget.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/qtextbrowser.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/qtextedit.h \
   /Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtWidgets.framework/Versions/5/Headers/qtwidgets-config.h \

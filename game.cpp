@@ -1,6 +1,7 @@
 #include "game.h"
 #include <qDebug>
 #include "mainwindow.h"
+#include "humanmachine.h"
 using namespace std;
 
 Game::Game(vector<string> initialInboxSet,
@@ -27,6 +28,7 @@ bool Game::isLegalOperation(string& command) {
 }
 
 void Game::updateState(){
+    qDebug()<<"执行update";
     if(onInboxbarUpdate){
         string inboxbarReturn;
         for(int tempindex=0;tempindex<inboxBar.size();++tempindex){
@@ -49,15 +51,28 @@ void Game::updateState(){
         onOutboxbarUpdate(outboxbarReturn);
     }
 
-    if(onCarpetbarUpdate){
-        string carpetbarReturn;
-        for(int tempindex=0;tempindex<carpetBar.size();++tempindex){
-            if(!carpetbarReturn.empty()){
-                carpetbarReturn+=" ";
-            }
-            carpetbarReturn+=carpetBar[tempindex];
+    if(carpetBar.size()>=1){
+        if(onCarpet1Update){
+            onCarpet1Update(carpetBar[0]);
         }
-        onCarpetbarUpdate(carpetbarReturn);
+    }
+
+    if(carpetBar.size()>=2){
+        if(onCarpet1Update){
+            onCarpet2Update(carpetBar[1]);
+        }
+    }
+
+    if(carpetBar.size()>=3){
+        if(onCarpet1Update){
+            onCarpet3Update(carpetBar[2]);
+        }
+    }
+
+    if(carpetBar.size()>=4){
+        if(onCarpet1Update){
+            onCarpet4Update(carpetBar[3]);
+        }
     }
 
     if(onHandUpdate){
@@ -66,7 +81,6 @@ void Game::updateState(){
 }
 
 bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& endRun,int& numSteps) {
-    //判断操作是否合法
     if(!isLegalOperation(command)) {
         if(onLogbarUpdate) {
             onLogbarUpdate("操作不合法");
@@ -78,12 +92,12 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
 
     if(command=="inbox") {
         if(!jumpInputJudge) {
-            if(inboxBar.empty()) { //如果不是跳到这一步判断inbox是不是空的
+            if(inboxBar.empty()) {
                 return false;
             }
         } else {
             jumpInputJudge=false;
-            if(inboxBar.empty()) { //如果是空的，游戏结束，进行判断
+            if(inboxBar.empty()) {
                 endRun=true;
                 return true;
             }
@@ -93,6 +107,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
 
         updateState();
         if(onLogbarUpdate) {
+            actionLog.push("inbox");
             onLogbarUpdate(inboxBar.empty() ? "inbox为空" : "将"+hand+"从inbox取出");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -106,6 +121,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
 
         updateState();
         if(onLogbarUpdate) {
+            actionLog.push("outbox");
             onLogbarUpdate("将"+outboxBar[0]+"放入outbox");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -121,6 +137,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
 
         updateState();
         if(onLogbarUpdate) {
+            actionLog.push("copyto");
             onLogbarUpdate("将"+carpetBar[param-1]+"放入carpet["+std::to_string(param-1)+"]");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -136,6 +153,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
 
         updateState();
         if(onLogbarUpdate) {
+            actionLog.push("copyfrom");
             onLogbarUpdate("将"+carpetBar[param-1]+"从carpet["+std::to_string(param)+"]复制到手中");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -154,6 +172,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
 
         updateState();
         if(onLogbarUpdate) {
+            actionLog.push("add");
             onLogbarUpdate("将"+carpetBar[param-1]+"从carpet["+std::to_string(param)+"]加入到手中");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -172,6 +191,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
 
         updateState();
         if(onLogbarUpdate) {
+            actionLog.push("sub");
             onLogbarUpdate("将"+carpetBar[param-1]+"从carpet["+std::to_string(param)+"]在手中减去");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -194,7 +214,8 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
 
         updateState();
         if(onLogbarUpdate) {
-            onLogbarUpdate("跳转到"+std::to_string(param)+"步");
+            actionLog.push("zero");
+            onLogbarUpdate("手中为零，跳转到"+std::to_string(param)+"步");
         } else {
             qDebug()<<"回调函数未赋值";
         }
@@ -205,6 +226,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
 bool Game::playgame(istream& inputStream) {
     outboxBar.clear();
     fill(carpetBar.begin(), carpetBar.end(), "");
+    qDebug()<<"carpetsize"<<carpetBar.size();
     inboxBar=initialInbox;
 
     vector<string> command;
