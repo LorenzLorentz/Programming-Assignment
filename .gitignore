@@ -1,0 +1,27 @@
+# 忽略CMake构建目录
+cmake-build-debug/
+cmake-build-release/
+
+# 忽略构建生成的二进制文件
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.exe
+
+# 忽略生成的Makefile和CMake缓存
+Makefile
+CMakeCache.txt
+CMakeFiles/
+
+# 忽略临时文件
+*.log
+*.tmp
+*.swp
+*.DS_Store
+
+# 忽略Qt Creator特定的文件
+*.pro.user
+*.qrc.depends
+*.autosave
