@@ -83,9 +83,9 @@ void MainWindow::buttonExitClicked() {
     for(int i=0;i<games.size();++i) {
         archiveFile<<"Level"<<i<<":";
         if(games[i].passed) {
-            archiveFile<<"Passed"<<std::endl;
+//            archiveFile<<"Passed"<<endl;
         } else {
-            archiveFile<<"NotPassed"<<std::endl;
+//            archiveFile<<"NotPassed"<<endl;
         }
     }
     archiveFile.close();
@@ -127,7 +127,6 @@ void MainWindow::showGame(){
     } else {
         qDebug()<<"初始化正常";
     }
-
     QWidget *playGamePage=ui->playgame;
     QVBoxLayout *layout=new QVBoxLayout(playGamePage);
     layout->addWidget(machine);
@@ -328,7 +327,6 @@ void MainWindow::updateProcessingState() {
             games[level].actionLog.pop();
         }
         if(ifWin) {
-            ifWin=false;
             qDebug()<<"Success!";
             ui->stackedWidget->setCurrentWidget(ui->success);
         } else {
