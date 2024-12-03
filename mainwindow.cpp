@@ -83,9 +83,9 @@ void MainWindow::buttonExitClicked() {
     for(int i=0;i<games.size();++i) {
         archiveFile<<"Level"<<i<<":";
         if(games[i].passed) {
-            archiveFile<<"Passed"<<endl;
+//            archiveFile<<"Passed"<<endl;
         } else {
-            archiveFile<<"NotPassed"<<endl;
+//            archiveFile<<"NotPassed"<<endl;
         }
     }
     archiveFile.close();
@@ -128,12 +128,12 @@ void MainWindow::showGame(){
         qDebug()<<"初始化正常";
     }
     QWidget *playGamePage=ui->playgame;
-    //QVBoxLayout *layout=new QVBoxLayout(playGamePage);
-    //layout->addWidget(machine);
+    QVBoxLayout *layout=new QVBoxLayout(playGamePage);
+    layout->addWidget(machine);
 
     //playGamePage->layout()->removeWidget(ui->showPlaygameInboxbar);
     //playGamePage->layout()->removeWidget(machine);
-    playGamePage->layout()->addWidget(machine);
+    //playGamePage->layout()->addWidget(machine);
 
     std::string showInitialInbox;
     for(int i=0;i<games[level].initialInbox.size();++i){
@@ -197,35 +197,47 @@ void MainWindow::buttonStartJudgeClicked() {
 void MainWindow::updateProcessingState() {
     if(!games[level].actionLog.empty()){
         if(games[level].actionLog.front()=="inbox"){
-            machine->yPos=machine->iniyPos;
-            machine->xPos=machine->inixPos;
+            while(machine->xPos != machine->inixPos && machine->yPos != machine->iniyPos){
+                machine->xPos += (machine->xPos < machine->inixPos) ? 1 : -1;
+                machine->yPos += (machine->yPos < machine->iniyPos) ? 1 : -1;
+                machine->repaint();
+            }
             machine->updateHand();
-            machine->repaint();
         } else if(games[level].actionLog.front()=="outbox"){
-            machine->yPos=350;
-            machine->xPos=machine->inixPos;
+            while(machine->xPos != machine->inixPos && machine->yPos != 450){
+                machine->yPos += (machine->yPos < 450) ? 1 : -1;
+                machine->xPos += (machine->xPos < machine->inixPos) ? 1 : -1;
+                machine->repaint();
+            }
             machine->updateHand();
-            machine->repaint();
         } else if(games[level].actionLog.front()=="copyto"){
-            machine->yPos=150;
-            machine->xPos=260;
+            while(machine->xPos != 260 && machine->yPos != 150){
+                machine->yPos += (machine->yPos < 150) ? 1 : -1;
+                machine->xPos += (machine->xPos < 260) ? 1 : -1;
+                machine->repaint();
+            }
             machine->updateHand();
-            machine->repaint();
         } else if(games[level].actionLog.front()=="copyfrom"){
-            machine->yPos=150;
-            machine->xPos=260;
+            while(machine->xPos != 260 && machine->yPos != 150){
+                machine->yPos += (machine->yPos < 150) ? 1 : -1;
+                machine->xPos += (machine->xPos < 260) ? 1 : -1;
+                machine->repaint();
+            }
             machine->updateHand();
-            machine->repaint();
         } else if(games[level].actionLog.front()=="add"){
-            machine->yPos=150;
-            machine->xPos=260;
+            while(machine->xPos != 260 && machine->yPos != 150){
+                machine->yPos += (machine->yPos < 150) ? 1 : -1;
+                machine->xPos += (machine->xPos < 260) ? 1 : -1;
+                machine->repaint();
+            }
             machine->updateHand();
-            machine->repaint();
         } else if(games[level].actionLog.front()=="sub"){
-            machine->yPos=150;
-            machine->xPos=260;
+            while(machine->xPos != 260 && machine->yPos != 150){
+                machine->yPos += (machine->yPos < 150) ? 1 : -1;
+                machine->xPos += (machine->xPos < 260) ? 1 : -1;
+                machine->repaint();
+            }
             machine->updateHand();
-            machine->repaint();
         } else if(games[level].actionLog.front()=="zero"){
             machine->moveDown();
             machine->repaint();
