@@ -1,3 +1,3 @@
-LevelInfo: First level | Description: it's very easy | Original State: 1 2 | Goal: 1 2 | Hints: use inbox and outbox | InboxBar: 1 2 | AvailableOps: inbox outbox start | AvailableCarpet: 0 | GoalJudge: 1 2
-LevelInfo: Second level | Description: it's very easy | Original State: 3 9 5 1 -2 -2 9 -9 | Goal: -6 6 4 -4 0 0 18 -18 | Hints: use sub | InboxBar:  3 9 5 1 -2 -2 9 -9 | AvailableOps: inbox outbox copyfrom copyto add sub jump jumpifzero start | AvailableCarpet: 4 | GoalJudge: -6 6 4 -4 0 0 18 -18
-LevelInfo: Third level | Description: it's very easy | Original State: 6 2 7 7 -9 3 -3 -3 | Goal: 7 -3 | Hints: use inbox | InboxBar: 6 2 7 7 -9 3 -3 -3 | AvailableOps: inbox outbox copyfrom copyto add sub jump jumpifzero start | AvailableCarpet: 3 | GoalJudge: 7 -3
+LevelInfo: First level | InboxBar: 1 2 | AvailableOps: inbox outbox start | AvailableCarpet: 0 | GoalJudge: 1 2 | NumOfCarpet 0
+LevelInfo: Second level | InboxBar:  3 9 5 1 -2 -2 9 -9 | AvailableOps: inbox outbox copyfrom copyto add sub jump jumpifzero start | AvailableCarpet: 4 | GoalJudge: -6 6 4 -4 0 0 18 -18 | NumOfCarpet 4
+LevelInfo: Third level | InboxBar: 6 2 7 7 -9 3 -3 -3 | AvailableOps: inbox outbox copyfrom copyto add sub jump jumpifzero start | AvailableCarpet: 3 | GoalJudge: 7 -3 | NumOfCarpet 3
