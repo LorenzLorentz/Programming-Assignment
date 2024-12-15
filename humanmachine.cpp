@@ -11,21 +11,16 @@ Humanmachine::Humanmachine(QWidget *parent)
     qDebug()<<"生成函数被调用";
 }
 
-void Humanmachine::moveUp(){
-    yPos-=10;
+void Humanmachine::updateHand(){
+    handTextBrowser->move(xPos+30,yPos+30);
 }
-void Humanmachine::moveDown(){
-    yPos+=10;
+void Humanmachine::upHand(){
+    handTextBrowser->move(xPos+40,yPos);
 }
-void Humanmachine::moveLeft(){
-    xPos-=10;
-}
-void Humanmachine::moveRight(){
-    xPos+=10;
-}
-void Humanmachine::rotateHand(int angle){
-    handAngle+=angle;
+void Humanmachine::rotateHand(int angle=30){
+    handAngle=angle;
     update();
+    upHand();
 }
 
 void Humanmachine::resetDirec(){
@@ -34,9 +29,7 @@ void Humanmachine::resetDirec(){
     handAngle=0;
 }
 
-void Humanmachine::updateHand(){
-    handTextBrowser->move(xPos+30,yPos+30);
-}
+
 void Humanmachine::moveMachine(int aimx,int aimy) {
     if (xPos != aimx || yPos != aimy) {
         if (xPos != aimx) {
@@ -48,7 +41,8 @@ void Humanmachine::moveMachine(int aimx,int aimy) {
         if (xPos == aimx && yPos == aimy) {
             // 到达目标位置后执行的操作
         } else {
-            update();  // 继续更新界面
+            update();
+            upHand();            // 继续更新界面
         } // 使用 update() 而不是 repaint()
     }
 }
@@ -69,14 +63,14 @@ void Humanmachine::paintEvent(QPaintEvent *event) {
     painter.setBrush(Qt::red);
     painter.save();
     painter.translate(xPos+24,yPos+20);
-    painter.rotate(-30);
+    painter.rotate(-handAngle);
     painter.drawRect(-7,0,7,30);
     painter.restore();
 
     painter.setBrush(Qt::red);
     painter.save();
     painter.translate(xPos+2,yPos+20);
-    painter.rotate(30);
+    painter.rotate(handAngle);
     painter.drawRect(-7,0,7,30);
     painter.restore();
 }

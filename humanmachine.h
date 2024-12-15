@@ -30,6 +30,7 @@ public:
     void rotateHand(int angle);
     void resetDirec();
     void updateHand();
+    void upHand();
     void moveMachine(int aimx,int aimy);
 
 protected:

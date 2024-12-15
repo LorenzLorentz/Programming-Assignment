@@ -144,7 +144,7 @@ void MainWindow::showGame(){
 }
 
 void MainWindow::startMachineMovement() {
-    moveTimer->start(16);  // 约60帧每秒
+    moveTimer->start(3);  // 约60帧每秒
 }
 
 void MainWindow::stopMachineMovement() {
@@ -219,7 +219,6 @@ void MainWindow::updateProcessingState() {
             if(machine->xPos == machine->inixPos && machine->yPos == machine->iniyPos){
                 stopMachineMovement();
             }
-            machine->updateHand();
         } else if(games[level].actionLog.front()=="outbox"){
             targetx=machine->inixPos;
             targety=350;
@@ -227,7 +226,6 @@ void MainWindow::updateProcessingState() {
             if(machine->xPos == machine->inixPos && machine->yPos == 350){
                 stopMachineMovement();
             }
-            machine->updateHand();
         } else if(games[level].actionLog.front()=="copyto"){
             targetx=260;
             targety=150;
@@ -235,7 +233,6 @@ void MainWindow::updateProcessingState() {
             if(machine->xPos == 260 && machine->yPos == 150){
                 stopMachineMovement();
             }
-            machine->updateHand();
         } else if(games[level].actionLog.front()=="copyfrom"){
             targetx=260;
             targety=150;
@@ -243,7 +240,6 @@ void MainWindow::updateProcessingState() {
             if(machine->xPos == 260 && machine->yPos == 150){
                 stopMachineMovement();
             }
-            machine->updateHand();
         } else if(games[level].actionLog.front()=="add"){
             targetx=260;
             targety=150;
@@ -251,7 +247,6 @@ void MainWindow::updateProcessingState() {
             if(machine->xPos == 260 && machine->yPos == 150){
                 stopMachineMovement();
             }
-            machine->updateHand();
         } else if(games[level].actionLog.front()=="sub"){
             targetx=260;
             targety=150;
@@ -259,11 +254,9 @@ void MainWindow::updateProcessingState() {
             if(machine->xPos == 260 && machine->yPos == 150){
                 stopMachineMovement();
             }
-            machine->updateHand();
         }
         games[level].actionLog.pop();
     }
-    else machine->updateHand();
 
     if(!logStateQueue.empty()) {
         qDebug()<<"logbar:"<<QString::fromStdString(logStateQueue.front());
@@ -320,8 +313,13 @@ void MainWindow::updateProcessingState() {
         std::string handState=handStateQueue.front();
         handStateQueue.pop();
         machine->handTextBrowser->setHtml("<font size=\"36>\"<b>"+QString::fromStdString(handState)+"</b></font>");
+        machine->rotateHand(120);
+        machine->upHand();
     }
-
+    if(handStateQueue.empty()) {
+        machine->rotateHand(30);
+        machine->updateHand();
+    }
     if(logStateQueue.empty()&&inboxbarStateQueue.empty()&&outboxbarStateQueue.empty()&&carpet1StateQueue.empty()&&carpet2StateQueue.empty()&&carpet3StateQueue.empty()&&carpet4StateQueue.empty()){
         qDebug()<<"All queues are empty";
         stateUpdateTimer->stop();
