@@ -25,15 +25,11 @@ public:
     int aimAngle;
     int aimX;
     int aimY;
-    int status; //0表示普通姿势，1表示手在头顶
+    int status;
     QTextBrowser* handTextBrowser;
     QTimer* moveMachineTimer;
     QTimer* rotateHandTimer;
 
-    void moveUp();
-    void moveDown();
-    void moveLeft();
-    void moveRight();
     void rotateHand(int angle);
     void resetDirec();
     void updateHand();

@@ -12,6 +12,7 @@
 #include <QLayout>
 #include <QVBoxLayout>
 #include "humanmachine.h"
+#include <set>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -198,18 +199,16 @@ void MainWindow::buttonStartJudgeClicked() {
 
 void MainWindow::updateProcessingState() {
     if(!games[level].actionLog.empty()){
+        const std::set<std::string> carpetAction={"copyto","copyfrom","copyifpos","copyifneg","add","sub"};
+        const std::set<std::string> jumphandAction={"zero","pos","neg","hand+","hand-"};
         if(games[level].actionLog.front()=="inbox"){
             machine->moveMachine(machine->inixPos,machine->iniyPos,games[level].actionLog.front());
         } else if(games[level].actionLog.front()=="outbox"){
             machine->moveMachine(machine->inixPos,350,games[level].actionLog.front());
-        } else if(games[level].actionLog.front()=="copyto"){
+        } else if(carpetAction.find(games[level].actionLog.front())!=carpetAction.end()){
             machine->moveMachine(260,150,games[level].actionLog.front());
-        } else if(games[level].actionLog.front()=="copyfrom"){
-            machine->moveMachine(260,150,games[level].actionLog.front());
-        } else if(games[level].actionLog.front()=="add"){
-            machine->moveMachine(260,150,games[level].actionLog.front());
-        } else if(games[level].actionLog.front()=="sub"){
-            machine->moveMachine(260,150,games[level].actionLog.front());
+        } else if(jumphandAction.find(games[level].actionLog.front())!=jumphandAction.end()){
+            machine->moveMachine(machine->xPos,machine->yPos,games[level].actionLog.front());
         }
         games[level].actionLog.pop();
     }
