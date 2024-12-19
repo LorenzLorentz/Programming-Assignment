@@ -1,1 +1,3 @@
-Level0:NotPassed1Level1:NotPassed1Level2:Passed1
+Level0:Passed
+Level1:NotPassed
+Level2:NotPassed

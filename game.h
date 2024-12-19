@@ -18,6 +18,7 @@ public:
     std::vector<std::string> availableOps;
     std::string hand;
     std::vector<std::string> goal;
+    std::string descrip;
     bool passed;
 
     std::queue<std::string> actionLog;
@@ -33,7 +34,8 @@ public:
     Game(std::vector<std::string> initialInboxSet,
          std::vector<std::string> availableOpsSet,
          std::vector<std::string> goalSet,
-         int numOfCarpetSet);
+         int numOfCarpetSet,
+         std::string descripSet);
 
     bool goalReached();
     bool isLegalOperation(std::string& command);

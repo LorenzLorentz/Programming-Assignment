@@ -16,7 +16,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , stateUpdateTimer(new QTimer(this)) {
+    , stateUpdateTimer(new QTimer(this)){
     ui->setupUi(this);
 
     //welcome界面
@@ -45,7 +45,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     //初始化处理状态定时器
     stateUpdateTimer=new QTimer(this);
+    //moveTimer=new QTimer(this);
     connect(stateUpdateTimer,&QTimer::timeout,this,&MainWindow::updateProcessingState);
+    //connect(moveTimer,&QTimer::timeout,this,&MainWindow::moveMachine);
 
     //loadgame界面
     connect(ui->buttonLoadgameLoadlevelinfo,&QPushButton::clicked,this,&MainWindow::loadLevelinfo);
@@ -83,9 +85,9 @@ void MainWindow::buttonExitClicked() {
     for(int i=0;i<games.size();++i) {
         archiveFile<<"Level"<<i<<":";
         if(games[i].passed) {
-            archiveFile<<"Passed"<<std::endl;
+//            archiveFile<<"Passed"<<endl;
         } else {
-            archiveFile<<"NotPassed"<<std::endl;
+//            archiveFile<<"NotPassed"<<endl;
         }
     }
     archiveFile.close();
@@ -127,20 +129,17 @@ void MainWindow::showGame(){
     } else {
         qDebug()<<"初始化正常";
     }
-
     QWidget *playGamePage=ui->playgame;
     QVBoxLayout *layout=new QVBoxLayout(playGamePage);
     layout->addWidget(machine);
-
-    //playGamePage->layout()->removeWidget(ui->showPlaygameInboxbar);
-    //playGamePage->layout()->removeWidget(machine);
-    //playGamePage->layout()->addWidget(machine);
+    machine->resetDirec();
 
     std::string showInitialInbox;
     for(int i=0;i<games[level].initialInbox.size();++i){
         showInitialInbox+=games[level].initialInbox[i]+" ";
     }
     ui->showPlaygameInboxbar->append(QString::fromStdString(showInitialInbox));
+    ui->showPlaygameLogbar->append(QString::fromStdString(games[level].descrip));
 }
 
 void MainWindow::buttonStartJudgeClicked() {
@@ -152,6 +151,8 @@ void MainWindow::buttonStartJudgeClicked() {
         ui->inputPlaygameCommand->clear();
         return;
     }
+
+    ui->showPlaygameLogbar->clear();
 
     games[level].onLogbarUpdate=[this](const std::string& state) {
         logStateQueue.push(state);
@@ -198,59 +199,17 @@ void MainWindow::buttonStartJudgeClicked() {
 void MainWindow::updateProcessingState() {
     if(!games[level].actionLog.empty()){
         if(games[level].actionLog.front()=="inbox"){
-            while(machine->xPos != machine->inixPos && machine->yPos != machine->iniyPos){
-                machine->xPos += (machine->xPos < machine->inixPos) ? 1 : -1;
-                machine->yPos += (machine->yPos < machine->iniyPos) ? 1 : -1;
-                machine->repaint();
-                machine->updateHand();
-            }
+            machine->moveMachine(machine->inixPos,machine->iniyPos,games[level].actionLog.front());
         } else if(games[level].actionLog.front()=="outbox"){
-            while(machine->xPos != machine->inixPos && machine->yPos != 450){
-                machine->yPos += (machine->yPos < 450) ? 1 : -1;
-                machine->xPos += (machine->xPos < machine->inixPos) ? 1 : -1;
-                machine->repaint();
-                machine->updateHand();
-            }
+            machine->moveMachine(machine->inixPos,350,games[level].actionLog.front());
         } else if(games[level].actionLog.front()=="copyto"){
-            while(machine->xPos != 260 && machine->yPos != 150){
-                machine->yPos += (machine->yPos < 150) ? 1 : -1;
-                machine->xPos += (machine->xPos < 260) ? 1 : -1;
-                machine->repaint();
-                machine->updateHand();
-            }
+            machine->moveMachine(260,150,games[level].actionLog.front());
         } else if(games[level].actionLog.front()=="copyfrom"){
-            while(machine->xPos != 260 && machine->yPos != 150){
-                machine->yPos += (machine->yPos < 150) ? 1 : -1;
-                machine->xPos += (machine->xPos < 260) ? 1 : -1;
-                machine->repaint();
-                machine->updateHand();
-            }
+            machine->moveMachine(260,150,games[level].actionLog.front());
         } else if(games[level].actionLog.front()=="add"){
-            while(machine->xPos != 260 && machine->yPos != 150){
-                machine->yPos += (machine->yPos < 150) ? 1 : -1;
-                machine->xPos += (machine->xPos < 260) ? 1 : -1;
-                machine->repaint();
-                machine->updateHand();
-            }
+            machine->moveMachine(260,150,games[level].actionLog.front());
         } else if(games[level].actionLog.front()=="sub"){
-            while(machine->xPos != 260 && machine->yPos != 150){
-                machine->yPos += (machine->yPos < 150) ? 1 : -1;
-                machine->xPos += (machine->xPos < 260) ? 1 : -1;
-                machine->repaint();
-                machine->updateHand();
-            }
-        } else if(games[level].actionLog.front()=="zero"){
-            int tempy=machine->yPos;
-            while(machine->yPos!=tempy){
-                machine->yPos+=1;
-                machine->repaint();
-                machine->updateHand();
-            }
-            while(machine->yPos!=tempy){
-                machine->yPos-=1;
-                machine->repaint();
-                machine->updateHand();
-            }
+            machine->moveMachine(260,150,games[level].actionLog.front());
         }
         games[level].actionLog.pop();
     }
@@ -310,8 +269,11 @@ void MainWindow::updateProcessingState() {
         std::string handState=handStateQueue.front();
         handStateQueue.pop();
         machine->handTextBrowser->setHtml("<font size=\"36>\"<b>"+QString::fromStdString(handState)+"</b></font>");
+        //machine->rotateHand(120);
     }
-
+    if(handStateQueue.empty()) {
+        //machine->rotateHand(30);
+    }
     if(logStateQueue.empty()&&inboxbarStateQueue.empty()&&outboxbarStateQueue.empty()&&carpet1StateQueue.empty()&&carpet2StateQueue.empty()&&carpet3StateQueue.empty()&&carpet4StateQueue.empty()){
         qDebug()<<"All queues are empty";
         stateUpdateTimer->stop();
@@ -328,7 +290,6 @@ void MainWindow::updateProcessingState() {
             games[level].actionLog.pop();
         }
         if(ifWin) {
-            ifWin=false;
             qDebug()<<"Success!";
             ui->stackedWidget->setCurrentWidget(ui->success);
         } else {
@@ -368,8 +329,9 @@ void MainWindow::loadLevelinfo(){
     std::vector<std::vector<std::string>> goalJudgeRead;
     std::vector<int> numOfCarpet;
     std::string line;
+    std::vector<std::string> descripRead;
     while(getline(levelInfoRead,line)){
-        parselLevelInfo(line,levelinfoRead,inboxBarSetRead,availableOpRead,goalJudgeRead,numOfCarpet);
+        parselLevelInfo(line,levelinfoRead,inboxBarSetRead,availableOpRead,goalJudgeRead,numOfCarpet,descripRead);
     }
     levelInfoRead.close();
 
@@ -381,7 +343,7 @@ void MainWindow::loadLevelinfo(){
 
     games.clear();
     for(int i=0;i<levelinfoRead.size();++i) {
-        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i]);
+        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],descripRead[i]);
     }
 }
 
@@ -424,8 +386,9 @@ void MainWindow::loadAuto(){
     std::vector<std::vector<std::string>> goalJudgeRead;
     std::vector<int> numOfCarpet;
     std::string line;
+    std::vector<std::string> descripRead;
     while(getline(levelInfoRead,line)){
-        parselLevelInfo(line,levelinfoRead,inboxBarSetRead,availableOpRead,goalJudgeRead,numOfCarpet);
+        parselLevelInfo(line,levelinfoRead,inboxBarSetRead,availableOpRead,goalJudgeRead,numOfCarpet,descripRead);
     }
     levelInfoRead.close();
 
@@ -436,7 +399,7 @@ void MainWindow::loadAuto(){
     }
     games.clear();
     for(int i=0;i<levelinfoRead.size();++i) {
-        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i]);
+        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],descripRead[i]);
     }
 
     std::ifstream archiveRead("archive.txt");
@@ -487,7 +450,8 @@ void MainWindow::parselLevelInfo(const std::string& line,
                      std::vector<std::vector<std::string>>& inboxBarSetRead,
                      std::vector<std::vector<std::string>>& availableOpRead,
                      std::vector<std::vector<std::string>>& goalJudgeRead,
-                     std::vector<int>& numOfCarpet) {
+                     std::vector<int>& numOfCarpet,
+                     std::vector<std::string>& descripRead) {
     std::stringstream ss(line);
     qDebug()<<QString::fromStdString(line);
     std::string segment;
@@ -534,6 +498,8 @@ void MainWindow::parselLevelInfo(const std::string& line,
                 goalJudgeRead.push_back(parts);
             } else if(key=="NumOfCarpet"){
                 numOfCarpet.push_back(std::stoi(value));
+            } else if(key=="Description"){
+                descripRead.push_back(value);
             }
         }
     }
@@ -545,6 +511,7 @@ void MainWindow::loadandback(){
         for(int j=0;j<games[i].initialInbox.size();++j){
             qDebug()<<i<<QString::fromStdString(games[i].initialInbox[j]);
         }
+        qDebug()<<QString::fromStdString(games[i].descrip);
         qDebug()<<" "<<(games[i].passed ? "PASSED" : "NOT PASSED");
     }
     ui->stackedWidget->setCurrentWidget(ui->welcomePage);
