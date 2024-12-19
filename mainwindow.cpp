@@ -198,6 +198,11 @@ void MainWindow::buttonStartJudgeClicked() {
 }
 
 void MainWindow::updateProcessingState() {
+    /*
+     * TODO
+     * 进行动作与显示内容先后顺序匹配
+     */
+
     if(!games[level].actionLog.empty()){
         const std::set<std::string> carpetAction={"copyto","copyfrom","copyifpos","copyifneg","add","sub"};
         const std::set<std::string> jumphandAction={"zero","pos","neg","hand+","hand-"};
