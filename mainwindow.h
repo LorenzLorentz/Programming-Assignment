@@ -11,7 +11,7 @@ extern std::vector<Game> games;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 QT_END_NAMESPACE
 
@@ -24,6 +24,7 @@ public:
 
     Humanmachine *machine;
     bool ifWin;
+    bool startProcessing;
     int level;
     std::queue<std::string> logStateQueue;
     std::queue<std::string> inboxbarStateQueue;
@@ -40,7 +41,8 @@ public:
                          std::vector<std::vector<std::string>>& inboxBarSetRead,
                          std::vector<std::vector<std::string>>& availableOpRead,
                          std::vector<std::vector<std::string>>& goalJudgeRead,
-                         std::vector<int>& numOfCarpet);
+                         std::vector<int>& numOfCarpet,
+                         std::vector<std::string>& descripRead);
     void setTargetPosition(int x, int y);
 
 signals:
@@ -57,20 +59,19 @@ private slots:
     void updateProcessingState();
     void loadLevelinfo();
     void loadArchive();
-//    void loadEndBack();
     void loadAuto();
     void loadandback();
     void showGame();
     void skiptoend();
-    void startMachineMovement();
-    void stopMachineMovement();
-    void moveMachine();
+    //void startMachineMovement();
+    //void stopMachineMovement();
+    //void moveMachine();
 
 private:
     Ui::MainWindow *ui;
     QTimer* stateUpdateTimer;
-    QTimer* moveTimer;
-    int targetx;
-    int targety;
+    //QTimer* moveTimer;
+    //int targetx;
+    //int targety;
 };
 #endif // MAINWINDOW_H

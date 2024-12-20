@@ -17,21 +17,32 @@ public:
 
 
     int inixPos=145;
-    int iniyPos=5;
+    int iniyPos=10;
+    int iniangle=30;
     int xPos;
     int yPos;
     int handAngle;
+    int aimAngle;
+    int aimX;
+    int aimY;
+    int status;
+    bool isRotationCompleted=true;
     QTextBrowser* handTextBrowser;
+    QTimer* moveMachineTimer;
+    QTimer* rotateHandTimer;
 
-    void moveUp();
-    void moveDown();
-    void moveLeft();
-    void moveRight();
     void rotateHand(int angle);
     void resetDirec();
     void updateHand();
-    void upHand();
-    void moveMachine(int aimx,int aimy);
+    //void upHand();
+    void moveMachine(int aimXSet,int aimYset,std::string action);
+
+signals:
+    void rotationCompleted();
+
+private slots:
+    void rotateStep();
+    void moveMachineStep();
 
 protected:
     void paintEvent(QPaintEvent *event);

@@ -7,11 +7,13 @@ using namespace std;
 Game::Game(vector<string> initialInboxSet,
            vector<string> availableOpsSet,
            vector<string> goalSet,
-           int numOfCarpetSet)
+           int numOfCarpetSet,
+           std::string descripSet)
     : initialInbox(initialInboxSet),
     availableOps(availableOpsSet),
     goal(goalSet),
-    carpetBar(numOfCarpetSet) {}
+    carpetBar(numOfCarpetSet),
+    descrip(descripSet){}
 
 bool Game::goalReached() {
     return outboxBar==goal;
@@ -33,7 +35,7 @@ void Game::updateState(){
         string inboxbarReturn;
         for(int tempindex=0;tempindex<inboxBar.size();++tempindex){
             if(!inboxbarReturn.empty()){
-                inboxbarReturn+=" ";
+                inboxbarReturn+=" | ";
             }
             inboxbarReturn+=inboxBar[tempindex];
         }
@@ -44,7 +46,7 @@ void Game::updateState(){
         string outboxbarReturn;
         for(int tempindex=0;tempindex<outboxBar.size();++tempindex){
             if(!outboxbarReturn.empty()){
-                outboxbarReturn+=" ";
+                outboxbarReturn+=" | ";
             }
             outboxbarReturn+=outboxBar[tempindex];
         }
@@ -108,6 +110,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
         updateState();
         if(onLogbarUpdate) {
             actionLog.push("inbox");
+            qDebug()<<"actionLog pushed";
             onLogbarUpdate(inboxBar.empty() ? "inbox为空" : "将"+hand+"从inbox取出");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -122,6 +125,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
         updateState();
         if(onLogbarUpdate) {
             actionLog.push("outbox");
+            qDebug()<<"actionLog pushed";
             onLogbarUpdate("将"+outboxBar[0]+"放入outbox");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -138,6 +142,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
         updateState();
         if(onLogbarUpdate) {
             actionLog.push("copyto");
+            qDebug()<<"actionLog pushed";
             onLogbarUpdate("将"+carpetBar[param-1]+"放入carpet["+std::to_string(param-1)+"]");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -154,6 +159,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
         updateState();
         if(onLogbarUpdate) {
             actionLog.push("copyfrom");
+            qDebug()<<"actionLog pushed";
             onLogbarUpdate("将"+carpetBar[param-1]+"从carpet["+std::to_string(param)+"]复制到手中");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -173,6 +179,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
         updateState();
         if(onLogbarUpdate) {
             actionLog.push("add");
+            qDebug()<<"actionLog pushed";
             onLogbarUpdate("将"+carpetBar[param-1]+"从carpet["+std::to_string(param)+"]加入到手中");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -192,6 +199,7 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
         updateState();
         if(onLogbarUpdate) {
             actionLog.push("sub");
+            qDebug()<<"actionLog pushed";
             onLogbarUpdate("将"+carpetBar[param-1]+"从carpet["+std::to_string(param)+"]在手中减去");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -215,7 +223,100 @@ bool Game::inputProcess(string &command,int& param,bool& jumpInputJudge,bool& en
         updateState();
         if(onLogbarUpdate) {
             actionLog.push("zero");
+            qDebug()<<"actionLog pushed";
             onLogbarUpdate("手中为零，跳转到"+std::to_string(param)+"步");
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="jumpifpos"){
+        if(!(0<=param && param<numSteps)) {
+            return false;
+        }
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("pos");
+            qDebug()<<"actionLog pushed";
+            onLogbarUpdate("手中为正，跳转到"+std::to_string(param)+"步");
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="jumpifneg"){
+        if(!(0<=param && param<numSteps)) {
+            return false;
+        }
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("neg");
+            qDebug()<<"actionLog pushed";
+            onLogbarUpdate("手中为负，跳转到"+std::to_string(param)+"步");
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="hand+"){
+        if(hand.empty()){
+            return false;
+        }
+        hand=to_string(std::stoi(hand)+param);
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("hand+");
+            qDebug()<<"actionLog pushed";
+            onLogbarUpdate("手中加上"+std::to_string(param));
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="hand-"){
+        if(hand.empty()){
+            return false;
+        }
+        hand=to_string(std::stoi(hand)-param);
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("hand-");
+            qDebug()<<"actionLog pushed";
+            onLogbarUpdate("手中减去"+std::to_string(param));
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="copyifpos"){
+        if(param<=0||param>carpetBar.size()) {
+            return false;
+        }
+        if(carpetBar[param-1].empty()) {
+            return false;
+        }
+        if(stoi(carpetBar[param-1])>0){
+            hand=carpetBar[param-1];
+        }
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("copypos");
+            qDebug()<<"actionLog pushed";
+            onLogbarUpdate("carpet为正，将"+carpetBar[param-1]+"从carpet["+std::to_string(param)+"]复制到手中");
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="copyifneg"){
+        if(param<=0||param>carpetBar.size()) {
+            return false;
+        }
+        if(carpetBar[param-1].empty()) {
+            return false;
+        }
+        if(stoi(carpetBar[param-1])<0){
+            hand=carpetBar[param-1];
+        }
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("copyneg");
+            qDebug()<<"actionLog pushed";
+            onLogbarUpdate("carpet为负，将"+carpetBar[param-1]+"从carpet["+std::to_string(param)+"]复制到手中");
         } else {
             qDebug()<<"回调函数未赋值";
         }
@@ -260,7 +361,7 @@ bool Game::playgame(istream& inputStream) {
 
     while(doStep<numSteps&&!endRun) {
         //jump指令的处理
-        if(command[doStep]=="jump"||command[doStep]=="jumpifzero") {
+        if(command[doStep]=="jump"||command[doStep]=="jumpifzero"||command[doStep]=="jumpifpos"||command[doStep]=="jumpifneg") {
             if(!inputProcess(command[doStep],param[doStep],jumpInputJudge,endRun,numSteps)) {
                 qDebug()<<"Error on instruction "<<doStep+1;
                 if(onLogbarUpdate) {
@@ -271,7 +372,7 @@ bool Game::playgame(istream& inputStream) {
                 return false;
             }
 
-            if(command[doStep]=="jump"||(command[doStep]=="jumpifzero"&&hand=="0")) {
+            if(command[doStep]=="jump"||(command[doStep]=="jumpifzero"&&hand=="0") || (command[doStep]=="jumpifpos"&&std::stoi(hand)>0) || (command[doStep]=="jumpifneg"&&std::stoi(hand)<0)) {
                 jumpInputJudge=true;
                 doStep=param[doStep]-1; //跳跃至传输的参数指定的位置
             } else if(command[doStep]=="jumpifzero") {
