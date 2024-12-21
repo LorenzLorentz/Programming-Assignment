@@ -34,6 +34,7 @@ public:
     std::queue<std::string> carpet4StateQueue;
     std::queue<std::string> handStateQueue;
 
+    void clearLayout(QLayout* layout);
     void parselArchiveInfo(const std::string& line,int tempIndex);
     void parselLevelInfo(const std::string& line,
                          std::vector<std::string>& levelInfoRead,
@@ -41,6 +42,7 @@ public:
                          std::vector<std::vector<std::string>>& availableOpRead,
                          std::vector<std::vector<std::string>>& goalJudgeRead,
                          std::vector<int>& numOfCarpet,
+                         std::vector<int>& numOfCarpet2D,
                          std::vector<std::string>& descripRead);
     void setTargetPosition(int x, int y);
 

@@ -77,7 +77,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page"/>
+    <widget class="QWidget" name="playgameNunchucks"/>
     <widget class="QWidget" name="fail">
      <widget class="QPushButton" name="buttonFailExit">
       <property name="geometry">
@@ -189,13 +189,26 @@
       <property name="geometry">
        <rect>
         <x>330</x>
-        <y>350</y>
+        <y>440</y>
         <width>100</width>
         <height>32</height>
        </rect>
       </property>
       <property name="text">
        <string>Back</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonLevelchoiceLevel4">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>360</y>
+        <width>121</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Level 4</string>
       </property>
      </widget>
     </widget>

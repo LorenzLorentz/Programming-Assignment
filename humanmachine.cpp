@@ -39,6 +39,7 @@ void Humanmachine::resetDirec(){
     xPos=inixPos;
     yPos=iniyPos;
     handAngle=iniangle;
+    update();
 }
 
 void Humanmachine::updateHand(){
@@ -105,7 +106,7 @@ void Humanmachine::moveMachine(int aimXSet, int aimYset, std::string action="emp
                 });
             } else if(action=="copyifpos"||action=="copyifneg"){
 
-            } else if(action=="sub"||action=="sub"){
+            } else if(action=="add"||action=="sub"){
 
             } else if(action=="hand+"||action=="hand-"){
                 qDebug()<<"CCCC";

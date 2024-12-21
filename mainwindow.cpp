@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonLevelchoiceLevel1,&QPushButton::clicked,this,[=](){level=0;showGame();});
     connect(ui->buttonLevelchoiceLevel2,&QPushButton::clicked,this,[=](){level=1;showGame();});
     connect(ui->buttonLevelchoiceLevel3,&QPushButton::clicked,this,[=](){level=2;showGame();});
+    connect(ui->buttonLevelchoiceLevel4,&QPushButton::clicked,this,[=](){level=3,showGame();});
     connect(ui->buttonLevelchoiceBack,&QPushButton::clicked,this,&MainWindow::buttonBackWelcomepageClicked);
 
     //playgmae界面
@@ -60,6 +61,20 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+void MainWindow::clearLayout(QLayout* layout) {
+    if(!layout) return;
+    while (QLayoutItem* item=layout->takeAt(0)) {
+        if (QWidget* widget=item->widget()) {
+            delete widget;
+        }
+        if (QLayout* childLayout=item->layout()) {
+            clearLayout(childLayout);
+        }
+        delete item;
+    }
+}
+
 
 void MainWindow::buttonEnterClicked() {
     if(games[0].passed){
@@ -108,6 +123,11 @@ void MainWindow::buttonBackWelcomepageClicked(){
 }
 
 void MainWindow::buttonRestartClicked() {
+    QWidget *playGamePage=ui->playgame;
+    if(playGamePage->layout()!=nullptr){
+        clearLayout(playGamePage->layout());
+        delete playGamePage->layout();
+    }
     ui->stackedWidget->setCurrentWidget(ui->playgame);
 }
 
@@ -117,7 +137,6 @@ void MainWindow::showGame(){
     if(level>=1){
         if(!games[level-1].passed) {
             QMessageBox::warning(this,"Warning","You've not passed previous level");
-            //return;
         }
     }
 
@@ -131,6 +150,10 @@ void MainWindow::showGame(){
         qDebug()<<"初始化正常";
     }
     QWidget *playGamePage=ui->playgame;
+    if(playGamePage->layout()!=nullptr){
+        clearLayout(playGamePage->layout());
+        delete playGamePage->layout();
+    }
     QVBoxLayout *layout=new QVBoxLayout(playGamePage);
     layout->addWidget(machine);
     machine->resetDirec();
@@ -332,10 +355,11 @@ void MainWindow::loadLevelinfo(){
     std::vector<std::vector<std::string>> availableOpRead;
     std::vector<std::vector<std::string>> goalJudgeRead;
     std::vector<int> numOfCarpet;
+    std::vector<int> numOfCarpet2D;
     std::string line;
     std::vector<std::string> descripRead;
     while(getline(levelInfoRead,line)){
-        parselLevelInfo(line,levelinfoRead,inboxBarSetRead,availableOpRead,goalJudgeRead,numOfCarpet,descripRead);
+        parselLevelInfo(line,levelinfoRead,inboxBarSetRead,availableOpRead,goalJudgeRead,numOfCarpet,numOfCarpet2D,descripRead);
     }
     levelInfoRead.close();
 
@@ -347,7 +371,7 @@ void MainWindow::loadLevelinfo(){
 
     games.clear();
     for(int i=0;i<levelinfoRead.size();++i) {
-        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],descripRead[i]);
+        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],numOfCarpet2D[i],descripRead[i]);
     }
 }
 
@@ -389,10 +413,11 @@ void MainWindow::loadAuto(){
     std::vector<std::vector<std::string>> availableOpRead;
     std::vector<std::vector<std::string>> goalJudgeRead;
     std::vector<int> numOfCarpet;
+    std::vector<int> numOfCarpet2D;
     std::string line;
     std::vector<std::string> descripRead;
     while(getline(levelInfoRead,line)){
-        parselLevelInfo(line,levelinfoRead,inboxBarSetRead,availableOpRead,goalJudgeRead,numOfCarpet,descripRead);
+        parselLevelInfo(line,levelinfoRead,inboxBarSetRead,availableOpRead,goalJudgeRead,numOfCarpet,numOfCarpet2D,descripRead);
     }
     levelInfoRead.close();
 
@@ -403,7 +428,7 @@ void MainWindow::loadAuto(){
     }
     games.clear();
     for(int i=0;i<levelinfoRead.size();++i) {
-        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],descripRead[i]);
+        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],numOfCarpet2D[i],descripRead[i]);
     }
 
     std::ifstream archiveRead("archive.txt");
@@ -455,6 +480,7 @@ void MainWindow::parselLevelInfo(const std::string& line,
                      std::vector<std::vector<std::string>>& availableOpRead,
                      std::vector<std::vector<std::string>>& goalJudgeRead,
                      std::vector<int>& numOfCarpet,
+                     std::vector<int>& numOfCarpet2D,
                      std::vector<std::string>& descripRead) {
     std::stringstream ss(line);
     qDebug()<<QString::fromStdString(line);
@@ -502,6 +528,8 @@ void MainWindow::parselLevelInfo(const std::string& line,
                 goalJudgeRead.push_back(parts);
             } else if(key=="NumOfCarpet"){
                 numOfCarpet.push_back(std::stoi(value));
+            } else if(key=="NumOfcaepet2D"){
+                numOfCarpet2D.push_back(std::stoi(value));
             } else if(key=="Description"){
                 descripRead.push_back(value);
             }

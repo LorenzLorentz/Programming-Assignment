@@ -35,7 +35,7 @@ public:
     QPushButton *buttonWelcomeLoadgame;
     QPushButton *buttonWelcomeExit;
     QLabel *labelWelcomepageCentralname;
-    QWidget *page;
+    QWidget *playgameNunchucks;
     QWidget *fail;
     QPushButton *buttonFailExit;
     QPushButton *buttonFailRestart;
@@ -47,6 +47,7 @@ public:
     QPushButton *buttonLevelchoiceLevel3;
     QLabel *labelLevelchoiceCentrallevelchoice;
     QPushButton *buttonLevelchoiceBack;
+    QPushButton *buttonLevelchoiceLevel4;
     QWidget *loadgame;
     QPushButton *buttonLoadgameLoadlevelinfo;
     QPushButton *buttonLoadgameLoadarchive;
@@ -101,9 +102,9 @@ public:
         labelWelcomepageCentralname->setObjectName(QString::fromUtf8("labelWelcomepageCentralname"));
         labelWelcomepageCentralname->setGeometry(QRect(100, 210, 591, 71));
         stackedWidget->addWidget(welcomePage);
-        page = new QWidget();
-        page->setObjectName(QString::fromUtf8("page"));
-        stackedWidget->addWidget(page);
+        playgameNunchucks = new QWidget();
+        playgameNunchucks->setObjectName(QString::fromUtf8("playgameNunchucks"));
+        stackedWidget->addWidget(playgameNunchucks);
         fail = new QWidget();
         fail->setObjectName(QString::fromUtf8("fail"));
         buttonFailExit = new QPushButton(fail);
@@ -135,7 +136,10 @@ public:
         labelLevelchoiceCentrallevelchoice->setGeometry(QRect(240, 180, 291, 51));
         buttonLevelchoiceBack = new QPushButton(levelchoice);
         buttonLevelchoiceBack->setObjectName(QString::fromUtf8("buttonLevelchoiceBack"));
-        buttonLevelchoiceBack->setGeometry(QRect(330, 350, 100, 32));
+        buttonLevelchoiceBack->setGeometry(QRect(330, 440, 100, 32));
+        buttonLevelchoiceLevel4 = new QPushButton(levelchoice);
+        buttonLevelchoiceLevel4->setObjectName(QString::fromUtf8("buttonLevelchoiceLevel4"));
+        buttonLevelchoiceLevel4->setGeometry(QRect(130, 360, 121, 32));
         stackedWidget->addWidget(levelchoice);
         loadgame = new QWidget();
         loadgame->setObjectName(QString::fromUtf8("loadgame"));
@@ -246,6 +250,7 @@ public:
         buttonLevelchoiceLevel3->setText(QCoreApplication::translate("MainWindow", "Level 3", nullptr));
         labelLevelchoiceCentrallevelchoice->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:48pt; font-weight:700;\">Level Choice</span></p></body></html>", nullptr));
         buttonLevelchoiceBack->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        buttonLevelchoiceLevel4->setText(QCoreApplication::translate("MainWindow", "Level 4", nullptr));
         buttonLoadgameLoadlevelinfo->setText(QCoreApplication::translate("MainWindow", "LOAD LEVELINFO", nullptr));
         buttonLoadgameLoadarchive->setText(QCoreApplication::translate("MainWindow", "LOAD ARCHIVE", nullptr));
         labelLoadgameCentral->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:36pt; font-weight:700;\">Load Game</span></p></body></html>", nullptr));

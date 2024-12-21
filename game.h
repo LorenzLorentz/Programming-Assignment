@@ -1,11 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <iostream>    // cin, cout, cin.ignore
-#include <vector>      // vector
-#include <string>      // string, stoi, to_string, getline
-#include <sstream>     // istringstream
-#include <algorithm>   // fill
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <algorithm>
 #include <functional>
 #include <queue>
 
@@ -14,7 +14,7 @@ public:
     std::vector<std::string> initialInbox;
     std::vector<std::string> inboxBar;
     std::vector<std::string> outboxBar;
-    std::vector<std::string> carpetBar;
+    std::vector<std::vector<std::string>> carpetBar;
     std::vector<std::string> availableOps;
     std::string hand;
     std::vector<std::string> goal;
@@ -35,13 +35,15 @@ public:
          std::vector<std::string> availableOpsSet,
          std::vector<std::string> goalSet,
          int numOfCarpetSet,
+         int numOfCarpet2DSet,
          std::string descripSet);
 
     bool goalReached();
     bool isLegalOperation(std::string& command);
-    bool inputProcess(std::string &command,int& param,bool& jumpInputJudge,bool& endRun,int& numSteps);
+    bool inputProcess(std::string &command,int& param,int& paramW,std::string extraParam,bool& jumpInputJudge,bool& endRun,int& numSteps);
     void updateState();
     bool playgame(std::istream& inputStream);
+    void commandProcess(std::string& commandToProcess,int& param,int& paramW,std::string& extraParam);
 };
 
 #endif // GAME_H
