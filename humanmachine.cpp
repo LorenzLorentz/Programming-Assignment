@@ -53,9 +53,28 @@ void Humanmachine::updateHand(){
 }
 
 void Humanmachine::rotateHand(int angle=30){
+
+    //
+    isRotationCompleted=false;
+    //
+
     aimAngle=angle;
-    rotateHandTimer->start(1);
+    /*rotateHandTimer->start(1);
+    */
+
+    //
+    if(handAngle!=aimAngle){
+        isRotationCompleted=false;
+        rotateHandTimer->start(1);
+    }
+    //
+
     if(handAngle==aimAngle){
+        //
+        if(aimAngle==30)
+            isRotationCompleted=true;
+        //
+
         rotateHandTimer->stop();
     }
 }
@@ -72,6 +91,10 @@ void Humanmachine::rotateStep(){
 // moveMachineStep绑定到moveMachineTimer
 
 void Humanmachine::moveMachine(int aimXSet, int aimYset, std::string action="empty"){
+    //
+    if(!isRotationCompleted) return;
+    //
+
     aimX=aimXSet;
     aimY=aimYset;
     moveMachineTimer->start(2);
@@ -98,14 +121,24 @@ void Humanmachine::moveMachine(int aimXSet, int aimYset, std::string action="emp
                 rotateHand(90);
                 QTimer::singleShot(1000,this,[&]() {
                     rotateHand(120);
-                    repaint();
-                });
-                QTimer::singleShot(1000,this,[&]() {
-                    rotateHand(30);
-                    repaint();
+                    //repaint();
+                    QTimer::singleShot(1000,this,[&]() {
+                        rotateHand(30);
+                        repaint();
+                    });
                 });
             } else if(action=="copyifpos"||action=="copyifneg"){
-
+                status=1;
+                repaint();
+                QTimer::singleShot(1000,this,[&]() {
+                    status=0;
+                    repaint();
+                    rotateHand(90);
+                    QTimer::singleShot(1000,this,[&]() {
+                        rotateHand(30);
+                        repaint();
+                    });
+                });
             } else if(action=="add"||action=="sub"){
 
             } else if(action=="hand+"||action=="hand-"){

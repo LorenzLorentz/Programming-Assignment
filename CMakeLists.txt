@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         game.h
         humanmachine.cpp
         humanmachine.h
+        nunchunk.cpp
+        nunchunk.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

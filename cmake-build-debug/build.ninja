@@ -89,6 +89,14 @@ build CMakeFiles/HRM.dir/humanmachine.cpp.o: CXX_COMPILER__HRM_unscanned_Debug /
   OBJECT_DIR = CMakeFiles/HRM.dir
   OBJECT_FILE_DIR = CMakeFiles/HRM.dir
 
+build CMakeFiles/HRM.dir/nunchunk.cpp.o: CXX_COMPILER__HRM_unscanned_Debug /Users/lorenzlorentz/HRM/nunchunk.cpp || cmake_object_order_depends_target_HRM
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/HRM.dir/nunchunk.cpp.o.d
+  FLAGS = -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -fdiagnostics-color=always -fPIC
+  INCLUDES = -I/Users/lorenzlorentz/HRM/cmake-build-debug/HRM_autogen/include -isystem /Users/lorenzlorentz/anaconda/anaconda3/include/qt -isystem /Users/lorenzlorentz/anaconda/anaconda3/include/qt/QtWidgets -isystem /Users/lorenzlorentz/anaconda/anaconda3/include/qt/QtGui -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/Library/Frameworks/OpenGL.framework/Headers -isystem /Users/lorenzlorentz/anaconda/anaconda3/include/qt/QtCore -isystem /Users/lorenzlorentz/anaconda/anaconda3/./mkspecs/macx-clang
+  OBJECT_DIR = CMakeFiles/HRM.dir
+  OBJECT_FILE_DIR = CMakeFiles/HRM.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target HRM
@@ -97,7 +105,7 @@ build CMakeFiles/HRM.dir/humanmachine.cpp.o: CXX_COMPILER__HRM_unscanned_Debug /
 #############################################
 # Link the executable HRM.app/Contents/MacOS/HRM
 
-build HRM.app/Contents/MacOS/HRM: CXX_EXECUTABLE_LINKER__HRM_Debug CMakeFiles/HRM.dir/HRM_autogen/mocs_compilation.cpp.o CMakeFiles/HRM.dir/main.cpp.o CMakeFiles/HRM.dir/mainwindow.cpp.o CMakeFiles/HRM.dir/game.cpp.o CMakeFiles/HRM.dir/humanmachine.cpp.o | /Users/lorenzlorentz/anaconda/anaconda3/lib/libQt5Widgets.5.15.2.dylib /Users/lorenzlorentz/anaconda/anaconda3/lib/libQt5Gui.5.15.2.dylib /Users/lorenzlorentz/anaconda/anaconda3/lib/libQt5Core.5.15.2.dylib || HRM_autogen HRM_autogen_timestamp_deps
+build HRM.app/Contents/MacOS/HRM: CXX_EXECUTABLE_LINKER__HRM_Debug CMakeFiles/HRM.dir/HRM_autogen/mocs_compilation.cpp.o CMakeFiles/HRM.dir/main.cpp.o CMakeFiles/HRM.dir/mainwindow.cpp.o CMakeFiles/HRM.dir/game.cpp.o CMakeFiles/HRM.dir/humanmachine.cpp.o CMakeFiles/HRM.dir/nunchunk.cpp.o | /Users/lorenzlorentz/anaconda/anaconda3/lib/libQt5Widgets.5.15.2.dylib /Users/lorenzlorentz/anaconda/anaconda3/lib/libQt5Gui.5.15.2.dylib /Users/lorenzlorentz/anaconda/anaconda3/lib/libQt5Core.5.15.2.dylib || HRM_autogen HRM_autogen_timestamp_deps
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk
   LINK_LIBRARIES = -Wl,-rpath,/Users/lorenzlorentz/anaconda/anaconda3/lib  /Users/lorenzlorentz/anaconda/anaconda3/lib/libQt5Widgets.5.15.2.dylib  /Users/lorenzlorentz/anaconda/anaconda3/lib/libQt5Gui.5.15.2.dylib  /Users/lorenzlorentz/anaconda/anaconda3/lib/libQt5Core.5.15.2.dylib
   OBJECT_DIR = CMakeFiles/HRM.dir

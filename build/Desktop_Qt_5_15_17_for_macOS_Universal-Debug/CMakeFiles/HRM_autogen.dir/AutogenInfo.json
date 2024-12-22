@@ -93,6 +93,12 @@
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
 			null
+		],
+		[
+			"/Users/lorenzlorentz/HRM/nunchunk.h",
+			"MU",
+			"EWIEGA46WW/moc_nunchunk.cpp",
+			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
@@ -147,7 +153,8 @@
 		[ "/Users/lorenzlorentz/HRM/game.cpp", "MU", null ],
 		[ "/Users/lorenzlorentz/HRM/humanmachine.cpp", "MU", null ],
 		[ "/Users/lorenzlorentz/HRM/main.cpp", "MU", null ],
-		[ "/Users/lorenzlorentz/HRM/mainwindow.cpp", "MU", null ]
+		[ "/Users/lorenzlorentz/HRM/mainwindow.cpp", "MU", null ],
+		[ "/Users/lorenzlorentz/HRM/nunchunk.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],

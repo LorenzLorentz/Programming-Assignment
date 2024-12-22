@@ -102,6 +102,8 @@ HRM_autogen/timestamp: \
 	/Users/lorenzlorentz/HRM/main.cpp \
 	/Users/lorenzlorentz/HRM/mainwindow.cpp \
 	/Users/lorenzlorentz/HRM/mainwindow.h \
+	/Users/lorenzlorentz/HRM/nunchunk.cpp \
+	/Users/lorenzlorentz/HRM/nunchunk.h \
 	/Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtCore.framework/Versions/5/Headers/QTimer \
 	/Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtCore.framework/Versions/5/Headers/qalgorithms.h \
 	/Users/lorenzlorentz/Qt/5.15.17/macos/lib/QtCore.framework/Versions/5/Headers/qarraydata.h \

@@ -30,11 +30,16 @@ public:
     QTimer* moveMachineTimer;
     QTimer* rotateHandTimer;
 
+    bool isRotationCompleted=true;
+
     void rotateHand(int angle);
     void resetDirec();
     void updateHand();
     //void upHand();
     void moveMachine(int aimXSet,int aimYset,std::string action);
+
+signals:
+    void rotationCompleted();
 
 private slots:
     void rotateStep();

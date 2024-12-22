@@ -14,7 +14,12 @@ Game::Game(vector<string> initialInboxSet,
     availableOps(availableOpsSet),
     goal(goalSet),
     carpetBar(numOfCarpet2DSet,std::vector<std::string>(numOfCarpetSet)),
-    descrip(descripSet){}
+    descrip(descripSet) {}
+
+bool Game::isValidInteger(string &input){
+    std::regex validIntPattern("^-?\\d+$");
+    return std::regex_match(input, validIntPattern);
+}
 
 bool Game::goalReached() {
     return outboxBar==goal;
@@ -31,20 +36,33 @@ bool Game::isLegalOperation(string& command) {
 }
 
 void Game::commandProcess(string& commandToProcess,int& param,int& paramW,string& extraParam) {
+    qDebug()<<"QQQQQQ"<<QString::fromStdString(commandToProcess);
     istringstream iss(commandToProcess);
     size_t tempPos=commandToProcess.find(';');
     if(tempPos!=std::string::npos){
+        qDebug()<<"two param";
         string token;
         getline(iss,token,';');
-        cout<<token<<endl;
-        param=stoi(token);
+        if(isValidInteger(token)){
+            param=stoi(token);
+        } else {
+            qDebug()<<"notinteger"<<QString::fromStdString(token);
+            param=-1;
+        }
         getline(iss,token,' ');
-        cout<<token<<endl;
-        paramW=stoi(token);
+        if(isValidInteger(token)){
+            paramW=stoi(token);
+        } else {
+            paramW=-1;
+        }
     } else {
         string token;
         getline(iss,token,' ');
-        param=stoi(token);
+        if(isValidInteger(token)){
+            param=stoi(token);
+        } else {
+            param=-1;
+        }
         paramW=1;
     }
 
@@ -84,28 +102,189 @@ void Game::updateState(){
  * TODO
  * 针对二维carpet逻辑进行修改
  */
-
-    if(carpetBar[0].size()>=1){
-        if(onCarpet1Update){
-            onCarpet1Update(carpetBar[0][0]);
+    if(level<=3){
+        if(carpetBar[0].size()>=1){
+            if(onCarpet1Update){
+                onCarpet1Update(carpetBar[0][0]);
+            }
         }
-    }
 
-    if(carpetBar[0].size()>=2){
-        if(onCarpet1Update){
-            onCarpet2Update(carpetBar[0][1]);
+        if(carpetBar[0].size()>=2){
+            if(onCarpet1Update){
+                onCarpet2Update(carpetBar[0][1]);
+            }
         }
-    }
 
-    if(carpetBar[0].size()>=3){
-        if(onCarpet1Update){
-            onCarpet3Update(carpetBar[0][2]);
+        if(carpetBar[0].size()>=3){
+            if(onCarpet1Update){
+                onCarpet3Update(carpetBar[0][2]);
+            }
         }
-    }
 
-    if(carpetBar[0].size()>=4){
-        if(onCarpet1Update){
-            onCarpet4Update(carpetBar[0][3]);
+        if(carpetBar[0].size()>=4){
+            if(onCarpet1Update){
+                onCarpet4Update(carpetBar[0][3]);
+            }
+        }
+    } else if(level>=4){
+        //1
+        if(carpetBar[0].size()>=1){
+            if(onCarpet11Update){
+                onCarpet11Update(carpetBar[0][0]);
+            }
+        }
+        if(carpetBar[0].size()>=2){
+            if(onCarpet12Update){
+                onCarpet12Update(carpetBar[0][1]);
+            }
+        }
+        if(carpetBar[0].size()>=3){
+            if(onCarpet13Update){
+                onCarpet13Update(carpetBar[0][2]);
+            }
+        }
+        if(carpetBar[0].size()>=4){
+            if(onCarpet14Update){
+                onCarpet14Update(carpetBar[0][3]);
+            }
+        }
+        if(carpetBar[0].size()>=5){
+            if(onCarpet15Update){
+                onCarpet15Update(carpetBar[0][4]);
+            }
+        }
+        if(carpetBar[0].size()>=6){
+            if(onCarpet16Update){
+                onCarpet16Update(carpetBar[0][5]);
+            }
+        }
+
+        //2
+        if(carpetBar[1].size()>=1){
+            if(onCarpet21Update){
+                onCarpet21Update(carpetBar[1][0]);
+            }
+        }
+        if(carpetBar[1].size()>=2){
+            if(onCarpet22Update){
+                onCarpet22Update(carpetBar[1][1]);
+            }
+        }
+        if(carpetBar[1].size()>=3){
+            if(onCarpet23Update){
+                onCarpet23Update(carpetBar[1][2]);
+            }
+        }
+        if(carpetBar[1].size()>=4){
+            if(onCarpet24Update){
+                onCarpet24Update(carpetBar[1][3]);
+            }
+        }
+        if(carpetBar[1].size()>=5){
+            if(onCarpet25Update){
+                onCarpet25Update(carpetBar[1][4]);
+            }
+        }
+        if(carpetBar[1].size()>=6){
+            if(onCarpet26Update){
+                onCarpet26Update(carpetBar[1][5]);
+            }
+        }
+
+        //3
+        if(carpetBar[2].size()>=1){
+            if(onCarpet31Update){
+                onCarpet31Update(carpetBar[2][0]);
+            }
+        }
+        if(carpetBar[2].size()>=2){
+            if(onCarpet32Update){
+                onCarpet32Update(carpetBar[2][1]);
+            }
+        }
+        if(carpetBar[2].size()>=3){
+            if(onCarpet33Update){
+                onCarpet33Update(carpetBar[2][2]);
+            }
+        }
+        if(carpetBar[2].size()>=4){
+            if(onCarpet34Update){
+                onCarpet34Update(carpetBar[2][3]);
+            }
+        }
+        if(carpetBar[2].size()>=5){
+            if(onCarpet35Update){
+                onCarpet35Update(carpetBar[2][4]);
+            }
+        }
+        if(carpetBar[2].size()>=6){
+            if(onCarpet36Update){
+                onCarpet36Update(carpetBar[2][5]);
+            }
+        }
+
+        //4
+        if(carpetBar[3].size()>=1){
+            if(onCarpet41Update){
+                onCarpet41Update(carpetBar[3][0]);
+            }
+        }
+        if(carpetBar[3].size()>=2){
+            if(onCarpet42Update){
+                onCarpet42Update(carpetBar[3][1]);
+            }
+        }
+        if(carpetBar[3].size()>=3){
+            if(onCarpet43Update){
+                onCarpet43Update(carpetBar[3][2]);
+            }
+        }
+        if(carpetBar[3].size()>=4){
+            if(onCarpet44Update){
+                onCarpet44Update(carpetBar[3][3]);
+            }
+        }
+        if(carpetBar[3].size()>=5){
+            if(onCarpet45Update){
+                onCarpet45Update(carpetBar[3][4]);
+            }
+        }
+        if(carpetBar[3].size()>=6){
+            if(onCarpet46Update){
+                onCarpet46Update(carpetBar[3][5]);
+            }
+        }
+
+        //5
+        if(carpetBar[4].size()>=1){
+            if(onCarpet51Update){
+                onCarpet51Update(carpetBar[4][0]);
+            }
+        }
+        if(carpetBar[4].size()>=2){
+            if(onCarpet52Update){
+                onCarpet52Update(carpetBar[4][1]);
+            }
+        }
+        if(carpetBar[4].size()>=3){
+            if(onCarpet53Update){
+                onCarpet53Update(carpetBar[4][2]);
+            }
+        }
+        if(carpetBar[4].size()>=4){
+            if(onCarpet54Update){
+                onCarpet54Update(carpetBar[4][3]);
+            }
+        }
+        if(carpetBar[4].size()>=5){
+            if(onCarpet55Update){
+                onCarpet55Update(carpetBar[4][4]);
+            }
+        }
+        if(carpetBar[4].size()>=6){
+            if(onCarpet56Update){
+                onCarpet56Update(carpetBar[4][5]);
+            }
         }
     }
 
@@ -164,15 +343,20 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         }
     } else if(command=="copyto") {
         if(paramW<=0||paramW>carpetBar.size()) {
+            qDebug()<<paramW<<" "<<param<<" "<<QString::fromStdString(extraParam)<<" "<<carpetBar.size();
+            qDebug()<<"AAAAAA";
             return false;
         }
         if(param<=0||param>carpetBar[0].size()){
+            qDebug()<<"BBBBB";
             return false;
         }
         if(hand.empty()) {
+            qDebug()<<"CCCCC";
             return false;
         }
         if(carpetBar[paramW-1][param-1].find(';')!=std::string::npos){
+            qDebug()<<"DDDDD";
             return false;
         }
 
@@ -196,40 +380,21 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
             }
             carpetBar[paramW-1][param-1]=hand;
         } else if(extraParam=="p1"){
-            int tempParam;
-            int tempParamW;
-            string tempExtraParam;
-            commandProcess(carpetBar[paramW-1][param-1],tempParam,tempParamW,tempExtraParam);
-            param=tempParam;
-            paramW=tempParamW;
-            if(paramW<=0||paramW>carpetBar.size()) {
-                return false;
-            }
-            if(param<=0||param>carpetBar[0].size()){
-                return false;
-            }
             if(carpetBar[paramW-1][param-1].find(';')==std::string::npos){
                 carpetBar[paramW-1][param-1]=hand;
-            } else {
+            } else if(carpetBar.empty()){
                 carpetBar[paramW-1][param-1]=hand+carpetBar[paramW-1][param-1].substr(carpetBar[paramW-1][param-1].find(';'));
+            } else {
+                carpetBar[paramW-1][param-1]=hand+" "+carpetBar[paramW-1][param-1];
             }
         } else if(extraParam=="p2"){
-            int tempParam;
-            int tempParamW;
-            string tempExtraParam;
-            commandProcess(carpetBar[paramW-1][param-1],tempParam,tempParamW,tempExtraParam);
-            param=tempParam;
-            paramW=tempParamW;
-            if(paramW<=0||paramW>carpetBar.size()) {
-                return false;
-            }
-            if(param<=0||param>carpetBar[0].size()){
-                return false;
-            }
+            qDebug()<<"BUGTHERE";
             if(carpetBar[paramW-1][param-1].find(';')==std::string::npos){
+                carpetBar[paramW-1][param-1]=carpetBar[paramW-1][param-1].substr(0,1+carpetBar[paramW-1][param-1].find(';'))+hand;
+            } else if(carpetBar.empty()){
                 carpetBar[paramW-1][param-1]+=(";"+hand);
             } else {
-                carpetBar[paramW-1][param-1]=carpetBar[paramW-1][param-1].substr(0,1+carpetBar[paramW-1][param-1].find(';'))+hand;
+                carpetBar[paramW-1][param-1]=carpetBar[paramW-1][param-1]+";"+hand;
             }
         } else {
             return false;
@@ -436,7 +601,11 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(hand.empty()){
             return false;
         }
-        hand=to_string(std::stoi(hand)+param);
+        if(param==-1){
+            hand=to_string(std::stoi(hand)+1);
+        } else {
+            hand=to_string(std::stoi(hand)+param);
+        }
 
         updateState();
         if(onLogbarUpdate) {
@@ -450,7 +619,12 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(hand.empty()){
             return false;
         }
-        hand=to_string(std::stoi(hand)-param);
+
+        if(param==-1){
+            hand=to_string(std::stoi(hand)-1);
+        } else {
+            hand=to_string(std::stoi(hand)-param);
+        }
 
         updateState();
         if(onLogbarUpdate) {
@@ -602,12 +776,20 @@ bool Game::playgame(istream& inputStream) {
         command.push_back(cmd);
 
         if(iss>>par){
+            std::string tempInputPar;
+            while(iss>>tempInputPar){
+                par+=" ";
+                par+=tempInputPar;
+            }
             int tempParam;
             int tempParamW;
             string tempExtraParam;
             commandProcess(par,tempParam,tempParamW,tempExtraParam);
+
+            qDebug()<<tempParam<<" "<<tempParamW<<" "<<QString::fromStdString(tempExtraParam);
+
             param.push_back(tempParam);
-            paramW.push_back(tempParam);
+            paramW.push_back(tempParamW);
             extraParam.push_back(tempExtraParam);
         } else {
             param.push_back(-1);
