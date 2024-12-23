@@ -92,7 +92,7 @@ void Humanmachine::rotateStep(){
 
 void Humanmachine::moveMachine(int aimXSet, int aimYset, std::string action="empty"){
     //
-    if(!isRotationCompleted) return;
+    //if(!isRotationCompleted) return;
     //
 
     aimX=aimXSet;

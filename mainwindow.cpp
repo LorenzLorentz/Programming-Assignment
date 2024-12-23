@@ -84,6 +84,11 @@ void MainWindow::clearLayout(QLayout* layout) {
 
 
 void MainWindow::buttonEnterClicked() {
+    if(games.empty()){
+        QMessageBox::warning(this,"warning","You've load game info");
+        return;
+    }
+
     if(games[0].passed){
         QString currentText=ui->buttonLevelchoiceLevel1->text();
         QString updatedText=currentText+" PASSED";
@@ -108,16 +113,16 @@ void MainWindow::buttonExitClicked() {
     for(int i=0;i<games.size();++i) {
         archiveFile<<"Level"<<i<<":";
         if(games[i].passed) {
-//            archiveFile<<"Passed"<<endl;
+            archiveFile<<"Passed"<<endl;
         } else {
-//            archiveFile<<"NotPassed"<<endl;
+            archiveFile<<"NotPassed"<<endl;
         }
     }
     archiveFile.close();
     exit(0);
 }
 
-void MainWindow::buttonLoadgameClicked(){
+void MainWindow::buttonLoadgameClicked() {
     ui->stackedWidget->setCurrentWidget(ui->loadgame);
 }
 
@@ -246,7 +251,7 @@ void MainWindow::showGameNunchunk(){
     if(level>=1){
         if(!games[level-1].passed) {
             QMessageBox::warning(this,"Warning","You've not passed previous level");
-            //return;
+            return;
         }
     }
 
@@ -883,12 +888,30 @@ void MainWindow::loadLevelinfo(){
         for(int j=0;j<inboxBarSetRead[i].size();++j){
             qDebug()<<i<<QString::fromStdString(inboxBarSetRead[i][j]);
         }
+        for(int j=0;j<availableOpRead[i].size();++j){
+            qDebug()<<i<<QString::fromStdString(availableOpRead[i][j]);
+        }
+        for(int j=0;j<goalJudgeRead[i].size();++j){
+            qDebug()<<i<<QString::fromStdString(goalJudgeRead[i][j]);
+        }
+        qDebug()<<i<<numOfCarpet[i];
+        qDebug()<<i<<numOfCarpet2D[i];
+        qDebug()<<i<<QString::fromStdString(descripRead[i]);
     }
 
-    games.clear();
-    for(int i=0;i<levelinfoRead.size();++i) {
-        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],numOfCarpet2D[i],descripRead[i]);
-    }
+    //games.clear();
+    /* for(int i=0;i<levelinfoRead.size();++i) {
+        //Game tempGameSet={inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],1,descripRead[i]};
+        //games.push_back(tempGameSet);
+        games.push_back(Game(inboxBarSetRead[i],std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos"},goalJudgeRead[i],numOfCarpet[i],1,"123"));
+        //games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],numOfCarpet2D[i],descripRead[i]);
+    } */
+    //qDebug()<<"SSSS"<<games.size();
+
+    games.push_back(Game(std::vector<std::string>{"1", "2"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero","hand+","hand-"},std::vector<std::string>{"1", "2"},4,1,"第一关\n让机器人取出输入序列上的每个积木放入输出序列中"));
+    games.push_back(Game(std::vector<std::string>{"3", "9", "5", "1", "-2", "-2", "9", "-9"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero"},std::vector<std::string>{"-6", "6", "4", "-4", "0", "0", "18", "-18"},4,1,"第二关\n对于输入序列中的每两个东西，先把第1个减去第2个，并把结果放在输出序列中，然后把第2个减去第1个，再把结果放在输出序列中，重复"));
+    games.push_back(Game(std::vector<std::string>{"6", "2", "7", "7", "-9", "3", "-3", "-3"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero"},std::vector<std::string>{"7", "-3"},3,1,"第三关\n从输入序列中依次取2个数字，如果相等则将其中一个输出，否则扔掉。重复这个过程直到输入传送带为空"));
+    games.push_back(Game(std::vector<std::string>{"3","10","1","2","3","1000","3000","6000"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos"},std::vector<std::string>{"19233"},1000,4,"第四关 \n 有N种类型的短棒，第i种短棒长度为a_i，武力值为b_i，数量无限\n\n长度为A的棒和长度为B的棒组成一个长度为A+B的棒，此时长度为A+B的棒的武力值为他们的和\n\n如果A与B的长度相等，则其武力值还要再增加233\n\n已知需要一根长M的棒，求最大的武力值是多少"));
 }
 
 void MainWindow::loadArchive(){
@@ -942,9 +965,9 @@ void MainWindow::loadAuto(){
             qDebug()<<i<<QString::fromStdString(inboxBarSetRead[i][j]);
         }
     }
-    games.clear();
+    //games.clear();
     for(int i=0;i<levelinfoRead.size();++i) {
-        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],numOfCarpet2D[i],descripRead[i]);
+        //games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],numOfCarpet2D[i],descripRead[i]);
     }
 
     std::ifstream archiveRead("archive.txt");
@@ -1044,7 +1067,8 @@ void MainWindow::parselLevelInfo(const std::string& line,
                 goalJudgeRead.push_back(parts);
             } else if(key=="NumOfCarpet"){
                 numOfCarpet.push_back(std::stoi(value));
-            } else if(key=="NumOfcaepet2D"){
+            } else if(key=="NumOfCarpet2D"){
+                qDebug()<<"2D"<<std::stoi(value);
                 numOfCarpet2D.push_back(std::stoi(value));
             } else if(key=="Description"){
                 descripRead.push_back(value);

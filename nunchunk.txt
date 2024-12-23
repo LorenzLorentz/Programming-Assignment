@@ -1,0 +1,175 @@
+数据存储
+1 ptr: 第一个指针表示index;第二个指针写入a，也就是说写入到第三行；
+1' ptr: 第一个是index i，第二个是 index j， 第三个是 index k，第四个表示指向a[i]的索引，第五个表示指向b[i]
+2 const: n , m , maxBonus , maxBonus的比较,临时存储/bonux函数存储,bonus函数存储2
+3 a:
+4 b:
+5 dp:
+
+
+//输入n和m
+1 inbox
+2 copyto 1;2
+3 inbox
+4 copyto 2;2
+
+//输入数组 a
+5 hand0
+6 copyto 1;1
+7 jump INPUT_A_LOOP
+
+INPUT_A_LOOP:
+8 copyfrom 1;1
+9 sub 1;2
+10 jumpifposzero END_INPUT_A
+11 copyfrom 1;1
+12 copyto 2;1 p1
+13 hand0
+14 hand+ 1
+15 copyto 2;1 p2
+16 inbox
+17 copyto 2;1 c
+18 copyfrom 1;1
+19 hand+
+20 copyto 1;1
+21 jump INPUT_A_LOOP
+END_INPUT_A:
+
+// 输入数组 b
+23 hand0
+24 copyto 1;1
+25 jump INPUT_B_LOOP
+
+INPUT_B_LOOP:
+26 copyfrom 1;1
+27 sub 1;2
+28 jumpifposzero END_INPUT_B
+29 copyfrom 1;1
+30 copyto 3;1 p1
+31 hand0
+32 hand+ 1
+33 copyto 3;1 p2
+34 inbox
+35 copyto 3;1 c
+36 copyfrom 1;1
+37 hand+
+38 copyto 1;1
+39 jump INPUT_B_LOOP
+END_INPUT_B:
+
+// 初始化 dp 数组
+40 hand0
+41 copyto 1;1
+42 jump INIT_DP_LOOP
+
+INIT_DP_LOOP:
+43 copyfrom 1;1
+44 sub 2;2
+45 jumpifposzero END_INIT_DP
+46 copyfrom 1;1
+47 copyto 4;1 p1
+48 hand0
+49 hand+ 1
+50 copyto 4;1 p2
+51 hand0
+52 copyto 4;1 c
+53 jump INIT_DP_LOOP
+END_INIT_DP
+
+// 主循环
+54 hand0
+55 copyto 1;1
+56 jump MAIN_LOOP1
+
+MAIN_LOOP1:
+57 copyfrom 1;1               
+58 sub 1;2
+59 jumpifposzero END_MAIN_LOOP1
+60 copyfrom 1;1
+61 copyto 4;1 p1
+62 hand 0
+63 hand+ 2
+64 copyto 4;1 p2
+65 copyfrom 4;1 c
+66 copyto 2;1
+67 jump MAIN_LOOP2
+
+MAIN_LOOP2:
+68 copyfrom 2;1
+69 sub 2;2
+70 jumpifpos END_MAIN_LOOP2
+71 hand0
+72 copyto 3;2
+73 hand0
+74 hand+ 1
+75 copyto 3;1
+76 jump MAIN_LOOP3
+
+MAIN_LOOP3:
+77 copyfrom 3;1
+78 hand* 4;1 c
+79 sub 2;1
+80 jump END_MAIN_LOOP3
+81 jump UPDATE_BONUS
+82 copyfrom 3;1
+83 jump FUNC_BONUS
+FUNC_BONUS_RETURN
+84 copyto 4;2
+85 copyfrom 1;1
+86 copyto 5;1 p1
+87 hand0 
+88 hand+ 4
+89 copyto 4;2 p2
+90 copyfrom 4;2 c
+91 hand* 3;1
+92 add 4;2
+93 copyto 4;2
+94 copyfrom 4;1 c
+95 hand* 3;1 c
+96 sub 2;1
+97 copyto 5;2
+98 hand0 
+99 sub 5;2
+100 add 4;2
+101 copyto 4;2
+102 sub 3;2
+103 jumpifpos UPDATE_BONUS
+104 copyfrom 3;2
+END_UPDATE_BONUS
+105 copyto 3;2
+106 jump MAIN_LOOP3
+UPDATE_BONUS:
+107 copyfrom 4;2
+END_MAIN_LOOP3:
+108 jumo MAIN_LOOP2
+END_MAIN_LOOP2:
+109 jump MAIN_LOOP1
+END_MAIN_LOOP1:
+
+FUNC_BONUS:
+110 copyto 6;2
+111 hand0
+112 copyto 5;2
+113 jump FUNC_BONUS_LOOP
+END_FUNC_BONUS_LOOP
+114 copyfrom 5;2
+115 hand* 233
+116 jump FUNC_BONUS_RETURN
+
+FUNC_BONUS_LOOP:
+117 copyfrom 6;2
+118 hand/ 2
+119 copyto 6;2
+120 add 5;2
+121 copyto 5;2
+122 copyfrom 6;2
+123 jumpifzero
+
+OUTPUT:
+124 copyfrom 2;2
+125 copyto 1;1 p1
+126 hand0
+127 hand+ 5
+128 copyto 1;1 p2 
+129 copyfrom 1;1 c 
+130 outbox
