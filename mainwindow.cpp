@@ -214,7 +214,7 @@ void MainWindow::showGame(){
     if(level>=1){
         if(!games[level-1].passed) {
             QMessageBox::warning(this,"Warning","You've not passed previous level");
-            //return;
+            return;
         }
     }
 
@@ -256,7 +256,7 @@ void MainWindow::showGameNunchunk(){
     if(level>=1){
         if(!games[level-1].passed) {
             QMessageBox::warning(this,"Warning","You've not passed previous level");
-            //return;
+            return;
         }
     }
 
