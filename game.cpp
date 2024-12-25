@@ -25,6 +25,16 @@ bool Game::goalReached() {
     return outboxBar==goal;
 }
 
+std::string Game::removeSpaces(std::string& input) {
+    std::string result;
+    for(char ch:input) {
+        if(ch!=' ') {
+            result += ch;
+        }
+    }
+    return result;
+}
+
 bool Game::isLegalOperation(string& command) {
     if(command==" ") return true;
     for(int i=0;i<availableOps.size();++i) {
@@ -43,6 +53,7 @@ void Game::commandProcess(string& commandToProcess,int& param,int& paramW,string
         qDebug()<<"two param";
         string token;
         getline(iss,token,';');
+        token=removeSpaces(token);
         if(isValidInteger(token)){
             param=stoi(token);
         } else {
@@ -50,17 +61,21 @@ void Game::commandProcess(string& commandToProcess,int& param,int& paramW,string
             param=-1;
         }
         getline(iss,token,' ');
+        token=removeSpaces(token);
         if(isValidInteger(token)){
             paramW=stoi(token);
         } else {
+            qDebug()<<"NOTINTEGER?"<<QString::fromStdString(token);
             paramW=-1;
         }
     } else {
         string token;
         getline(iss,token,' ');
+        token=removeSpaces(token);
         if(isValidInteger(token)){
             param=stoi(token);
         } else {
+            qDebug()<<"NOTINTEGER?"<<QString::fromStdString(token);
             param=-1;
         }
         paramW=1;
@@ -98,10 +113,6 @@ void Game::updateState(){
         onOutboxbarUpdate(outboxbarReturn);
     }
 
-/*
- * TODO
- * 针对二维carpet逻辑进行修改
- */
     if(level<=3){
         if(carpetBar[0].size()>=1){
             if(onCarpet1Update){
@@ -293,7 +304,7 @@ void Game::updateState(){
     }
 }
 
-bool Game::inputProcess(string &command,int& param,int& paramW,std::string extraParam,bool& jumpInputJudge,bool& endRun,int& numSteps) {
+bool Game::inputProcess(string command,int param,int paramW,std::string extraParam,bool& jumpInputJudge,bool& endRun,int& numSteps) {
     if(!isLegalOperation(command)) {
         if(onLogbarUpdate) {
             onLogbarUpdate("操作不合法");
@@ -322,13 +333,18 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("inbox");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             onLogbarUpdate(inboxBar.empty() ? "inbox为空" : "将"+hand+"从inbox取出");
+            qDebug()<<(inboxBar.empty() ? "inbox为空" : "将"+QString::fromStdString(hand)+"从inbox取出");
         } else {
             qDebug()<<"回调函数未赋值";
         }
     } else if(command=="outbox") {
         if(hand.empty()) {
+            qDebug()<<"Oops! HAND EMPTY!";
             return false;
+        } else {
+            qDebug()<<"Hoory! Not EMPTY!";
         }
         outboxBar.push_back(hand);
         hand="";
@@ -337,7 +353,9 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("outbox");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             onLogbarUpdate("将"+outboxBar[0]+"放入outbox");
+            qDebug()<<("将"+QString::fromStdString(outboxBar[0])+"放入outbox");
         } else {
             qDebug()<<"回调函数未赋值";
         }
@@ -355,10 +373,6 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
             qDebug()<<"CCCCC";
             return false;
         }
-        if(carpetBar[paramW-1][param-1].find(';')!=std::string::npos){
-            qDebug()<<"DDDDD";
-            return false;
-        }
 
         if(extraParam=="np"){
             carpetBar[paramW-1][param-1]=hand;
@@ -367,33 +381,41 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
             int tempParamW;
             string tempExtraParam;
             commandProcess(carpetBar[paramW-1][param-1],tempParam,tempParamW,tempExtraParam);
+            qDebug()<<"COPYTOWHERE???"<<param<<" "<<paramW<<" "<<tempParam<<" "<<tempParamW;
             param=tempParam;
             paramW=tempParamW;
+
             if(paramW<=0||paramW>carpetBar.size()) {
+                qDebug()<<"位置1报错"<<param<<" "<<paramW;
                 return false;
             }
             if(param<=0||param>carpetBar[0].size()){
+                qDebug()<<"位置2报错"<<param<<" "<<paramW;
                 return false;
             }
-            if(carpetBar[paramW-1][param-1].find(';')!=std::string::npos){
+            /* if(carpetBar[paramW-1][param-1].find(';')!=std::string::npos){
                 return false;
-            }
+            } */
             carpetBar[paramW-1][param-1]=hand;
         } else if(extraParam=="p1"){
-            if(carpetBar[paramW-1][param-1].find(';')==std::string::npos){
-                carpetBar[paramW-1][param-1]=hand;
-            } else if(carpetBar.empty()){
+            if(carpetBar[paramW-1][param-1].find(';')!=std::string::npos){
                 carpetBar[paramW-1][param-1]=hand+carpetBar[paramW-1][param-1].substr(carpetBar[paramW-1][param-1].find(';'));
+            } else if(carpetBar.empty()){
+                carpetBar[paramW-1][param-1]=hand;
             } else {
                 carpetBar[paramW-1][param-1]=hand+" "+carpetBar[paramW-1][param-1];
             }
         } else if(extraParam=="p2"){
-            qDebug()<<"BUGTHERE";
-            if(carpetBar[paramW-1][param-1].find(';')==std::string::npos){
+            qDebug()<<"被执行";
+            if(carpetBar[paramW-1][param-1].find(';')!=std::string::npos){
+                qDebug()<<"分支1被执行";
                 carpetBar[paramW-1][param-1]=carpetBar[paramW-1][param-1].substr(0,1+carpetBar[paramW-1][param-1].find(';'))+hand;
-            } else if(carpetBar.empty()){
-                carpetBar[paramW-1][param-1]+=(";"+hand);
+            } else if(carpetBar[paramW-1][param-1].empty()){
+                qDebug()<<"分支2被执行";
+                carpetBar[paramW-1][param-1]=hand;
             } else {
+                qDebug()<<"WHYNOTADD?";
+                qDebug()<<QString::fromStdString(carpetBar[paramW-1][param-1])<<" "<<QString::fromStdString(hand);
                 carpetBar[paramW-1][param-1]=carpetBar[paramW-1][param-1]+";"+hand;
             }
         } else {
@@ -403,7 +425,17 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         updateState();
         if(onLogbarUpdate) {
             actionLog.push("copyto");
+            qDebug()<<QString::fromStdString(command);
             qDebug()<<"actionLog pushed";
+            //qDebug()<<(string(extraParam=="c" ? "调用指针," : "")+"将"+QString::fromStdString(carpetBar[paramW-1][param-1])+"放入carpet["+std::to_string(paramW-1)+"]["+std::to_string(param-1)+"]");
+            qDebug() << QString::fromStdString((extraParam == "c" ? "调用指针," : ""))
+                            + "将"
+                            + QString::fromStdString(carpetBar[paramW - 1][param - 1])
+                            + "放入carpet["
+                            + QString::number(paramW - 1)
+                            + "]["
+                            + QString::number(param - 1)
+                            + "]";
             onLogbarUpdate(string(extraParam=="c" ? "调用指针," : "")+"将"+carpetBar[paramW-1][param-1]+"放入carpet["+std::to_string(paramW-1)+"]["+std::to_string(param-1)+"]");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -438,6 +470,7 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
                 return false;
             }
             hand=carpetBar[paramW-1][param-1];
+            qDebug()<<"WHATDIDICOPIED?"<<QString::fromStdString(hand);
         } else {
             return false;
         }
@@ -446,6 +479,16 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("copyfrom");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
+            //qDebug()<<(string(extraParam=="c" ? "调用指针," : "")+"将"+QString::fromStdString(carpetBar[paramW-1][param-1])+"从carpet["+QString::fromStdString(std::to_string(paramW-1))+"]["+QString::fromStdString(std::to_string(param-1))+"]复制到手中");
+            qDebug() << QString::fromStdString((extraParam == "c" ? "调用指针," : ""))
+                            + "将"
+                            + QString::fromStdString(carpetBar[paramW - 1][param - 1])
+                            + "从carpet["
+                            + QString::number(paramW - 1)
+                            + "]["
+                            + QString::number(param - 1)
+                            + "]复制到手中";
             onLogbarUpdate(string(extraParam=="c" ? "调用指针," : "")+"将"+carpetBar[paramW-1][param-1]+"从carpet["+std::to_string(paramW-1)+"]["+std::to_string(param-1)+"]复制到手中");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -494,6 +537,7 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("add");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             onLogbarUpdate(string(extraParam=="c" ? "调用指针," : "")+"将"+carpetBar[paramW-1][param-1]+"从carpet["+std::to_string(paramW-1)+"]["+std::to_string(param-1)+"]加入到手中");
         } else {
             qDebug()<<"回调函数未赋值";
@@ -542,7 +586,62 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("sub");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             onLogbarUpdate(string(extraParam=="c" ? "调用指针," : "")+"将"+carpetBar[paramW-1][param-1]+"从carpet["+std::to_string(paramW-1)+"]["+std::to_string(param-1)+"]在手中减去");
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } if(command=="times") {
+        if(paramW<=0||paramW>carpetBar.size()) {
+            return false;
+        }
+        if(param<=0||param>carpetBar[0].size()){
+            return false;
+        }
+        if(hand.empty()) {
+            return false;
+        }
+        if(carpetBar[paramW-1][param-1].empty()){
+            return false;
+        }
+
+        if(extraParam=="np"){
+            hand=to_string(stoi(hand)*stoi(carpetBar[paramW-1][param-1]));
+        } else if(extraParam=="c"){
+            qDebug()<<"WRONGTYPE 5";
+            int tempParam;
+            int tempParamW;
+            string tempExtraParam;
+            commandProcess(carpetBar[paramW-1][param-1],tempParam,tempParamW,tempExtraParam);
+            param=tempParam;
+            paramW=tempParamW;
+            if(paramW<=0||paramW>carpetBar.size()) {
+                qDebug()<<"WRONGTYPE 1";
+                return false;
+            }
+            if(param<=0||param>carpetBar[0].size()){
+                qDebug()<<"WRONGTYPE 2";
+                return false;
+            }
+            if(carpetBar[paramW-1][param-1].empty()){
+                qDebug()<<"WRONGTYPE 3";
+                return false;
+            }
+            if(carpetBar[paramW-1][param-1].find(';')!=std::string::npos){
+                qDebug()<<"WRONGTYPE 4";
+                return false;
+            }
+            hand=to_string(stoi(hand)*stoi(carpetBar[paramW-1][param-1]));
+        } else {
+            return false;
+        }
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("sub");
+            qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
+            onLogbarUpdate(string(extraParam=="c" ? "调用指针," : "")+"将"+carpetBar[paramW-1][param-1]+"从carpet["+std::to_string(paramW-1)+"]["+std::to_string(param-1)+"]乘上");
         } else {
             qDebug()<<"回调函数未赋值";
         }
@@ -554,12 +653,13 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         updateState();
         if(onLogbarUpdate) {
             actionLog.push("jump");
+            qDebug()<<QString::fromStdString(command);
             onLogbarUpdate("跳转到"+std::to_string(param)+"步");
         } else {
             qDebug()<<"回调函数未赋值";
         }
     } else if(command=="jumpifzero") {
-        if(!(0<=param && param<numSteps)) {
+        if(!(0<=param&&param<=numSteps)) {
             return false;
         }
 
@@ -567,12 +667,13 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("zero");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             onLogbarUpdate("手中为零，跳转到"+std::to_string(param)+"步");
         } else {
             qDebug()<<"回调函数未赋值";
         }
     } else if(command=="jumpifpos"){
-        if(!(0<=param && param<numSteps)) {
+        if(!(0<=param&&param<=numSteps)) {
             return false;
         }
 
@@ -580,12 +681,13 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("pos");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             onLogbarUpdate("手中为正，跳转到"+std::to_string(param)+"步");
         } else {
             qDebug()<<"回调函数未赋值";
         }
     } else if(command=="jumpifneg"){
-        if(!(0<=param&&param<numSteps)) {
+        if(!(0<=param&&param<=numSteps)) {
             return false;
         }
 
@@ -593,7 +695,36 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("neg");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             onLogbarUpdate("手中为负，跳转到"+std::to_string(param)+"步");
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="jumpifposzero"){
+        if(!(0<=param && param<=numSteps)) {
+            return false;
+        }
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("poszero");
+            qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
+            onLogbarUpdate("手中为正，跳转到"+std::to_string(param)+"步");
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="jumpifnegzero"){
+        if(!(0<=param && param<=numSteps)) {
+            return false;
+        }
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("negzero");
+            qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
+            onLogbarUpdate("手中为正，跳转到"+std::to_string(param)+"步");
         } else {
             qDebug()<<"回调函数未赋值";
         }
@@ -601,6 +732,7 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(hand.empty()){
             return false;
         }
+
         if(param==-1){
             hand=to_string(std::stoi(hand)+1);
         } else {
@@ -611,6 +743,7 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("hand+");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             onLogbarUpdate("手中加上"+std::to_string(param));
         } else {
             qDebug()<<"回调函数未赋值";
@@ -630,6 +763,84 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("hand-");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
+            onLogbarUpdate("手中减去"+std::to_string(param));
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="hand*"){
+        if(hand.empty()){
+            return false;
+        }
+
+        if(param==-1){
+            return false;
+        } else {
+            qDebug()<<"HAND*!"<<param;
+            hand=to_string(std::stoi(hand)*param);
+        }
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("hand*");
+            qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
+            onLogbarUpdate("手中乘上"+std::to_string(param));
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="hand="){
+        if(hand.empty()){
+            return false;
+        }
+
+        if(param==-1){
+            return false;
+        } else {
+            hand=to_string(param);
+        }
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("hand=");
+            qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
+            onLogbarUpdate("手中变为"+std::to_string(param));
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="hand/"){
+        if(hand.empty()){
+            return false;
+        }
+
+        if(param<=0){
+            return false;
+        } else {
+            hand=to_string(std::stoi(hand)/param);
+        }
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("hand/");
+            qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
+            onLogbarUpdate("手中除以"+std::to_string(param));
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
+    } else if(command=="hand0"){
+        if(hand.empty()){
+            return false;
+        }
+
+        hand=to_string(0);
+
+        updateState();
+        if(onLogbarUpdate) {
+            actionLog.push("hand-");
+            qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             onLogbarUpdate("手中减去"+std::to_string(param));
         } else {
             qDebug()<<"回调函数未赋值";
@@ -682,6 +893,7 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("copyifpos");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             if(stoi(carpetBar[paramW-1][param-1])>0){
                 onLogbarUpdate(string(extraParam=="c" ? "调用指针," : "")+"carpet为，将"+carpetBar[paramW-1][param-1]+"从carpet["+std::to_string(paramW-1)+"]["+std::to_string(param-1)+"]复制到手中");
             }
@@ -736,6 +948,7 @@ bool Game::inputProcess(string &command,int& param,int& paramW,std::string extra
         if(onLogbarUpdate) {
             actionLog.push("copyifneg");
             qDebug()<<"actionLog pushed";
+            qDebug()<<QString::fromStdString(command);
             if(stoi(carpetBar[paramW-1][param-1])<0){
                 onLogbarUpdate(string(extraParam=="c" ? "调用指针," : "")+"carpet为负，将"+carpetBar[paramW-1][param-1]+"从carpet["+std::to_string(paramW-1)+"]["+std::to_string(param-1)+"]复制到手中");
             }
@@ -816,10 +1029,16 @@ bool Game::playgame(istream& inputStream) {
                 return false;
             }
 
-            if(command[doStep]=="jump"||(command[doStep]=="jumpifzero"&&hand=="0") || (command[doStep]=="jumpifpos"&&std::stoi(hand)>0) || (command[doStep]=="jumpifneg"&&std::stoi(hand)<0)) {
+            if(command[doStep]=="jump"||(command[doStep]=="jumpifzero"&&hand=="0") || (command[doStep]=="jumpifpos"&&std::stoi(hand)>0) || (command[doStep]=="jumpifneg"&&std::stoi(hand)<0) || (command[doStep]=="jumpifposzero"&&std::stoi(hand)>=0) || (command[doStep]=="jumpifnegzero"&&std::stoi(hand)<=0)) {
+                if(command[doStep]=="jumpifpos"){
+                    qDebug()<<"COOL! It's POSITIVE!";
+                }
+
                 jumpInputJudge=true;
+                qDebug()<<"WHYJUMP? "<<QString::fromStdString(command[doStep]);
+                qDebug()<<"JUMPTOWHERE? "<<param[doStep];
                 doStep=param[doStep]-1;
-            } else if(command[doStep]=="jumpifzero") {
+            } else if(command[doStep]=="jumpifzero"||command[doStep]=="jumpifpos"||command[doStep]=="jumpifneg"||command[doStep]=="jumpifposzero"||command[doStep]=="jumpifnegzero") {
                 ++doStep;
             }
         }

@@ -106,11 +106,13 @@ private slots:
     void showGameNunchunk();
     void skiptoend();
     void geneLevelNunchunk();
+    void speedup();
     //void startMachineMovement();
     //void stopMachineMovement();
     //void moveMachine();
 
 private:
+    int speedinverse=1000;
     Ui::MainWindow *ui;
     QTimer* stateUpdateTimer;
     //QTimer* moveTimer;

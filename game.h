@@ -76,7 +76,8 @@ public:
 
     bool goalReached();
     bool isLegalOperation(std::string& command);
-    bool inputProcess(std::string &command,int& param,int& paramW,std::string extraParam,bool& jumpInputJudge,bool& endRun,int& numSteps);
+    std::string removeSpaces(std::string& input);
+    bool inputProcess(std::string command,int param,int paramW,std::string extraParam,bool& jumpInputJudge,bool& endRun,int& numSteps);
     void updateState();
     bool playgame(std::istream& inputStream);
     void commandProcess(std::string& commandToProcess,int& param,int& paramW,std::string& extraParam);

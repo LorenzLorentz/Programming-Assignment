@@ -70,6 +70,7 @@ public:
     QLabel *labelPlaygameOutboxbar;
     QLabel *labelPlaygameCarpetbar;
     QPushButton *buttonPlaygameSkip;
+    QPushButton *buttonPlaygameSpeedup;
     QWidget *playgameNunchunk;
     QTextEdit *inputPlaygameCommandNunchunk;
     QPushButton *buttonPlaygameStartNunchunk;
@@ -111,6 +112,7 @@ public:
     QTextBrowser *showPlaygameCarpet54Nunchunk;
     QTextBrowser *showPlaygameCarpet55Nunchunk;
     QTextBrowser *showPlaygameCarpet56Nunchunk;
+    QPushButton *buttonPlaygameSpeedupNunchunk;
     QWidget *success;
     QLabel *labelSuccessCentral;
     QPushButton *buttonSuccessBack;
@@ -248,6 +250,9 @@ public:
         buttonPlaygameSkip = new QPushButton(playgame);
         buttonPlaygameSkip->setObjectName(QString::fromUtf8("buttonPlaygameSkip"));
         buttonPlaygameSkip->setGeometry(QRect(580, 410, 100, 32));
+        buttonPlaygameSpeedup = new QPushButton(playgame);
+        buttonPlaygameSpeedup->setObjectName(QString::fromUtf8("buttonPlaygameSpeedup"));
+        buttonPlaygameSpeedup->setGeometry(QRect(580, 460, 100, 32));
         stackedWidget->addWidget(playgame);
         playgameNunchunk = new QWidget();
         playgameNunchunk->setObjectName(QString::fromUtf8("playgameNunchunk"));
@@ -289,7 +294,7 @@ public:
         labelPlaygameOutboxbarNunchunk->setGeometry(QRect(310, 360, 91, 21));
         labelPlaygameCarpetbarNunchunk = new QLabel(playgameNunchunk);
         labelPlaygameCarpetbarNunchunk->setObjectName(QString::fromUtf8("labelPlaygameCarpetbarNunchunk"));
-        labelPlaygameCarpetbarNunchunk->setGeometry(QRect(390, 130, 61, 21));
+        labelPlaygameCarpetbarNunchunk->setGeometry(QRect(420, 130, 61, 21));
         buttonPlaygameSkipNunchunk = new QPushButton(playgameNunchunk);
         buttonPlaygameSkipNunchunk->setObjectName(QString::fromUtf8("buttonPlaygameSkipNunchunk"));
         buttonPlaygameSkipNunchunk->setGeometry(QRect(580, 410, 100, 32));
@@ -371,6 +376,9 @@ public:
         showPlaygameCarpet56Nunchunk = new QTextBrowser(playgameNunchunk);
         showPlaygameCarpet56Nunchunk->setObjectName(QString::fromUtf8("showPlaygameCarpet56Nunchunk"));
         showPlaygameCarpet56Nunchunk->setGeometry(QRect(540, 320, 31, 31));
+        buttonPlaygameSpeedupNunchunk = new QPushButton(playgameNunchunk);
+        buttonPlaygameSpeedupNunchunk->setObjectName(QString::fromUtf8("buttonPlaygameSpeedupNunchunk"));
+        buttonPlaygameSpeedupNunchunk->setGeometry(QRect(580, 450, 101, 32));
         stackedWidget->addWidget(playgameNunchunk);
         success = new QWidget();
         success->setObjectName(QString::fromUtf8("success"));
@@ -431,12 +439,14 @@ public:
         labelPlaygameOutboxbar->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; font-weight:700;\">OutboxBar</span></p></body></html>", nullptr));
         labelPlaygameCarpetbar->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; font-weight:700;\">Carpet</span></p></body></html>", nullptr));
         buttonPlaygameSkip->setText(QCoreApplication::translate("MainWindow", "SKIP", nullptr));
+        buttonPlaygameSpeedup->setText(QCoreApplication::translate("MainWindow", "SPEED UP", nullptr));
         buttonPlaygameStartNunchunk->setText(QCoreApplication::translate("MainWindow", "START", nullptr));
         labelPlaygameLogbarNunchunk->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:24pt; font-weight:700;\">LOG</span></p></body></html>", nullptr));
         labelPlaygameInboxbarNunchunk->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; font-weight:700;\">InboxBar</span></p></body></html>", nullptr));
         labelPlaygameOutboxbarNunchunk->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; font-weight:700;\">OutboxBar</span></p></body></html>", nullptr));
         labelPlaygameCarpetbarNunchunk->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; font-weight:700;\">Carpet</span></p></body></html>", nullptr));
         buttonPlaygameSkipNunchunk->setText(QCoreApplication::translate("MainWindow", "SKIP", nullptr));
+        buttonPlaygameSpeedupNunchunk->setText(QCoreApplication::translate("MainWindow", "SPEED UP", nullptr));
         labelSuccessCentral->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:64pt; font-weight:700; vertical-align:super;\">SUCCESS</span></p></body></html>", nullptr));
         buttonSuccessBack->setText(QCoreApplication::translate("MainWindow", "BACK", nullptr));
         buttonSuccessExit->setText(QCoreApplication::translate("MainWindow", "EXIT", nullptr));

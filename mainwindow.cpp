@@ -51,6 +51,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonPlaygameSkip,&QPushButton::clicked,this,&MainWindow::skiptoend);
     connect(ui->buttonPlaygameStartNunchunk,&QPushButton::clicked,this,&MainWindow::buttonStartJudgeClicked);
     connect(ui->buttonPlaygameSkipNunchunk,&QPushButton::clicked,this,&MainWindow::skiptoend);
+    connect(ui->buttonPlaygameSpeedup,&QPushButton::clicked,this,&MainWindow::speedup);
+    connect(ui->buttonPlaygameSpeedupNunchunk,&QPushButton::clicked,this,&MainWindow::speedup);
 
     //初始化处理状态定时器
     stateUpdateTimer=new QTimer(this);
@@ -145,6 +147,7 @@ void MainWindow::buttonBackWelcomepageClicked(){
 }
 
 void MainWindow::buttonRestartClicked() {
+    speedinverse=1000;
     if(level<=3){
         machine=new Humanmachine(this);
         machine->setFixedSize(600, 1000);
@@ -200,6 +203,7 @@ void MainWindow::buttonRestartClicked() {
 }
 
 void MainWindow::showGame(){
+    speedinverse=1000;
     qDebug()<<"开始游戏";
 
     if(games[level].initialInbox.empty()){
@@ -241,6 +245,7 @@ void MainWindow::showGame(){
 }
 
 void MainWindow::showGameNunchunk(){
+    speedinverse=1000;
     qDebug()<<"开始游戏";
 
     if(games[level].initialInbox.empty()){
@@ -251,7 +256,7 @@ void MainWindow::showGameNunchunk(){
     if(level>=1){
         if(!games[level-1].passed) {
             QMessageBox::warning(this,"Warning","You've not passed previous level");
-            return;
+            //return;
         }
     }
 
@@ -433,12 +438,20 @@ void MainWindow::buttonStartJudgeClicked() {
     qDebug()<<(ifWin ? "win" : "notwin");
 
     ui->showPlaygameInboxbar->clear();
-    stateUpdateTimer->start(1000);
+    stateUpdateTimer->start(speedinverse);
 
     //
     startProcessing=true;
     updateProcessingState();
     //
+}
+
+void MainWindow::speedup(){
+    stateUpdateTimer->stop();
+    if(speedinverse>1){
+        speedinverse/=10;
+        stateUpdateTimer->start(speedinverse);
+    }
 }
 
 void MainWindow::updateProcessingState() {
@@ -848,7 +861,54 @@ void MainWindow::updateProcessingState() {
 }
 
 void MainWindow::skiptoend(){
+    stateUpdateTimer->stop();
+    ui->inputPlaygameCommand->clear();
+    ui->inputPlaygameCommandNunchunk->clear();
+    ui->showPlaygameLogbarNunchunk->clear();
+    ui->showPlaygameInboxbarNunchunk->clear();
+    ui->showPlaygameOutboxbarNunchunk->clear();
+
+    ui->showPlaygameCarpet11Nunchunk->clear();
+    ui->showPlaygameCarpet12Nunchunk->clear();
+    ui->showPlaygameCarpet13Nunchunk->clear();
+    ui->showPlaygameCarpet14Nunchunk->clear();
+    ui->showPlaygameCarpet15Nunchunk->clear();
+    ui->showPlaygameCarpet16Nunchunk->clear();
+
+    ui->showPlaygameCarpet21Nunchunk->clear();
+    ui->showPlaygameCarpet22Nunchunk->clear();
+    ui->showPlaygameCarpet23Nunchunk->clear();
+    ui->showPlaygameCarpet24Nunchunk->clear();
+    ui->showPlaygameCarpet25Nunchunk->clear();
+    ui->showPlaygameCarpet26Nunchunk->clear();
+
+    ui->showPlaygameCarpet31Nunchunk->clear();
+    ui->showPlaygameCarpet32Nunchunk->clear();
+    ui->showPlaygameCarpet33Nunchunk->clear();
+    ui->showPlaygameCarpet34Nunchunk->clear();
+    ui->showPlaygameCarpet35Nunchunk->clear();
+    ui->showPlaygameCarpet36Nunchunk->clear();
+
+    ui->showPlaygameCarpet41Nunchunk->clear();
+    ui->showPlaygameCarpet42Nunchunk->clear();
+    ui->showPlaygameCarpet43Nunchunk->clear();
+    ui->showPlaygameCarpet44Nunchunk->clear();
+    ui->showPlaygameCarpet45Nunchunk->clear();
+    ui->showPlaygameCarpet46Nunchunk->clear();
+
+    ui->showPlaygameCarpet51Nunchunk->clear();
+    ui->showPlaygameCarpet52Nunchunk->clear();
+    ui->showPlaygameCarpet53Nunchunk->clear();
+    ui->showPlaygameCarpet54Nunchunk->clear();
+    ui->showPlaygameCarpet55Nunchunk->clear();
+    ui->showPlaygameCarpet56Nunchunk->clear();
+
+    machine->resetDirec();
+    while(!games[level].actionLog.empty()){
+        games[level].actionLog.pop();
+    }
     if(ifWin) {
+        ifWin=false;
         qDebug()<<"Success!";
         ui->stackedWidget->setCurrentWidget(ui->success);
     } else {
@@ -911,7 +971,7 @@ void MainWindow::loadLevelinfo(){
     games.push_back(Game(std::vector<std::string>{"1", "2"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero","hand+","hand-"},std::vector<std::string>{"1", "2"},4,1,"第一关\n让机器人取出输入序列上的每个积木放入输出序列中"));
     games.push_back(Game(std::vector<std::string>{"3", "9", "5", "1", "-2", "-2", "9", "-9"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero"},std::vector<std::string>{"-6", "6", "4", "-4", "0", "0", "18", "-18"},4,1,"第二关\n对于输入序列中的每两个东西，先把第1个减去第2个，并把结果放在输出序列中，然后把第2个减去第1个，再把结果放在输出序列中，重复"));
     games.push_back(Game(std::vector<std::string>{"6", "2", "7", "7", "-9", "3", "-3", "-3"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero"},std::vector<std::string>{"7", "-3"},3,1,"第三关\n从输入序列中依次取2个数字，如果相等则将其中一个输出，否则扔掉。重复这个过程直到输入传送带为空"));
-    games.push_back(Game(std::vector<std::string>{"3","10","1","2","3","1000","3000","6000"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos"},std::vector<std::string>{"19233"},1000,4,"第四关 \n 有N种类型的短棒，第i种短棒长度为a_i，武力值为b_i，数量无限\n\n长度为A的棒和长度为B的棒组成一个长度为A+B的棒，此时长度为A+B的棒的武力值为他们的和\n\n如果A与B的长度相等，则其武力值还要再增加233\n\n已知需要一根长M的棒，求最大的武力值是多少"));
+    games.push_back(Game(std::vector<std::string>{"3","10","1","2","3","1000","3000","6000"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos" , "hand*" , "hand/"},std::vector<std::string>{"19233"},1000,4,"第四关 \n 有N种类型的短棒，第i种短棒长度为a_i，武力值为b_i，数量无限\n\n长度为A的棒和长度为B的棒组成一个长度为A+B的棒，此时长度为A+B的棒的武力值为他们的和\n\n如果A与B的长度相等，则其武力值还要再增加233\n\n已知需要一根长M的棒，求最大的武力值是多少"));
 }
 
 void MainWindow::loadArchive(){
@@ -1079,13 +1139,13 @@ void MainWindow::parselLevelInfo(const std::string& line,
 
 void MainWindow::geneLevelNunchunk(){
     srand(time(0));
-    int nNunchunkGen=(rand()%(1000-1+1))+1;
-    int mNunchunkGen=(rand()%(1000-1+1))+1;
+    int nNunchunkGen=(rand()%(100-1+1))+1;
+    int mNunchunkGen=(rand()%(100-1+1))+1;
     std::vector<int> aNunchunkGen(nNunchunkGen);
     std::vector<int> bNunchunkGen(nNunchunkGen);
     for(int i=0;i<nNunchunkGen;++i){
         aNunchunkGen[i]=(rand()%(mNunchunkGen-1+1))+1;
-        bNunchunkGen[i]=(rand()%(10000-1+1))+1;
+        bNunchunkGen[i]=(rand()%(1000-1+1))+1;
     }
     std::vector<std::string> inboxSetNunchunk;
 
@@ -1114,11 +1174,18 @@ void MainWindow::geneLevelNunchunk(){
     Nunchunk nunchunkObj;
     std::vector<std::string> outboxSetNunchunk;
     outboxSetNunchunk.push_back(std::to_string(nunchunkObj.nunchunk(inputStreamNunchunk)));
-    games.push_back(Game(inboxSetNunchunk,std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos"},outboxSetNunchunk,1000,5,"第五关\n没有描述"));
+    games.push_back(Game(inboxSetNunchunk,std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos" , "hand0" , "jumpifposzero" , "jumpifnegzero" , "hand*" , "hand/" , "times" , "hand="},outboxSetNunchunk,10000,5,"第五关\n没有描述"));
 }
 
 void MainWindow::loadandback(){
+    if(games.empty()){
+        QMessageBox::warning(this,"warning","You've not loaded game!");
+        return;
+    }
+
     geneLevelNunchunk();
+
+    //games.push_back(Game(std::vector<std::string>{"3","5","1","2","3","1000","3000","6000"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , """copyifneg" , "copyifpos" , "hand0" , "jumpifposzero" , "jumpifnegzero" , "hand*" , "hand/" , "times" , "hand="},std::vector<std::string>{"9000"},1000,5,"第四关 \n 有N种类型的短棒，第i种短棒长度为a_i，武力值为b_i，数量无限\n\n长度为A的棒和长度为B的棒组成一个长度为A+B的棒，此时长度为A+B的棒的武力值为他们的和\n\n如果A与B的长度相等，则其武力值还要再增加233\n\n已知需要一根长M的棒，求最大的武力值是多少"));
 
     qDebug()<<"Num of levels:"<<games.size();
     for(int i=0;i<games.size();++i){

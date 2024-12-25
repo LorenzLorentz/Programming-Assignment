@@ -1,20 +1,25 @@
+Nunchunk参考通关程序：
+
+注：这个程序的的确确是错的，但希望能给你带来一些启示
+
+注2：根据观测，游戏运行出结果要秒量级的时间；即使是1000倍速，游戏动画结束也需要分钟量级（5分钟？）的时间
+
 数据存储
 1 ptr: 第一个指针表示index;第二个指针写入a，也就是说写入到第三行；
-1' ptr: 第一个是index i，第二个是 index j， 第三个是 index k，第四个表示指向a[i]的索引，第五个表示指向b[i]
+1' ptr: 第一个是index i，第二个是 index j， 第三个是 index k，第四个表示指向a[i]的索引，第五个表示指向b[i]，第六个表示指向dp[j]
 2 const: n , m , maxBonus , maxBonus的比较,临时存储/bonux函数存储,bonus函数存储2
 3 a:
 4 b:
 5 dp:
 
+可读性强一些的version：
 
-//输入n和m
 1 inbox
 2 copyto 1;2
 3 inbox
 4 copyto 2;2
 
-//输入数组 a
-5 hand0
+5 hand= 1
 6 copyto 1;1
 7 jump INPUT_A_LOOP
 
@@ -25,29 +30,29 @@ INPUT_A_LOOP:
 11 copyfrom 1;1
 12 copyto 2;1 p1
 13 hand0
-14 hand+ 1
+14 hand+ 3
 15 copyto 2;1 p2
 16 inbox
 17 copyto 2;1 c
 18 copyfrom 1;1
 19 hand+
 20 copyto 1;1
-21 jump INPUT_A_LOOP
+21 hand0
+22 jump INPUT_A_LOOP
 END_INPUT_A:
 
-// 输入数组 b
-23 hand0
+23 hand= 1
 24 copyto 1;1
 25 jump INPUT_B_LOOP
 
 INPUT_B_LOOP:
 26 copyfrom 1;1
 27 sub 1;2
-28 jumpifposzero END_INPUT_B
+28 jumpifpos END_INPUT_B
 29 copyfrom 1;1
 30 copyto 3;1 p1
 31 hand0
-32 hand+ 1
+32 hand+ 4
 33 copyto 3;1 p2
 34 inbox
 35 copyto 3;1 c
@@ -57,119 +62,323 @@ INPUT_B_LOOP:
 39 jump INPUT_B_LOOP
 END_INPUT_B:
 
-// 初始化 dp 数组
-40 hand0
+40 hand= 1
 41 copyto 1;1
 42 jump INIT_DP_LOOP
 
 INIT_DP_LOOP:
 43 copyfrom 1;1
 44 sub 2;2
-45 jumpifposzero END_INIT_DP
+45 jumpifpos END_INIT_DP
 46 copyfrom 1;1
 47 copyto 4;1 p1
 48 hand0
-49 hand+ 1
+49 hand+ 5
 50 copyto 4;1 p2
 51 hand0
 52 copyto 4;1 c
-53 jump INIT_DP_LOOP
-END_INIT_DP
 
-// 主循环
-54 hand0
+53 copyfrom 1;1
+54 hand+ 1
 55 copyto 1;1
-56 jump MAIN_LOOP1
+
+56 jump INIT_DP_LOOP
+END_INIT_DP:
+
+57 hand= 1
+58 copyto 1;1
+59 jump MAIN_LOOP1
 
 MAIN_LOOP1:
-57 copyfrom 1;1               
-58 sub 1;2
-59 jumpifposzero END_MAIN_LOOP1
-60 copyfrom 1;1
-61 copyto 4;1 p1
-62 hand 0
-63 hand+ 2
-64 copyto 4;1 p2
-65 copyfrom 4;1 c
-66 copyto 2;1
-67 jump MAIN_LOOP2
+60 copyfrom 1;1               
+61 sub 1;2
+62 jumpifpos END_MAIN_LOOP1
+63 copyfrom 1;1
+64 copyto 4;1 p1
+65 hand0
+66 hand+ 3
+67 copyto 4;1 p2
+68 copyfrom 4;1 c
+69 copyto 2;1
+70 jump MAIN_LOOP2
 
 MAIN_LOOP2:
-68 copyfrom 2;1
-69 sub 2;2
-70 jumpifpos END_MAIN_LOOP2
-71 hand0
-72 copyto 3;2
-73 hand0
-74 hand+ 1
-75 copyto 3;1
-76 jump MAIN_LOOP3
+71 copyfrom 2;1
+72 sub 2;2
+73 jumpifpos END_MAIN_LOOP2
+74 hand0
+75 copyto 3;2
+76 hand0
+77 hand+ 1
+78 copyto 3;1
+79 jump MAIN_LOOP3
 
 MAIN_LOOP3:
-77 copyfrom 3;1
-78 hand* 4;1 c
-79 sub 2;1
-80 jump END_MAIN_LOOP3
-81 jump UPDATE_BONUS
-82 copyfrom 3;1
-83 jump FUNC_BONUS
+80 copyfrom 3;1
+81 times 4;1 c
+82 sub 2;1
+83 jumpifpos END_MAIN_LOOP3
+84 hand0
+85 copyfrom 3;1
+86 jump FUNC_BONUS
 FUNC_BONUS_RETURN
-84 copyto 4;2
-85 copyfrom 1;1
-86 copyto 5;1 p1
-87 hand0 
-88 hand+ 4
-89 copyto 4;2 p2
-90 copyfrom 4;2 c
-91 hand* 3;1
-92 add 4;2
-93 copyto 4;2
-94 copyfrom 4;1 c
-95 hand* 3;1 c
-96 sub 2;1
-97 copyto 5;2
-98 hand0 
-99 sub 5;2
-100 add 4;2
-101 copyto 4;2
-102 sub 3;2
-103 jumpifpos UPDATE_BONUS
-104 copyfrom 3;2
+87 copyto 4;2
+88 copyfrom 1;1
+89 copyto 5;1 p1
+90 hand0 
+91 hand+ 4
+92 copyto 5;1 p2
+93 copyfrom 5;1 c
+94 times 3;1
+95 add 4;2
+96 copyto 4;2
+97 copyfrom 4;1 c
+98 times 3;1
+99 sub 2;1
+100 copyto 5;2
+101 hand= 1 //!!!因为是从1开始计数的
+102 sub 5;2
+103 copyto 6;1 p1
+104 hand0
+105 hand+ 5
+106 copyto 6;1 p2
+107 copyfrom 6;1 c
+108 add 4;2
+109 copyto 4;2
+110 sub 3;2
+111 jumpifpos UPDATE_BONUS
+112 copyfrom 3;2
 END_UPDATE_BONUS
-105 copyto 3;2
-106 jump MAIN_LOOP3
+113 copyto 3;2
+114 copyfrom 2;1
+115 copyto 6;1 p1
+116 hand0
+117 hand+ 5
+118 copyto 6;1 p2
+119 copyfrom 6;1 c
+120 sub 3;2
+121 jumpifneg UPDATE_DP
+122 copyfrom 6;1 c
+
+END_UPDATE_DP
+123 copyto 6;1 c
+124 copyfrom 3;1
+125 hand+
+126 copyto 3;1
+127 jump MAIN_LOOP3
+UPDATE_DP
+128 copyfrom 3;2
+129 jump END_UPDATE_DP
+
 UPDATE_BONUS:
-107 copyfrom 4;2
+130 copyfrom 4;2
+131 jump END_UPDATE_BONUS
+
 END_MAIN_LOOP3:
-108 jumo MAIN_LOOP2
+132 copyfrom 2;1
+133 hand+
+134 copyto 2;1
+135 jump MAIN_LOOP2
+
 END_MAIN_LOOP2:
-109 jump MAIN_LOOP1
+136 copyfrom 1;1
+137 hand+
+138 copyto 1;1
+139 jump MAIN_LOOP1
+
 END_MAIN_LOOP1:
+140 jump OUTPUT
 
 FUNC_BONUS:
-110 copyto 6;2
-111 hand0
-112 copyto 5;2
-113 jump FUNC_BONUS_LOOP
+141 copyto 6;2
+142 hand0
+143 copyto 5;2
+144 jump FUNC_BONUS_LOOP
 END_FUNC_BONUS_LOOP
-114 copyfrom 5;2
-115 hand* 233
-116 jump FUNC_BONUS_RETURN
+145 copyfrom 5;2
+146 hand* 233
+147 jump FUNC_BONUS_RETURN
 
 FUNC_BONUS_LOOP:
-117 copyfrom 6;2
-118 hand/ 2
-119 copyto 6;2
-120 add 5;2
-121 copyto 5;2
-122 copyfrom 6;2
-123 jumpifzero
+148 copyfrom 6;2
+149 hand/ 2
+150 copyto 6;2
+151 add 5;2
+152 copyto 5;2
+153 copyfrom 6;2
+154 jumpifzero END_FUNC_BONUS_LOOP
+155 jump FUNC_BONUS_LOOP
 
 OUTPUT:
-124 copyfrom 2;2
-125 copyto 1;1 p1
-126 hand0
-127 hand+ 5
-128 copyto 1;1 p2 
-129 copyfrom 1;1 c 
-130 outbox
+156 copyfrom 2;2
+157 copyto 1;1
+158 hand0
+159 hand+ 5
+160 copyto 1;1 p2 
+161 copyfrom 1;1 c 
+162 outbox
+
+可以直接输入的version：
+
+inbox
+copyto 1;2
+inbox
+copyto 2;2
+hand= 1
+copyto 1;1
+jump 8
+copyfrom 1;1
+sub 1;2
+jumpifpos 23
+copyfrom 1;1
+copyto 2;1 p1
+hand0
+hand+ 3
+copyto 2;1 p2
+inbox
+copyto 2;1 c
+copyfrom 1;1
+hand+
+copyto 1;1
+hand0
+jump 8
+hand= 1
+copyto 1;1
+jump 26
+copyfrom 1;1
+sub 1;2
+jumpifpos 40
+copyfrom 1;1
+copyto 3;1 p1
+hand0
+hand+ 4
+copyto 3;1 p2
+inbox
+copyto 3;1 c
+copyfrom 1;1
+hand+
+copyto 1;1
+jump 26
+hand= 1
+copyto 1;1
+jump 43
+copyfrom 1;1
+sub 2;2
+jumpifpos 57
+copyfrom 1;1
+copyto 4;1 p1
+hand0
+hand+ 5
+copyto 4;1 p2
+hand0 
+copyto 4;1 c
+copyfrom 1;1
+hand+ 1
+copyto 1;1
+jump 43
+hand= 1
+copyto 1;1
+jump 60
+copyfrom 1;1               
+sub 1;2
+jumpifpos 140
+copyfrom 1;1
+copyto 4;1 p1
+hand0
+hand+ 3
+copyto 4;1 p2
+copyfrom 4;1 c
+copyto 2;1
+jump 71
+copyfrom 2;1
+sub 2;2
+jumpifpos 136
+hand0
+copyto 3;2
+hand0
+hand+ 1
+copyto 3;1
+jump 80
+copyfrom 3;1
+times 4;1 c
+sub 2;1
+jumpifpos 132
+hand0
+copyfrom 3;1
+jump 141
+copyto 4;2
+copyfrom 1;1
+copyto 5;1 p1
+hand0 
+hand+ 4
+copyto 5;1 p2
+copyfrom 5;1 c
+times 3;1
+add 4;2
+copyto 4;2
+copyfrom 4;1 c
+times 3;1
+sub 2;1
+copyto 5;2
+hand= 1 
+sub 5;2
+copyto 6;1 p1
+hand0
+hand+ 5
+copyto 6;1 p2
+copyfrom 6;1 c
+add 4;2
+copyto 4;2
+sub 3;2
+jumpifpos 130
+copyfrom 3;2
+copyto 3;2
+copyfrom 2;1
+copyto 6;1 p1
+hand0
+hand+ 5
+copyto 6;1 p2
+copyfrom 6;1 c
+sub 3;2
+jumpifneg 128
+copyfrom 6;1 c
+copyto 6;1 c
+copyfrom 3;1
+hand+
+copyto 3;1
+jump 77
+copyfrom 3;2
+jump 123
+copyfrom 4;2
+jump 113
+copyfrom 2;1
+hand+
+copyto 2;1
+jump 71
+copyfrom 1;1
+hand+
+copyto 1;1
+jump 60
+jump 156
+copyto 6;2
+hand0
+copyto 5;2
+jump 148
+copyfrom 5;2
+hand* 233
+jump 87
+copyfrom 6;2
+hand/ 2
+copyto 6;2
+add 5;2
+copyto 5;2
+copyfrom 6;2
+jumpifzero 145
+jump 148
+copyfrom 2;2
+copyto 1;1
+hand0
+hand+ 5
+copyto 1;1 p2 
+copyfrom 1;1 c 
+outbox
