@@ -1,22 +1,3 @@
-/*
- * README
- * humanmachine主要有这几个函数
- * 1.resetDirec
- * 2.Hand: rotateHand,rotateStep
- * 3.Body: moveMachine, moveMachineStep
- * 4.paint: paintEvent, updateHand
- * 新增参量
- * 1.status 0表示普通姿势，1表示手在头顶
- * 2.aim等变量
- */
-
-/*
- * TODO
- * 1.涉及到的动作，jump类动作，copy类动作，add、sub类动作，hand+-类动作
- * 2.动作与栏内容修改先后顺序匹配
- * 3.我试着写了一些，但好像不能正常显示效果（代码所应该达到的效果）
- */
-
 #include "humanmachine.h"
 #include <QPainter>
 #include <QDebug>
@@ -30,6 +11,7 @@ Humanmachine::Humanmachine(QWidget *parent)
 
     moveMachineTimer=new QTimer(this);
     rotateHandTimer=new QTimer(this);
+
     connect(rotateHandTimer,&QTimer::timeout,this,&Humanmachine::rotateStep);
     connect(moveMachineTimer,&QTimer::timeout,this,&Humanmachine::moveMachineStep);
     qDebug()<<"生成函数被调用";

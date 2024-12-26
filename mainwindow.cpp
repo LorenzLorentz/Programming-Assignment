@@ -16,6 +16,14 @@
 #include <cstdlib>
 #include "nunchunk.h"
 
+/*
+* TODO
+* 暂停按键？
+* jump的指针模式？
+* 还有的已经忘了。
+* 不知道还有什么bug
+*/
+
 int level=0;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -87,24 +95,34 @@ void MainWindow::clearLayout(QLayout* layout) {
 
 void MainWindow::buttonEnterClicked() {
     if(games.empty()){
-        QMessageBox::warning(this,"warning","You've load game info");
+        QMessageBox::warning(this,"warning","You've not loaded game info");
         return;
     }
 
-    if(games[0].passed){
+    if(games[0].passed&&ui->buttonLevelchoiceLevel1->text().toStdString().find("PASSED") == std::string::npos){
         QString currentText=ui->buttonLevelchoiceLevel1->text();
         QString updatedText=currentText+" PASSED";
         ui->buttonLevelchoiceLevel1->setText(updatedText);
     }
-    if(games[1].passed){
+    if(games[1].passed&&ui->buttonLevelchoiceLevel2->text().toStdString().find("PASSED") == std::string::npos){
         QString currentText=ui->buttonLevelchoiceLevel2->text();
         QString updatedText=currentText+" PASSED";
         ui->buttonLevelchoiceLevel2->setText(updatedText);
     }
-    if(games[2].passed){
+    if(games[2].passed&&ui->buttonLevelchoiceLevel3->text().toStdString().find("PASSED") == std::string::npos){
         QString currentText=ui->buttonLevelchoiceLevel3->text();
         QString updatedText=currentText+" PASSED";
         ui->buttonLevelchoiceLevel3->setText(updatedText);
+    }
+    if(games[3].passed&&ui->buttonLevelchoiceLevel4->text().toStdString().find("PASSED") == std::string::npos){
+        QString currentText=ui->buttonLevelchoiceLevel3->text();
+        QString updatedText=currentText+" PASSED";
+        ui->buttonLevelchoiceLevel4->setText(updatedText);
+    }
+    if(games[4].passed&&ui->buttonLevelchoiceLevel5->text().toStdString().find("PASSED") == std::string::npos){
+        QString currentText=ui->buttonLevelchoiceLevel3->text();
+        QString updatedText=currentText+" PASSED";
+        ui->buttonLevelchoiceLevel5->setText(updatedText);
     }
     ui->stackedWidget->setCurrentWidget(ui->levelchoice);
 }
@@ -139,6 +157,32 @@ void MainWindow::buttonBackClicked() {
         clearLayout(playGamePage->layout());
         delete playGamePage->layout();
     }
+
+    if(games[0].passed&&ui->buttonLevelchoiceLevel1->text().toStdString().find("PASSED") == std::string::npos){
+        QString currentText=ui->buttonLevelchoiceLevel1->text();
+        QString updatedText=currentText+" PASSED";
+        ui->buttonLevelchoiceLevel1->setText(updatedText);
+    }
+    if(games[1].passed&&ui->buttonLevelchoiceLevel2->text().toStdString().find("PASSED") == std::string::npos){
+        QString currentText=ui->buttonLevelchoiceLevel2->text();
+        QString updatedText=currentText+" PASSED";
+        ui->buttonLevelchoiceLevel2->setText(updatedText);
+    }
+    if(games[2].passed&&ui->buttonLevelchoiceLevel3->text().toStdString().find("PASSED") == std::string::npos){
+        QString currentText=ui->buttonLevelchoiceLevel3->text();
+        QString updatedText=currentText+" PASSED";
+        ui->buttonLevelchoiceLevel3->setText(updatedText);
+    }
+    if(games[3].passed&&ui->buttonLevelchoiceLevel4->text().toStdString().find("PASSED") == std::string::npos){
+        QString currentText=ui->buttonLevelchoiceLevel4->text();
+        QString updatedText=currentText+" PASSED";
+        ui->buttonLevelchoiceLevel4->setText(updatedText);
+    }
+    if(games[4].passed&&ui->buttonLevelchoiceLevel5->text().toStdString().find("PASSED") == std::string::npos){
+        QString currentText=ui->buttonLevelchoiceLevel5->text();
+        QString updatedText=currentText+" PASSED";
+        ui->buttonLevelchoiceLevel5->setText(updatedText);
+    }
     ui->stackedWidget->setCurrentWidget(ui->levelchoice);
 }
 
@@ -147,11 +191,13 @@ void MainWindow::buttonBackWelcomepageClicked(){
 }
 
 void MainWindow::buttonRestartClicked() {
+    startJudgeCheck=false;
     speedinverse=1000;
     if(level<=3){
         machine=new Humanmachine(this);
         machine->setFixedSize(600, 1000);
         machine->lower();
+
         ui->stackedWidget->setCurrentWidget(ui->playgame);
         if (!machine) {
             qDebug()<<"初始化失败";
@@ -191,6 +237,7 @@ void MainWindow::buttonRestartClicked() {
         QVBoxLayout *layout=new QVBoxLayout(playGamePage);
         layout->addWidget(machine);
         machine->resetDirec();
+
         ui->stackedWidget->setCurrentWidget(ui->playgameNunchunk);
 
         std::string showInitialInbox;
@@ -203,11 +250,12 @@ void MainWindow::buttonRestartClicked() {
 }
 
 void MainWindow::showGame(){
+    startJudgeCheck=false;
     speedinverse=1000;
     qDebug()<<"开始游戏";
 
     if(games[level].initialInbox.empty()){
-        QMessageBox::warning(this,"Warning","You've not load game info");
+        QMessageBox::warning(this,"Warning","You've not loaded game info");
         return;
     }
 
@@ -241,15 +289,16 @@ void MainWindow::showGame(){
         showInitialInbox+=games[level].initialInbox[i]+" ";
     }
     ui->showPlaygameInboxbar->setHtml(QString::fromStdString(showInitialInbox));
-    ui->showPlaygameLogbar->setHtml(QString::fromStdString(games[level].descrip));
+    ui->showPlaygameLogbar->setPlainText(QString::fromStdString(games[level].descrip));
 }
 
 void MainWindow::showGameNunchunk(){
+    startJudgeCheck=false;
     speedinverse=1000;
     qDebug()<<"开始游戏";
 
     if(games[level].initialInbox.empty()){
-        QMessageBox::warning(this,"Warning","You've not load game info");
+        QMessageBox::warning(this,"Warning","You've not loaded game info");
         return;
     }
 
@@ -287,6 +336,7 @@ void MainWindow::showGameNunchunk(){
 }
 
 void MainWindow::buttonStartJudgeClicked() {
+    startJudgeCheck=true;
     QString commandInput;
     if(level<=3){
         commandInput=ui->inputPlaygameCommand->toPlainText();
@@ -447,6 +497,10 @@ void MainWindow::buttonStartJudgeClicked() {
 }
 
 void MainWindow::speedup(){
+    if(!startJudgeCheck){
+        QMessageBox::warning(this,"warning","NOT START");
+        return;
+    }
     stateUpdateTimer->stop();
     if(speedinverse>1){
         speedinverse/=10;
@@ -455,11 +509,6 @@ void MainWindow::speedup(){
 }
 
 void MainWindow::updateProcessingState() {
-    /*
-     * TODO
-     * 进行动作与显示内容先后顺序匹配
-     */
-
     //
     //if(!machine->isRotationCompleted) return;
     //
@@ -861,9 +910,27 @@ void MainWindow::updateProcessingState() {
 }
 
 void MainWindow::skiptoend(){
+    if(!startJudgeCheck){
+        QMessageBox::warning(this,"warning","NOT START");
+        return;
+    }
+
+    qDebug()<<"REALLYWIN"<<(ifWin ? "WIN!" : "NOTWIN");
+
     stateUpdateTimer->stop();
     ui->inputPlaygameCommand->clear();
+
+    ui->showPlaygameLogbar->clear();
+    ui->showPlaygameInboxbar->clear();
+    ui->showPlaygameOutboxbar->clear();
+
+    ui->showPlaygameCarpet1->clear();
+    ui->showPlaygameCarpet2->clear();
+    ui->showPlaygameCarpet3->clear();
+    ui->showPlaygameCarpet4->clear();
+
     ui->inputPlaygameCommandNunchunk->clear();
+
     ui->showPlaygameLogbarNunchunk->clear();
     ui->showPlaygameInboxbarNunchunk->clear();
     ui->showPlaygameOutboxbarNunchunk->clear();
@@ -959,22 +1026,27 @@ void MainWindow::loadLevelinfo(){
         qDebug()<<i<<QString::fromStdString(descripRead[i]);
     }
 
-    //games.clear();
-    /* for(int i=0;i<levelinfoRead.size();++i) {
+    games.clear();
+    for(int i=0;i<levelinfoRead.size();++i) {
         //Game tempGameSet={inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],1,descripRead[i]};
         //games.push_back(tempGameSet);
-        games.push_back(Game(inboxBarSetRead[i],std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos"},goalJudgeRead[i],numOfCarpet[i],1,"123"));
+        games.push_back(Game(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],numOfCarpet2D[i],descripRead[i]));
         //games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],numOfCarpet2D[i],descripRead[i]);
-    } */
+    }
     //qDebug()<<"SSSS"<<games.size();
 
-    games.push_back(Game(std::vector<std::string>{"1", "2"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero","hand+","hand-"},std::vector<std::string>{"1", "2"},4,1,"第一关\n让机器人取出输入序列上的每个积木放入输出序列中"));
-    games.push_back(Game(std::vector<std::string>{"3", "9", "5", "1", "-2", "-2", "9", "-9"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero"},std::vector<std::string>{"-6", "6", "4", "-4", "0", "0", "18", "-18"},4,1,"第二关\n对于输入序列中的每两个东西，先把第1个减去第2个，并把结果放在输出序列中，然后把第2个减去第1个，再把结果放在输出序列中，重复"));
-    games.push_back(Game(std::vector<std::string>{"6", "2", "7", "7", "-9", "3", "-3", "-3"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero"},std::vector<std::string>{"7", "-3"},3,1,"第三关\n从输入序列中依次取2个数字，如果相等则将其中一个输出，否则扔掉。重复这个过程直到输入传送带为空"));
-    games.push_back(Game(std::vector<std::string>{"3","10","1","2","3","1000","3000","6000"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos" , "hand*" , "hand/"},std::vector<std::string>{"19233"},1000,4,"第四关 \n 有N种类型的短棒，第i种短棒长度为a_i，武力值为b_i，数量无限\n\n长度为A的棒和长度为B的棒组成一个长度为A+B的棒，此时长度为A+B的棒的武力值为他们的和\n\n如果A与B的长度相等，则其武力值还要再增加233\n\n已知需要一根长M的棒，求最大的武力值是多少"));
+    //games.push_back(Game(std::vector<std::string>{"1", "2"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero","hand+","hand-"},std::vector<std::string>{"1", "2"},4,1,"第一关\n让机器人取出输入序列上的每个积木放入输出序列中"));
+    //games.push_back(Game(std::vector<std::string>{"3", "9", "5", "1", "-2", "-2", "9", "-9"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero"},std::vector<std::string>{"-6", "6", "4", "-4", "0", "0", "18", "-18"},4,1,"第二关\n对于输入序列中的每两个东西，先把第1个减去第2个，并把结果放在输出序列中，然后把第2个减去第1个，再把结果放在输出序列中，重复"));
+    //games.push_back(Game(std::vector<std::string>{"6", "2", "7", "7", "-9", "3", "-3", "-3"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero"},std::vector<std::string>{"7", "-3"},3,1,"第三关\n从输入序列中依次取2个数字，如果相等则将其中一个输出，否则扔掉。重复这个过程直到输入传送带为空"));
+    //games.push_back(Game(std::vector<std::string>{"3","10","1","2","3","1000","3000","6000"},std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos" , "hand*" , "hand/"},std::vector<std::string>{"19233"},1000,4,"第四关 \n 有N种类型的短棒，第i种短棒长度为a_i，武力值为b_i，数量无限\n\n长度为A的棒和长度为B的棒组成一个长度为A+B的棒，此时长度为A+B的棒的武力值为他们的和\n\n如果A与B的长度相等，则其武力值还要再增加233\n\n已知需要一根长M的棒，求最大的武力值是多少"));
 }
 
 void MainWindow::loadArchive(){
+    if(games.empty()){
+        QMessageBox::warning(this,"warning","You 've not loaded gameinfo.");
+        return;
+    }
+
     QString archiveFilePath=QFileDialog::getOpenFileName(this, "Select Game File", "", "Text Files (*.txt);;All Files (*)");
 
     if (archiveFilePath.isEmpty()) {
@@ -1004,6 +1076,7 @@ void MainWindow::loadArchive(){
 void MainWindow::loadAuto(){
     std::ifstream levelInfoRead("levelinfo.txt");
     if (!levelInfoRead.is_open()) {
+        QMessageBox::warning(this,"warning","Can't access the gameinfo file");
         qDebug()<<"Can't access the file";
         return;
     }
@@ -1025,13 +1098,15 @@ void MainWindow::loadAuto(){
             qDebug()<<i<<QString::fromStdString(inboxBarSetRead[i][j]);
         }
     }
-    //games.clear();
+
+    games.clear();
     for(int i=0;i<levelinfoRead.size();++i) {
-        //games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],numOfCarpet2D[i],descripRead[i]);
+        games.emplace_back(inboxBarSetRead[i],availableOpRead[i],goalJudgeRead[i],numOfCarpet[i],numOfCarpet2D[i],descripRead[i]);
     }
 
     std::ifstream archiveRead("archive.txt");
     if (!archiveRead.is_open()) {
+        QMessageBox::warning(this,"warning","Can't access the archive file");
         qDebug()<<"Can access the file";
         return;
     }
@@ -1115,9 +1190,7 @@ void MainWindow::parselLevelInfo(const std::string& line,
                     parts.push_back(item);
                 }
                 availableOpRead.push_back(parts);
-            }else if(key=="AvailableCarpet") {
-                numOfCarpet.push_back(stoi(value));
-            }else if(key=="GoalJudge") {
+            } else if(key=="GoalJudge") {
                 std::istringstream gjStream(value);
                 std::string item;
                 std::vector<std::string> parts;
@@ -1126,11 +1199,20 @@ void MainWindow::parselLevelInfo(const std::string& line,
                 }
                 goalJudgeRead.push_back(parts);
             } else if(key=="NumOfCarpet"){
+                qDebug()<<"size:"<<numOfCarpet.size();
+                qDebug()<<"1D"<<std::stoi(value);
                 numOfCarpet.push_back(std::stoi(value));
             } else if(key=="NumOfCarpet2D"){
                 qDebug()<<"2D"<<std::stoi(value);
                 numOfCarpet2D.push_back(std::stoi(value));
             } else if(key=="Description"){
+                size_t startPos = 0;
+                string from="\\n";
+                string to="\n";
+                while((startPos=value.find(from,startPos))!=std::string::npos) {
+                    value.replace(startPos,from.length(),to);
+                    startPos+=to.length();
+                }
                 descripRead.push_back(value);
             }
         }
@@ -1174,7 +1256,7 @@ void MainWindow::geneLevelNunchunk(){
     Nunchunk nunchunkObj;
     std::vector<std::string> outboxSetNunchunk;
     outboxSetNunchunk.push_back(std::to_string(nunchunkObj.nunchunk(inputStreamNunchunk)));
-    games.push_back(Game(inboxSetNunchunk,std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos" , "hand0" , "jumpifposzero" , "jumpifnegzero" , "hand*" , "hand/" , "times" , "hand="},outboxSetNunchunk,10000,5,"第五关\n没有描述"));
+    games.push_back(Game(inboxSetNunchunk,std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos" , "hand0" , "jumpifposzero" , "jumpifnegzero" , "hand*" , "hand/" , "times" , "hand="},outboxSetNunchunk,10000,5,"第五关\n有N种类型的短棒,第i种短棒长度为a_i,武力值为b_i,数量无限\n长度为A的棒和长度为B的棒组成一个长度为A+B的棒,此时长度为A+B的棒的武力值为他们的和\n如果A与B的长度相等,则其武力值还要再增加233\n已知需要一根长M的棒,求最大的武力值是多少"));
 }
 
 void MainWindow::loadandback(){

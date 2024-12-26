@@ -1,4 +1,4 @@
-LevelInfo: First level | InboxBar: 1 2 | AvailableOps: inbox outbox start | AvailableCarpet: 0 | GoalJudge: 1 2 | NumOfCarpet: 0 | NumOfCarpet2D: 1 | Description: 第一关\n没有描述
-LevelInfo: Second level | InboxBar:  3 9 5 1 -2 -2 9 -9 | AvailableOps: inbox outbox copyfrom copyto add sub jump jumpifzero start | AvailableCarpet: 4 | GoalJudge: -6 6 4 -4 0 0 18 -18 | NumOfCarpet: 4 | NumOfCarpet2D: 1 | Description: 第二关\n没有描述
-LevelInfo: Third level | InboxBar: 6 2 7 7 -9 3 -3 -3 | AvailableOps: inbox outbox copyfrom copyto add sub jump jumpifzero start | AvailableCarpet: 3 | GoalJudge: 7 -3 | NumOfCarpet: 3 | NumOfCarpet2D: 1 | Description: 第三关\n没有描述
-LevelInfo: Fourth level | InboxBar: 3 10 1 2 3 1000 3000 6000 | AvailableOps: inbox outbox copyfrom copyto add sub jump jumpifzero hand hand+ hand- jumpifpos jumpifneg copyifneg copyifpos | NumOfCarpet: 1000 | NumOfCarpet2D: 5 | Description: 第四关\n没有描述
+LevelInfo: First level | InboxBar: 1 2 | AvailableOps: inbox outbox start | GoalJudge: 1 2 | NumOfCarpet: 0 | NumOfCarpet2D: 1 | Description: 第一关\n没有描述
+LevelInfo: Second level | InboxBar:  3 9 5 1 -2 -2 9 -9 | AvailableOps: inbox outbox copyfrom copyto add sub jump jumpifzero start | GoalJudge: -6 6 4 -4 0 0 18 -18 | NumOfCarpet: 4 | NumOfCarpet2D: 1 | Description: 第二关\n没有描述
+LevelInfo: Third level | InboxBar: 6 2 7 7 -9 3 -3 -3 | AvailableOps: inbox outbox copyfrom copyto add sub jump jumpifzero start | GoalJudge: 7 -3 | NumOfCarpet: 3 | NumOfCarpet2D: 1 | Description: 第三关\n没有描述
+LevelInfo: Fourth level | InboxBar: 3 10 1 2 3 1000 3000 6000 | AvailableOps: inbox outbox copyfrom copyto add sub jump jumpifzero hand hand+ hand- jumpifpos jumpifneg copyifneg copyifpos | GoalJudge: 19233 | NumOfCarpet: 1000 | NumOfCarpet2D: 5 | Description: 第四关\n没有描述

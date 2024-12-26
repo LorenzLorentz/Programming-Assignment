@@ -73,6 +73,7 @@ public:
     std::queue<std::string> carpet56StateQueue;
 
     bool startProcessing;
+    bool startJudgeCheck=false;
 
     void clearLayout(QLayout* layout);
     void parselArchiveInfo(const std::string& line,int tempIndex);
