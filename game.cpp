@@ -1025,16 +1025,25 @@ bool Game::playgame(istream& inputStream) {
 
     int doStep=0;
     int numSteps=command.size();
+    int actualSteps=0;
     bool endRun=false;
     bool jumpInputJudge=false;
+    string errorMessage;
 
     while(doStep<numSteps&&!endRun) {
+        ++actualSteps;
         //jump指令的处理
         if(command[doStep]=="jump"||command[doStep]=="jumpifzero"||command[doStep]=="jumpifpos"||command[doStep]=="jumpifneg") {
             if(!inputProcess(command[doStep],param[doStep],paramW[doStep],extraParam[doStep],jumpInputJudge,endRun,numSteps)) {
                 qDebug()<<"Error on instruction "<<doStep+1;
                 if(onLogbarUpdate) {
                     onLogbarUpdate("Error on instruction "+std::to_string(doStep+1));
+                } else {
+                    qDebug()<<"回调函数未赋值";
+                }
+                if(endFailUpdate) {
+                    qDebug()<<"!!!!!!";
+                    endFailUpdate("Error on instruction "+std::to_string(doStep+1));
                 } else {
                     qDebug()<<"回调函数未赋值";
                 }
@@ -1062,6 +1071,12 @@ bool Game::playgame(istream& inputStream) {
                 } else {
                     qDebug()<<"回调函数未赋值";
                 }
+                if(endFailUpdate) {
+                    qDebug()<<"!!!!!!";
+                    endFailUpdate("Error on instruction "+std::to_string(doStep+1));
+                } else {
+                    qDebug()<<"回调函数未赋值";
+                }
                 return false;
             }
             ++doStep;
@@ -1074,12 +1089,21 @@ bool Game::playgame(istream& inputStream) {
         } else {
             qDebug()<<"回调函数未赋值";
         }
+        if(endSuccessUpdate) {
+            string outputReturn=std::string("");
+            for(int i=0;i<outboxBar.size();++i){
+                outputReturn+=(outboxBar[i]+std::string(" "));
+            }
+            endSuccessUpdate(actualSteps,numSteps,outputReturn);
+        } else {
+            qDebug()<<"回调函数未赋值";
+        }
         passed=true;
         qDebug()<<"SUCCESS!!";
         return true;
     } else {
-        if(onLogbarUpdate) {
-            onLogbarUpdate("游戏结束，失败。");
+        if(endFailUpdate) {
+            endFailUpdate("Wrong Answer!");
         } else {
             qDebug()<<"回调函数未赋值";
         }

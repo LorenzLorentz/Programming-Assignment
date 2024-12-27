@@ -15,14 +15,7 @@
 #include <set>
 #include <cstdlib>
 #include "nunchunk.h"
-
-/*
-* TODO
-* 暂停按键？
-* jump的指针模式？
-* 还有的已经忘了。
-* 不知道还有什么bug
-*/
+#include <QMovie>
 
 int level=0;
 
@@ -31,6 +24,30 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , stateUpdateTimer(new QTimer(this)){
     ui->setupUi(this);
+
+    QMovie *currentMovie1=ui->labelWelcomeMovieRobot->movie();
+    if(!currentMovie1) {
+        QMovie *movieRobot=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieRobot.gif");
+        if(!movieRobot->isValid()) {
+            qDebug()<<"GIF failed to load. Error code:"<<movieRobot->lastError();
+        } else {
+            ui->labelWelcomeMovieRobot->setScaledContents(true);
+            ui->labelWelcomeMovieRobot->setMovie(movieRobot);
+            movieRobot->start();
+        }
+    }
+
+    QMovie *currentMovie2=ui->labelSuccessMovieFirework->movie();
+    if(!currentMovie2) {
+        QMovie *firework=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieFirework.gif");
+        if(!firework->isValid()) {
+            qDebug()<<"GIF failed to load. Error code:"<<firework->lastError();
+        } else {
+            ui->labelSuccessMovieFirework->setScaledContents(true);
+            ui->labelSuccessMovieFirework->setMovie(firework);
+            firework->start();
+        }
+    }
 
     //welcome界面
     connect(ui->buttonWelcomePlaygame,&QPushButton::clicked,this,&MainWindow::buttonEnterClicked);
@@ -62,6 +79,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonPlaygameSpeedup,&QPushButton::clicked,this,&MainWindow::speedup);
     connect(ui->buttonPlaygameSpeedupNunchunk,&QPushButton::clicked,this,&MainWindow::speedup);
 
+    connect(ui->buttonPlaygameSlowdown,&QPushButton::clicked,this,&MainWindow::slowdown);
+    connect(ui->buttonPlaygameStepbystep,&QPushButton::clicked,this,&MainWindow::stepbystep);
+    connect(ui->buttonPlaygameRunnonstop,&QPushButton::clicked,this,&MainWindow::runnonstop);
+    connect(ui->buttonPlaygameStop,&QPushButton::clicked,this,&MainWindow::stop);
+
+    connect(ui->buttonPlaygameSlowdownNunchunk,&QPushButton::clicked,this,&MainWindow::slowdown);
+    connect(ui->buttonPlaygameStepbystepNunchunk,&QPushButton::clicked,this,&MainWindow::stepbystep);
+    connect(ui->buttonPlaygameRunnonstopNunchunk,&QPushButton::clicked,this,&MainWindow::runnonstop);
+    connect(ui->buttonPlaygameStopNunchunk,&QPushButton::clicked,this,&MainWindow::stop);
+
     //初始化处理状态定时器
     stateUpdateTimer=new QTimer(this);
     //moveTimer=new QTimer(this);
@@ -92,6 +119,10 @@ void MainWindow::clearLayout(QLayout* layout) {
     }
 }
 
+void MainWindow::queueClear(std::queue<std::string>& q){
+    std::queue<std::string> empty;
+    swap(empty, q);
+}
 
 void MainWindow::buttonEnterClicked() {
     if(games.empty()){
@@ -115,12 +146,12 @@ void MainWindow::buttonEnterClicked() {
         ui->buttonLevelchoiceLevel3->setText(updatedText);
     }
     if(games[3].passed&&ui->buttonLevelchoiceLevel4->text().toStdString().find("PASSED") == std::string::npos){
-        QString currentText=ui->buttonLevelchoiceLevel3->text();
+        QString currentText=ui->buttonLevelchoiceLevel4->text();
         QString updatedText=currentText+" PASSED";
         ui->buttonLevelchoiceLevel4->setText(updatedText);
     }
     if(games[4].passed&&ui->buttonLevelchoiceLevel5->text().toStdString().find("PASSED") == std::string::npos){
-        QString currentText=ui->buttonLevelchoiceLevel3->text();
+        QString currentText=ui->buttonLevelchoiceLevel5->text();
         QString updatedText=currentText+" PASSED";
         ui->buttonLevelchoiceLevel5->setText(updatedText);
     }
@@ -195,7 +226,7 @@ void MainWindow::buttonRestartClicked() {
     speedinverse=1000;
     if(level<=3){
         machine=new Humanmachine(this);
-        machine->setFixedSize(600, 1000);
+        machine->setFixedSize(400, 600);
         machine->lower();
 
         ui->stackedWidget->setCurrentWidget(ui->playgame);
@@ -221,7 +252,7 @@ void MainWindow::buttonRestartClicked() {
         ui->showPlaygameLogbar->setHtml(QString::fromStdString(games[level].descrip));
     } else if(level>=4){
         machine=new Humanmachine(this);
-        machine->setFixedSize(600, 1000);
+        machine->setFixedSize(400, 600);
         machine->lower();
         ui->stackedWidget->setCurrentWidget(ui->playgameNunchunk);
         if (!machine) {
@@ -267,7 +298,7 @@ void MainWindow::showGame(){
     }
 
     machine=new Humanmachine(this);
-    machine->setFixedSize(600, 1000);
+    machine->setFixedSize(400, 600);
     machine->lower();
     ui->stackedWidget->setCurrentWidget(ui->playgame);
     if (!machine) {
@@ -288,7 +319,7 @@ void MainWindow::showGame(){
     for(int i=0;i<games[level].initialInbox.size();++i){
         showInitialInbox+=games[level].initialInbox[i]+" ";
     }
-    ui->showPlaygameInboxbar->setHtml(QString::fromStdString(showInitialInbox));
+    ui->showPlaygameInboxbar->setPlainText(QString::fromStdString(showInitialInbox));
     ui->showPlaygameLogbar->setPlainText(QString::fromStdString(games[level].descrip));
 }
 
@@ -310,7 +341,7 @@ void MainWindow::showGameNunchunk(){
     }
 
     machine=new Humanmachine(this);
-    machine->setFixedSize(600, 1000);
+    machine->setFixedSize(400, 600);
     machine->lower();
     ui->stackedWidget->setCurrentWidget(ui->playgameNunchunk);
     if (!machine) {
@@ -328,14 +359,33 @@ void MainWindow::showGameNunchunk(){
     machine->resetDirec();
 
     std::string showInitialInbox;
-    for(int i=0;i<games[level].initialInbox.size();++i){
+    for(int i=0;i<2;++i){
         showInitialInbox+=games[level].initialInbox[i]+" ";
     }
-    ui->showPlaygameInboxbarNunchunk->setHtml(QString::fromStdString(showInitialInbox));
-    ui->showPlaygameLogbarNunchunk->setHtml(QString::fromStdString(games[level].descrip));
+    showInitialInbox+="\n";
+    for(int i=2;i<games[level].initialInbox.size();++i){
+        showInitialInbox+=games[level].initialInbox[i]+" ";
+    }
+    qDebug()<<"!!!"<<QString::fromStdString(showInitialInbox);
+    /*
+    *                size_t startPos = 0;
+                string from="\\n";
+                string to="\n";
+                while((startPos=value.find(from,startPos))!=std::string::npos) {
+                    value.replace(startPos,from.length(),to);
+                    startPos+=to.length();
+                }
+                descripRead.push_back(value);
+    */
+    ui->showPlaygameInboxbarNunchunk->setPlainText(QString::fromStdString(showInitialInbox));
+    ui->showPlaygameLogbarNunchunk->setPlainText(QString::fromStdString(games[level].descrip));
 }
 
 void MainWindow::buttonStartJudgeClicked() {
+    if(startJudgeCheck){
+        return;
+    }
+
     startJudgeCheck=true;
     QString commandInput;
     if(level<=3){
@@ -481,6 +531,19 @@ void MainWindow::buttonStartJudgeClicked() {
         handStateQueue.push(state);
     };
 
+    games[level].endSuccessUpdate=[this](const int& actualStepsSet,const int& numOfCommandsSet,const std::string& showOutputSet){
+        qDebug()<<"回调函数1被调用";
+        actualSteps=actualStepsSet;
+        numOfCommands=numOfCommandsSet;
+        showOutput=showOutputSet;
+        qDebug()<<"回调函数1"<<actualSteps<<" "<<numOfCommands<<" "<<QString::fromStdString(showOutput);
+        qDebug()<<actualStepsSet<<" "<<numOfCommandsSet<<" "<<QString::fromStdString(showOutputSet);
+    };
+    games[level].endFailUpdate=[this](const std::string& whereErrorSet){
+        qDebug()<<"回调函数2被调用";
+        whereError=whereErrorSet;
+    };
+
     std::string inputStreamString=commandInput.toStdString();
     std::istringstream inputStream(inputStreamString);
     ifWin=games[level].playgame(inputStream);
@@ -489,6 +552,7 @@ void MainWindow::buttonStartJudgeClicked() {
 
     ui->showPlaygameInboxbar->clear();
     stateUpdateTimer->start(speedinverse);
+    stateUpdateTimer->stop();
 
     //
     startProcessing=true;
@@ -506,6 +570,47 @@ void MainWindow::speedup(){
         speedinverse/=10;
         stateUpdateTimer->start(speedinverse);
     }
+}
+
+void MainWindow::slowdown(){
+    if(!startJudgeCheck){
+        QMessageBox::warning(this,"warning","NOT START");
+        return;
+    }
+    stateUpdateTimer->stop();
+    if(speedinverse<8000){
+        speedinverse*=2;
+        stateUpdateTimer->start(speedinverse);
+    }
+}
+
+void MainWindow::stepbystep(){
+    if(!startJudgeCheck){
+        QMessageBox::warning(this,"warning","NOT START");
+        return;
+    }
+    if(!stateUpdateTimer->isActive()){
+        stateUpdateTimer->stop();
+    }
+    updateProcessingState();
+}
+
+void MainWindow::runnonstop(){
+    if(!startJudgeCheck){
+        QMessageBox::warning(this,"warning","NOT START");
+        return;
+    }
+    if(!stateUpdateTimer->isActive()) {
+        stateUpdateTimer->start(speedinverse);
+    }
+}
+
+void MainWindow::stop(){
+    if(!startJudgeCheck){
+        QMessageBox::warning(this,"warning","NOT START");
+        return;
+    }
+    stateUpdateTimer->stop();
 }
 
 void MainWindow::updateProcessingState() {
@@ -607,9 +712,26 @@ void MainWindow::updateProcessingState() {
             }
             if(ifWin) {
                 qDebug()<<"Success!";
+
+                ui->textEditSuccessOutput->clear();
+                ui->textEditSuccessActualsteps->clear();
+                ui->textEditSuccessNumofcmd->clear();
+
+                qDebug()<<QString::fromStdString(showOutput);
+                qDebug()<<actualSteps;
+                qDebug()<<numOfCommands;
+
+                ui->textEditSuccessOutput->setText(QString::fromStdString(showOutput));
+                ui->textEditSuccessActualsteps->setText(QString::fromStdString(std::to_string(actualSteps)));
+                ui->textEditSuccessNumofcmd->setText(QString::fromStdString(std::to_string(numOfCommands)));
+
                 ui->stackedWidget->setCurrentWidget(ui->success);
             } else {
                 qDebug()<<"Fail";
+
+                ui->showFailError->clear();
+                ui->showFailError->setText(QString::fromStdString(whereError));
+
                 ui->stackedWidget->setCurrentWidget(ui->fail);
             }
         }
@@ -899,10 +1021,30 @@ void MainWindow::updateProcessingState() {
                 games[level].actionLog.pop();
             }
             if(ifWin) {
-                qDebug()<<"Success!";
+                //暂停一下
+                qDebug()<<"*****Success!";
+
+                qDebug()<<"dwqwfhqwoifuq";
+
+                ui->textEditSuccessOutput->clear();
+                ui->textEditSuccessActualsteps->clear();
+                ui->textEditSuccessNumofcmd->clear();
+
+                qDebug()<<QString::fromStdString(showOutput);
+                qDebug()<<actualSteps;
+                qDebug()<<numOfCommands;
+
+                ui->textEditSuccessOutput->setText(QString::fromStdString(showOutput));
+                ui->textEditSuccessActualsteps->setText(QString::fromStdString(std::to_string(actualSteps)));
+                ui->textEditSuccessNumofcmd->setText(QString::fromStdString(std::to_string(numOfCommands)));
+
                 ui->stackedWidget->setCurrentWidget(ui->success);
             } else {
                 qDebug()<<"Fail";
+
+                ui->showFailError->clear();
+                ui->showFailError->setText(QString::fromStdString(whereError));
+
                 ui->stackedWidget->setCurrentWidget(ui->fail);
             }
         }
@@ -918,6 +1060,54 @@ void MainWindow::skiptoend(){
     qDebug()<<"REALLYWIN"<<(ifWin ? "WIN!" : "NOTWIN");
 
     stateUpdateTimer->stop();
+
+    queueClear(logStateQueue);
+    queueClear(inboxbarStateQueue);
+    queueClear(outboxbarStateQueue);
+
+    queueClear(carpet1StateQueue);
+    queueClear(carpet2StateQueue);
+    queueClear(carpet3StateQueue);
+    queueClear(carpet4StateQueue);
+
+    queueClear(carpet11StateQueue);
+    queueClear(carpet12StateQueue);
+    queueClear(carpet13StateQueue);
+    queueClear(carpet14StateQueue);
+    queueClear(carpet15StateQueue);
+    queueClear(carpet16StateQueue);
+
+    queueClear(carpet21StateQueue);
+    queueClear(carpet22StateQueue);
+    queueClear(carpet23StateQueue);
+    queueClear(carpet24StateQueue);
+    queueClear(carpet25StateQueue);
+    queueClear(carpet26StateQueue);
+
+    queueClear(carpet31StateQueue);
+    queueClear(carpet32StateQueue);
+    queueClear(carpet33StateQueue);
+    queueClear(carpet34StateQueue);
+    queueClear(carpet35StateQueue);
+    queueClear(carpet36StateQueue);
+
+    queueClear(carpet41StateQueue);
+    queueClear(carpet42StateQueue);
+    queueClear(carpet43StateQueue);
+    queueClear(carpet44StateQueue);
+    queueClear(carpet45StateQueue);
+    queueClear(carpet46StateQueue);
+
+    queueClear(carpet51StateQueue);
+    queueClear(carpet52StateQueue);
+    queueClear(carpet53StateQueue);
+    queueClear(carpet54StateQueue);
+    queueClear(carpet55StateQueue);
+    queueClear(carpet56StateQueue);
+
+    ui->showPlaygameLogbar->clear();
+    ui->showPlaygameLogbarNunchunk->clear();
+
     ui->inputPlaygameCommand->clear();
 
     ui->showPlaygameLogbar->clear();
@@ -977,9 +1167,26 @@ void MainWindow::skiptoend(){
     if(ifWin) {
         ifWin=false;
         qDebug()<<"Success!";
+
+        qDebug()<<QString::fromStdString(showOutput);
+        qDebug()<<actualSteps;
+        qDebug()<<numOfCommands;
+
+        ui->textEditSuccessOutput->clear();
+        ui->textEditSuccessActualsteps->clear();
+        ui->textEditSuccessNumofcmd->clear();
+
+        ui->textEditSuccessOutput->setText(QString::fromStdString(showOutput));
+        ui->textEditSuccessActualsteps->setText(QString::fromStdString(std::to_string(actualSteps)));
+        ui->textEditSuccessNumofcmd->setText(QString::fromStdString(std::to_string(numOfCommands)));
+
         ui->stackedWidget->setCurrentWidget(ui->success);
     } else {
         qDebug()<<"Fail";
+
+        ui->showFailError->clear();
+        ui->showFailError->setText(QString::fromStdString(whereError));
+
         ui->stackedWidget->setCurrentWidget(ui->fail);
     }
 }
@@ -1221,13 +1428,13 @@ void MainWindow::parselLevelInfo(const std::string& line,
 
 void MainWindow::geneLevelNunchunk(){
     srand(time(0));
-    int nNunchunkGen=(rand()%(100-1+1))+1;
-    int mNunchunkGen=(rand()%(100-1+1))+1;
+    int nNunchunkGen=(rand()%(15-1+1))+5;
+    int mNunchunkGen=(rand()%(15-1+1))+5;
     std::vector<int> aNunchunkGen(nNunchunkGen);
     std::vector<int> bNunchunkGen(nNunchunkGen);
     for(int i=0;i<nNunchunkGen;++i){
         aNunchunkGen[i]=(rand()%(mNunchunkGen-1+1))+1;
-        bNunchunkGen[i]=(rand()%(1000-1+1))+1;
+        bNunchunkGen[i]=10*(rand()%(100-1+1))+1;
     }
     std::vector<std::string> inboxSetNunchunk;
 
@@ -1253,6 +1460,7 @@ void MainWindow::geneLevelNunchunk(){
     for(const auto& str:inboxSetNunchunk) {
         inputStreamNunchunk<<str<<" ";
     }
+
     Nunchunk nunchunkObj;
     std::vector<std::string> outboxSetNunchunk;
     outboxSetNunchunk.push_back(std::to_string(nunchunkObj.nunchunk(inputStreamNunchunk)));

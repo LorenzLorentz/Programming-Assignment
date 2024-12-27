@@ -75,6 +75,11 @@ public:
     bool startProcessing;
     bool startJudgeCheck=false;
 
+    int numOfCommands;
+    int actualSteps;
+    std::string whereError;
+    std::string showOutput;
+
     void clearLayout(QLayout* layout);
     void parselArchiveInfo(const std::string& line,int tempIndex);
     void parselLevelInfo(const std::string& line,
@@ -86,6 +91,7 @@ public:
                          std::vector<int>& numOfCarpet2D,
                          std::vector<std::string>& descripRead);
     void setTargetPosition(int x, int y);
+    void queueClear(std::queue<std::string>& q);
 
 signals:
     void startJudge(int level);
@@ -107,7 +113,13 @@ private slots:
     void showGameNunchunk();
     void skiptoend();
     void geneLevelNunchunk();
+
     void speedup();
+    void slowdown();
+
+    void stepbystep();
+    void runnonstop();
+    void stop();
     //void startMachineMovement();
     //void stopMachineMovement();
     //void moveMachine();

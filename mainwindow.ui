@@ -76,6 +76,19 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:48pt; font-weight:700;&quot;&gt;Human Resource Machine&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
+     <widget class="QLabel" name="labelWelcomeMovieRobot">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>20</y>
+        <width>211</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="playgameNunchucks"/>
     <widget class="QWidget" name="fail">
@@ -129,6 +142,16 @@
       </property>
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:64pt; font-weight:700;&quot;&gt;FAIL&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="showFailError">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>243</y>
+        <width>221</width>
+        <height>51</height>
+       </rect>
       </property>
      </widget>
     </widget>
@@ -441,8 +464,8 @@
      <widget class="QPushButton" name="buttonPlaygameSkip">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>410</y>
+        <x>660</x>
+        <y>430</y>
         <width>100</width>
         <height>32</height>
        </rect>
@@ -454,14 +477,66 @@
      <widget class="QPushButton" name="buttonPlaygameSpeedup">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>460</y>
+        <x>660</x>
+        <y>370</y>
         <width>100</width>
         <height>32</height>
        </rect>
       </property>
       <property name="text">
        <string>SPEED UP</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonPlaygameSlowdown">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>400</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SLOW DOWN</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonPlaygameRunnonstop">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>370</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Run Nonstop</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonPlaygameStepbystep">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>400</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Step by Step</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonPlaygameStop">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>430</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>STOP</string>
       </property>
      </widget>
     </widget>
@@ -614,8 +689,8 @@
      <widget class="QPushButton" name="buttonPlaygameSkipNunchunk">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>410</y>
+        <x>660</x>
+        <y>370</y>
         <width>100</width>
         <height>32</height>
        </rect>
@@ -887,8 +962,8 @@
      <widget class="QPushButton" name="buttonPlaygameSpeedupNunchunk">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>450</y>
+        <x>660</x>
+        <y>400</y>
         <width>101</width>
         <height>32</height>
        </rect>
@@ -897,13 +972,65 @@
        <string>SPEED UP</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="buttonPlaygameSlowdownNunchunk">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>430</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SLOW DOWN</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonPlaygameStepbystepNunchunk">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>400</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Step by Step</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonPlaygameStopNunchunk">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>430</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>STOP</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonPlaygameRunnonstopNunchunk">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>370</y>
+        <width>101</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Run Nonstop</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="success">
      <widget class="QLabel" name="labelSuccessCentral">
       <property name="geometry">
        <rect>
         <x>290</x>
-        <y>170</y>
+        <y>110</y>
         <width>201</width>
         <height>41</height>
        </rect>
@@ -936,6 +1063,88 @@
       </property>
       <property name="text">
        <string>EXIT</string>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="textEditSuccessActualsteps">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>260</y>
+        <width>61</width>
+        <height>61</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="textEditSuccessOutput">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>260</y>
+        <width>61</width>
+        <height>61</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="textEditSuccessNumofcmd">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>260</y>
+        <width>61</width>
+        <height>61</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelSuccessActualSteps">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>220</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Actual Steps</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelSuccesNumofcmd">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>220</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Num of Commands</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelSuccessOutput">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>220</y>
+        <width>58</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>OUTPUT</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelSuccessMovieFirework">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>40</y>
+        <width>201</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </widget>

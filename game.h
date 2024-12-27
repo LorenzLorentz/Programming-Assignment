@@ -67,6 +67,9 @@ public:
     std::function<void(const std::string&)> onCarpet55Update;
     std::function<void(const std::string&)> onCarpet56Update;
 
+    std::function<void(const int& , const int& , const std::string&)> endSuccessUpdate;
+    std::function<void(const std::string&)> endFailUpdate;
+
     Game(std::vector<std::string> initialInboxSet,
          std::vector<std::string> availableOpsSet,
          std::vector<std::string> goalSet,
