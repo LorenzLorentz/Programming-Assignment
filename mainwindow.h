@@ -26,6 +26,8 @@ public:
     ~MainWindow();
 
     Humanmachine *machine;
+    QMovie *movieRobot=nullptr;
+    QMovie *firework=nullptr;
     bool ifWin;
 
     std::queue<std::string> logStateQueue;

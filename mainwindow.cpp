@@ -27,25 +27,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     QMovie *currentMovie1=ui->labelWelcomeMovieRobot->movie();
     if(!currentMovie1) {
-        QMovie *movieRobot=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieRobot.gif");
+        movieRobot=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieRobot.gif");
         if(!movieRobot->isValid()) {
             qDebug()<<"GIF failed to load. Error code:"<<movieRobot->lastError();
         } else {
             ui->labelWelcomeMovieRobot->setScaledContents(true);
             ui->labelWelcomeMovieRobot->setMovie(movieRobot);
             movieRobot->start();
-        }
-    }
-
-    QMovie *currentMovie2=ui->labelSuccessMovieFirework->movie();
-    if(!currentMovie2) {
-        QMovie *firework=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieFirework.gif");
-        if(!firework->isValid()) {
-            qDebug()<<"GIF failed to load. Error code:"<<firework->lastError();
-        } else {
-            ui->labelSuccessMovieFirework->setScaledContents(true);
-            ui->labelSuccessMovieFirework->setMovie(firework);
-            firework->start();
         }
     }
 
@@ -130,6 +118,13 @@ void MainWindow::buttonEnterClicked() {
         return;
     }
 
+    ui->labelWelcomeMovieRobot->clear();
+    if(movieRobot){
+        movieRobot->stop();
+        delete movieRobot;
+        movieRobot=nullptr;
+    }
+
     if(games[0].passed&&ui->buttonLevelchoiceLevel1->text().toStdString().find("PASSED") == std::string::npos){
         QString currentText=ui->buttonLevelchoiceLevel1->text();
         QString updatedText=currentText+" PASSED";
@@ -174,6 +169,13 @@ void MainWindow::buttonExitClicked() {
 }
 
 void MainWindow::buttonLoadgameClicked() {
+    ui->labelWelcomeMovieRobot->clear();
+    if(movieRobot){
+        movieRobot->stop();
+        delete movieRobot;
+        movieRobot=nullptr;
+    }
+
     ui->stackedWidget->setCurrentWidget(ui->loadgame);
 }
 
@@ -187,6 +189,13 @@ void MainWindow::buttonBackClicked() {
     if(playGamePage->layout()!=nullptr){
         clearLayout(playGamePage->layout());
         delete playGamePage->layout();
+    }
+
+    ui->labelSuccessMovieFirework->clear();
+    if(firework!=nullptr){
+        firework->stop();
+        delete firework;
+        firework=nullptr;
     }
 
     if(games[0].passed&&ui->buttonLevelchoiceLevel1->text().toStdString().find("PASSED") == std::string::npos){
@@ -218,6 +227,18 @@ void MainWindow::buttonBackClicked() {
 }
 
 void MainWindow::buttonBackWelcomepageClicked(){
+    QMovie *currentMovie1=ui->labelWelcomeMovieRobot->movie();
+    if(!currentMovie1) {
+        movieRobot=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieRobot.gif");
+        if(!movieRobot->isValid()) {
+            qDebug()<<"GIF failed to load. Error code:"<<movieRobot->lastError();
+        } else {
+            ui->labelWelcomeMovieRobot->setScaledContents(true);
+            ui->labelWelcomeMovieRobot->setMovie(movieRobot);
+            movieRobot->start();
+        }
+    }
+
     ui->stackedWidget->setCurrentWidget(ui->welcomePage);
 }
 
@@ -298,7 +319,8 @@ void MainWindow::showGame(){
     }
 
     machine=new Humanmachine(this);
-    machine->setFixedSize(400, 600);
+    machine->setFixedSize(400,600);
+
     machine->lower();
     ui->stackedWidget->setCurrentWidget(ui->playgame);
     if (!machine) {
@@ -402,6 +424,7 @@ void MainWindow::buttonStartJudgeClicked() {
     }
 
     ui->showPlaygameLogbar->clear();
+    ui->showPlaygameLogbarNunchunk->clear();
 
     games[level].onLogbarUpdate=[this](const std::string& state) {
         logStateQueue.push(state);
@@ -551,6 +574,7 @@ void MainWindow::buttonStartJudgeClicked() {
     qDebug()<<(ifWin ? "win" : "notwin");
 
     ui->showPlaygameInboxbar->clear();
+    ui->showPlaygameInboxbarNunchunk->clear();
     stateUpdateTimer->start(speedinverse);
     stateUpdateTimer->stop();
 
@@ -578,7 +602,10 @@ void MainWindow::slowdown(){
         return;
     }
     stateUpdateTimer->stop();
-    if(speedinverse<8000){
+    if(speedinverse<1000){
+        speedinverse*=10;
+        stateUpdateTimer->start(speedinverse);
+    } else if(speedinverse<8000){
         speedinverse*=2;
         stateUpdateTimer->start(speedinverse);
     }
@@ -724,6 +751,19 @@ void MainWindow::updateProcessingState() {
                 ui->textEditSuccessOutput->setText(QString::fromStdString(showOutput));
                 ui->textEditSuccessActualsteps->setText(QString::fromStdString(std::to_string(actualSteps)));
                 ui->textEditSuccessNumofcmd->setText(QString::fromStdString(std::to_string(numOfCommands)));
+
+
+                QMovie *currentMovie2=ui->labelSuccessMovieFirework->movie();
+                if(!currentMovie2) {
+                    firework=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieFirework.gif");
+                    if(!firework->isValid()) {
+                        qDebug()<<"GIF failed to load. Error code:"<<firework->lastError();
+                    } else {
+                        ui->labelSuccessMovieFirework->setScaledContents(true);
+                        ui->labelSuccessMovieFirework->setMovie(firework);
+                        firework->start();
+                    }
+                }
 
                 ui->stackedWidget->setCurrentWidget(ui->success);
             } else {
@@ -1038,6 +1078,18 @@ void MainWindow::updateProcessingState() {
                 ui->textEditSuccessActualsteps->setText(QString::fromStdString(std::to_string(actualSteps)));
                 ui->textEditSuccessNumofcmd->setText(QString::fromStdString(std::to_string(numOfCommands)));
 
+                QMovie *currentMovie2=ui->labelSuccessMovieFirework->movie();
+                if(!currentMovie2) {
+                    firework=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieFirework.gif");
+                    if(!firework->isValid()) {
+                        qDebug()<<"GIF failed to load. Error code:"<<firework->lastError();
+                    } else {
+                        ui->labelSuccessMovieFirework->setScaledContents(true);
+                        ui->labelSuccessMovieFirework->setMovie(firework);
+                        firework->start();
+                    }
+                }
+
                 ui->stackedWidget->setCurrentWidget(ui->success);
             } else {
                 qDebug()<<"Fail";
@@ -1179,6 +1231,18 @@ void MainWindow::skiptoend(){
         ui->textEditSuccessOutput->setText(QString::fromStdString(showOutput));
         ui->textEditSuccessActualsteps->setText(QString::fromStdString(std::to_string(actualSteps)));
         ui->textEditSuccessNumofcmd->setText(QString::fromStdString(std::to_string(numOfCommands)));
+
+        QMovie *currentMovie2=ui->labelSuccessMovieFirework->movie();
+        if(!currentMovie2) {
+            firework=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieFirework.gif");
+            if(!firework->isValid()) {
+                qDebug()<<"GIF failed to load. Error code:"<<firework->lastError();
+            } else {
+                ui->labelSuccessMovieFirework->setScaledContents(true);
+                ui->labelSuccessMovieFirework->setMovie(firework);
+                firework->start();
+            }
+        }
 
         ui->stackedWidget->setCurrentWidget(ui->success);
     } else {
@@ -1464,7 +1528,7 @@ void MainWindow::geneLevelNunchunk(){
     Nunchunk nunchunkObj;
     std::vector<std::string> outboxSetNunchunk;
     outboxSetNunchunk.push_back(std::to_string(nunchunkObj.nunchunk(inputStreamNunchunk)));
-    games.push_back(Game(inboxSetNunchunk,std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos" , "hand0" , "jumpifposzero" , "jumpifnegzero" , "hand*" , "hand/" , "times" , "hand="},outboxSetNunchunk,10000,5,"第五关\n有N种类型的短棒,第i种短棒长度为a_i,武力值为b_i,数量无限\n长度为A的棒和长度为B的棒组成一个长度为A+B的棒,此时长度为A+B的棒的武力值为他们的和\n如果A与B的长度相等,则其武力值还要再增加233\n已知需要一根长M的棒,求最大的武力值是多少"));
+    games.push_back(Game(inboxSetNunchunk,std::vector<std::string>{"inbox", "outbox", "copyfrom", "copyto", "add", "sub", "jump", "jumpifzero" , "hand+" , "hand-" , "jumpifpos" , "jumpifneg" , "copyifneg" , "copyifpos" , "hand0" , "jumpifposzero" , "jumpifnegzero" , "hand*" , "hand/" , "times" , "hand="},outboxSetNunchunk,30,5,"第五关\n通关要求同第四关\n新增操作: hand+ , hand- , hand= , hand0 , hand* , hand/ , times \njumpifpos , jumpifneg , jumpifposzero , jumpifnegzero , copyifneg , copyifpos \n可用空地:30 * 5"));
 }
 
 void MainWindow::loadandback(){
@@ -1488,5 +1552,18 @@ void MainWindow::loadandback(){
         qDebug()<<QString::fromStdString(games[i].descrip);
         qDebug()<<" "<<(games[i].passed ? "PASSED" : "NOT PASSED");
     }
+
+    QMovie *currentMovie1=ui->labelWelcomeMovieRobot->movie();
+    if(!currentMovie1) {
+        movieRobot=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieRobot.gif");
+        if(!movieRobot->isValid()) {
+            qDebug()<<"GIF failed to load. Error code:"<<movieRobot->lastError();
+        } else {
+            ui->labelWelcomeMovieRobot->setScaledContents(true);
+            ui->labelWelcomeMovieRobot->setMovie(movieRobot);
+            movieRobot->start();
+        }
+    }
+
     ui->stackedWidget->setCurrentWidget(ui->welcomePage);
 }

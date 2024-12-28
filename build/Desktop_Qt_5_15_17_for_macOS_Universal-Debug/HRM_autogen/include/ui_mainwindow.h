@@ -182,10 +182,10 @@ public:
         buttonFailBack->setGeometry(QRect(340, 320, 100, 32));
         labelFailCentral = new QLabel(fail);
         labelFailCentral->setObjectName(QString::fromUtf8("labelFailCentral"));
-        labelFailCentral->setGeometry(QRect(320, 160, 121, 71));
+        labelFailCentral->setGeometry(QRect(330, 160, 121, 71));
         showFailError = new QTextEdit(fail);
         showFailError->setObjectName(QString::fromUtf8("showFailError"));
-        showFailError->setGeometry(QRect(270, 243, 221, 51));
+        showFailError->setGeometry(QRect(280, 240, 221, 51));
         stackedWidget->addWidget(fail);
         levelchoice = new QWidget();
         levelchoice->setObjectName(QString::fromUtf8("levelchoice"));
@@ -239,7 +239,7 @@ public:
         buttonPlaygameStart->setGeometry(QRect(620, 70, 100, 32));
         showPlaygameLogbar = new QTextBrowser(playgame);
         showPlaygameLogbar->setObjectName(QString::fromUtf8("showPlaygameLogbar"));
-        showPlaygameLogbar->setGeometry(QRect(0, 40, 141, 241));
+        showPlaygameLogbar->setGeometry(QRect(0, 40, 141, 271));
         labelPlaygameLogbar = new QLabel(playgame);
         labelPlaygameLogbar->setObjectName(QString::fromUtf8("labelPlaygameLogbar"));
         labelPlaygameLogbar->setGeometry(QRect(40, 10, 51, 31));
@@ -257,10 +257,10 @@ public:
         showPlaygameCarpet2->setGeometry(QRect(430, 160, 71, 71));
         showPlaygameCarpet3 = new QTextBrowser(playgame);
         showPlaygameCarpet3->setObjectName(QString::fromUtf8("showPlaygameCarpet3"));
-        showPlaygameCarpet3->setGeometry(QRect(430, 250, 71, 71));
+        showPlaygameCarpet3->setGeometry(QRect(340, 250, 71, 71));
         showPlaygameCarpet4 = new QTextBrowser(playgame);
         showPlaygameCarpet4->setObjectName(QString::fromUtf8("showPlaygameCarpet4"));
-        showPlaygameCarpet4->setGeometry(QRect(340, 250, 71, 71));
+        showPlaygameCarpet4->setGeometry(QRect(430, 250, 71, 71));
         labelPlaygameInboxbar = new QLabel(playgame);
         labelPlaygameInboxbar->setObjectName(QString::fromUtf8("labelPlaygameInboxbar"));
         labelPlaygameInboxbar->setGeometry(QRect(310, 10, 81, 21));
@@ -299,7 +299,7 @@ public:
         buttonPlaygameStartNunchunk->setGeometry(QRect(620, 70, 100, 32));
         showPlaygameLogbarNunchunk = new QTextBrowser(playgameNunchunk);
         showPlaygameLogbarNunchunk->setObjectName(QString::fromUtf8("showPlaygameLogbarNunchunk"));
-        showPlaygameLogbarNunchunk->setGeometry(QRect(0, 40, 141, 241));
+        showPlaygameLogbarNunchunk->setGeometry(QRect(0, 40, 141, 271));
         labelPlaygameLogbarNunchunk = new QLabel(playgameNunchunk);
         labelPlaygameLogbarNunchunk->setObjectName(QString::fromUtf8("labelPlaygameLogbarNunchunk"));
         labelPlaygameLogbarNunchunk->setGeometry(QRect(40, 10, 51, 31));

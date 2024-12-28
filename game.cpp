@@ -503,20 +503,25 @@ bool Game::inputProcess(string command,int param,int paramW,std::string extraPar
         }
     } else if(command=="add") {
         if(paramW<=0||paramW>carpetBar.size()) {
+            qDebug()<<"type1";
             return false;
         }
         if(param<=0||param>carpetBar[0].size()){
+            qDebug()<<"type2";
             return false;
         }
         if(hand.empty()) {
+            qDebug()<<"type3";
             return false;
         }
         if(carpetBar[paramW-1][param-1].empty()){
+            qDebug()<<"type4";
             return false;
         }
 
         if(extraParam=="np"){
             if(carpetBar[paramW-1][param-1].find(';')!=std::string::npos){
+                qDebug()<<"type5";
                 return false;
             }
             hand=to_string(stoi(hand)+stoi(carpetBar[paramW-1][param-1]));
