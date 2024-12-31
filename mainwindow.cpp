@@ -77,6 +77,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonPlaygameRunnonstopNunchunk,&QPushButton::clicked,this,&MainWindow::runnonstop);
     connect(ui->buttonPlaygameStopNunchunk,&QPushButton::clicked,this,&MainWindow::stop);
 
+    connect(ui->buttonPlaygameFileplay,&QPushButton::clicked,this,&MainWindow::fileplay);
+    connect(ui->buttonPlaygameFileplayNunchunk,&QPushButton::clicked,this,&MainWindow::fileplay);
+
     //初始化处理状态定时器
     stateUpdateTimer=new QTimer(this);
     //moveTimer=new QTimer(this);
@@ -1255,6 +1258,42 @@ void MainWindow::skiptoend(){
     }
 }
 
+void MainWindow::fileplay(){
+    QString commandReadFilePath=QFileDialog::getOpenFileName(this,"Select Input File","","Text Files (*.txt);;All Files (*)");
+
+    if(commandReadFilePath.isEmpty()){
+        QMessageBox::information(this, "No file selected", "You did not select any file.");
+        return;
+    }
+
+    std::ifstream commandsReadStream(commandReadFilePath.toStdString());
+    if(!commandsReadStream.is_open()) {
+        qDebug()<<"Can't access the file";
+        return;
+    }
+
+
+    std::queue<std::string> commandsRead;
+    std::string templine;
+    while(getline(commandsReadStream,templine)){
+        commandsRead.push(templine);
+    }
+
+    if(level<=3){
+        ui->inputPlaygameCommand->clear();
+        while(!commandsRead.empty()){
+            ui->inputPlaygameCommand->append(QString::fromStdString(commandsRead.front()));
+            commandsRead.pop();
+        }
+    } else if(level>=4){
+        ui->inputPlaygameCommandNunchunk->clear();
+        while(!commandsRead.empty()){
+            ui->inputPlaygameCommandNunchunk->append(QString::fromStdString(commandsRead.front()));
+            commandsRead.pop();
+        }
+    }
+}
+
 void MainWindow::loadLevelinfo(){
     QString levelinfoFilePath=QFileDialog::getOpenFileName(this, "Select Game File", "", "Text Files (*.txt);;All Files (*)");
 
@@ -1265,7 +1304,7 @@ void MainWindow::loadLevelinfo(){
 
     std::ifstream levelInfoRead(levelinfoFilePath.toStdString());
     if (!levelInfoRead.is_open()) {
-        qDebug()<<"Can access the file";
+        qDebug()<<"'Can't access the file";
         return;
     }
 
@@ -1318,7 +1357,7 @@ void MainWindow::loadArchive(){
         return;
     }
 
-    QString archiveFilePath=QFileDialog::getOpenFileName(this, "Select Game File", "", "Text Files (*.txt);;All Files (*)");
+    QString archiveFilePath=QFileDialog::getOpenFileName(this, "Select Archive File", "", "Text Files (*.txt);;All Files (*)");
 
     if (archiveFilePath.isEmpty()) {
         QMessageBox::information(this, "No file selected", "You did not select any file.");
@@ -1492,8 +1531,8 @@ void MainWindow::parselLevelInfo(const std::string& line,
 
 void MainWindow::geneLevelNunchunk(){
     srand(time(0));
-    int nNunchunkGen=(rand()%(15-1+1))+5;
-    int mNunchunkGen=(rand()%(15-1+1))+5;
+    int nNunchunkGen=(rand()%(15-1+1))+10;
+    int mNunchunkGen=(rand()%(15-1+1))+10;
     std::vector<int> aNunchunkGen(nNunchunkGen);
     std::vector<int> bNunchunkGen(nNunchunkGen);
     for(int i=0;i<nNunchunkGen;++i){

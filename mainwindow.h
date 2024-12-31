@@ -122,6 +122,8 @@ private slots:
     void stepbystep();
     void runnonstop();
     void stop();
+
+    void fileplay();
     //void startMachineMovement();
     //void stopMachineMovement();
     //void moveMachine();

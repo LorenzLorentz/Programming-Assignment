@@ -77,6 +77,7 @@ public:
     QPushButton *buttonPlaygameRunnonstop;
     QPushButton *buttonPlaygameStepbystep;
     QPushButton *buttonPlaygameStop;
+    QPushButton *buttonPlaygameFileplay;
     QWidget *playgameNunchunk;
     QTextEdit *inputPlaygameCommandNunchunk;
     QPushButton *buttonPlaygameStartNunchunk;
@@ -123,6 +124,7 @@ public:
     QPushButton *buttonPlaygameStepbystepNunchunk;
     QPushButton *buttonPlaygameStopNunchunk;
     QPushButton *buttonPlaygameRunnonstopNunchunk;
+    QPushButton *buttonPlaygameFileplayNunchunk;
     QWidget *success;
     QLabel *labelSuccessCentral;
     QPushButton *buttonSuccessBack;
@@ -288,6 +290,9 @@ public:
         buttonPlaygameStop = new QPushButton(playgame);
         buttonPlaygameStop->setObjectName(QString::fromUtf8("buttonPlaygameStop"));
         buttonPlaygameStop->setGeometry(QRect(530, 430, 100, 32));
+        buttonPlaygameFileplay = new QPushButton(playgame);
+        buttonPlaygameFileplay->setObjectName(QString::fromUtf8("buttonPlaygameFileplay"));
+        buttonPlaygameFileplay->setGeometry(QRect(599, 310, 141, 32));
         stackedWidget->addWidget(playgame);
         playgameNunchunk = new QWidget();
         playgameNunchunk->setObjectName(QString::fromUtf8("playgameNunchunk"));
@@ -426,6 +431,9 @@ public:
         buttonPlaygameRunnonstopNunchunk = new QPushButton(playgameNunchunk);
         buttonPlaygameRunnonstopNunchunk->setObjectName(QString::fromUtf8("buttonPlaygameRunnonstopNunchunk"));
         buttonPlaygameRunnonstopNunchunk->setGeometry(QRect(530, 370, 101, 32));
+        buttonPlaygameFileplayNunchunk = new QPushButton(playgameNunchunk);
+        buttonPlaygameFileplayNunchunk->setObjectName(QString::fromUtf8("buttonPlaygameFileplayNunchunk"));
+        buttonPlaygameFileplayNunchunk->setGeometry(QRect(600, 310, 141, 32));
         stackedWidget->addWidget(playgameNunchunk);
         success = new QWidget();
         success->setObjectName(QString::fromUtf8("success"));
@@ -513,6 +521,7 @@ public:
         buttonPlaygameRunnonstop->setText(QCoreApplication::translate("MainWindow", "Run Nonstop", nullptr));
         buttonPlaygameStepbystep->setText(QCoreApplication::translate("MainWindow", "Step by Step", nullptr));
         buttonPlaygameStop->setText(QCoreApplication::translate("MainWindow", "STOP", nullptr));
+        buttonPlaygameFileplay->setText(QCoreApplication::translate("MainWindow", "Play via File", nullptr));
         buttonPlaygameStartNunchunk->setText(QCoreApplication::translate("MainWindow", "START", nullptr));
         labelPlaygameLogbarNunchunk->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:24pt; font-weight:700;\">LOG</span></p></body></html>", nullptr));
         labelPlaygameInboxbarNunchunk->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; font-weight:700;\">InboxBar</span></p></body></html>", nullptr));
@@ -524,6 +533,7 @@ public:
         buttonPlaygameStepbystepNunchunk->setText(QCoreApplication::translate("MainWindow", "Step by Step", nullptr));
         buttonPlaygameStopNunchunk->setText(QCoreApplication::translate("MainWindow", "STOP", nullptr));
         buttonPlaygameRunnonstopNunchunk->setText(QCoreApplication::translate("MainWindow", "Run Nonstop", nullptr));
+        buttonPlaygameFileplayNunchunk->setText(QCoreApplication::translate("MainWindow", "Play via File", nullptr));
         labelSuccessCentral->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:64pt; font-weight:700; vertical-align:super;\">SUCCESS</span></p></body></html>", nullptr));
         buttonSuccessBack->setText(QCoreApplication::translate("MainWindow", "BACK", nullptr));
         buttonSuccessExit->setText(QCoreApplication::translate("MainWindow", "EXIT", nullptr));

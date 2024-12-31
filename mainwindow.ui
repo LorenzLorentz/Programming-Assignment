@@ -539,6 +539,19 @@
        <string>STOP</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="buttonPlaygameFileplay">
+      <property name="geometry">
+       <rect>
+        <x>599</x>
+        <y>310</y>
+        <width>141</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Play via File</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="playgameNunchunk">
      <widget class="QTextEdit" name="inputPlaygameCommandNunchunk">
@@ -1022,6 +1035,19 @@
       </property>
       <property name="text">
        <string>Run Nonstop</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buttonPlaygameFileplayNunchunk">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>310</y>
+        <width>141</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Play via File</string>
       </property>
      </widget>
     </widget>
