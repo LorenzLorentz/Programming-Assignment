@@ -3,20 +3,31 @@
 <center>计48-经42 王鹏杰</center>
 <center>计48-经42 高雅菁</center>
 
-—————————————————————————————————————————————
+———————————————————————————————————————————————————————————————
+
+## 零、注意事项
+<ol>
+
+**视频链接：https://cloud.tsinghua.edu.cn/f/26a813345ebd45a9a0d5/**
+
+**1. 若使用非Mac平台运行，可能会出现字体格式不匹配现象。可以选用后缀为windows的ui文件。**
+
+**2. 运行前，需要将`mainwindow.cpp`程序第30，235，1597行的图片地址更新为本机机器人gif图片地址，第761，1086，1240行的图片地址更新为本机烟花gif图片地址。注意：使用相对地址可能无法正常读取。**
+
+</ol>
+
 
 ## 一、 游戏概述
 <ol>
-
 **本游戏基于Human Resource Machine进行改编，共分为五关。前三关为固定关卡，后两关为自由创新关卡。**
-**本游戏主要亮点如下：**
+**本游戏增加的主要亮点如下：**
 **1. 在自由创新关卡通过添加指针、扩充地毯、创造新指令等算法与手段让用户得以较轻松地实现数组、循环的编程。**
 **2. 自由创新关卡的关卡背景是人见人爱的oj题目哼哼哈兮。**
 **3. 在用户游玩关卡时添加单步模拟、连续模拟的选项，同时可以控制连续模拟的展示速度，也可以跳过模拟直接展示结果。**
 **4. 在游戏界面中插入欢迎、结算页面动画，机器人也有细节的手部动作更为美观。**
 
 </ol>
-<div STYLE="page-break-after: always;"></div>
+
 
 ## 二、设计逻辑
 <ol>
@@ -30,33 +41,53 @@
 
 #### 1. 显示的内容
 
-Level;关卡描述;inbox;outbox;carpet;hand;可以使用的指令
+- Level;关卡描述;可以使用的指令;可以使用的空地数目
 
-键盘输入;使用start启动
+- 键盘输入或文件输入；然后点击`start`启动
 
 #### 2. 具体操作实现逻辑
 
-**inbox：** 判定inbox是不是空的；如果是jump就可以空；inbox末尾赋值给hand；inbox末尾删除
+**注: **1. 数据实际存储形式为`std::string`，此处省略部分`std::stoi`及安全判定的说明
 
-**outbox:** 判定hand有没有东西；hand添加outbox最后一个；hand清空
+2. 由于新加入指令，又新加入了许多判定，在此处没有进行说明
 
-**copyto:** 判定hand是不是空的；判定para是不是超范围；覆盖carpet里面的内容；hand不清空
+**总体思路:**输入指令，逐步执行指令，并在执行过程中返回操作合法性，如果所有操作都合法，最后校验结果是否正确。
 
-**copyfrom:** 判定para是不是超范围；判定carpet是不是空的；把carpet内容赋给hand 
+**inbox：** 判定`inbox`是否为空；如果当前执行指令为jump则可以为空，并结束循环。
 
-**add：** 判定hand是不是空的；判定参数；判定carpet；判定是不是数；hand=hand+carpet
+​		将`inbox`的`front`赋值给hand；将`inbox`的`front`擦除
 
-**sub：** 同理
+**outbox:** 判定`hand`是否为空；
 
-**jump：** 先判定那个指令存不存在；是不是在jump之前；通过一个i来跳步骤；inbox空就不执行
+​		`outbox`中`push_back` `hand`的内容；`hand`清零
 
-**jumpifzero：** 先判定参数；再判定指令是否存在；判定手里有没有东西；再判定hand里面是不是zero；执行jump
+**copyto:** 判定`hand`是否为空；判定`para`是否超范围。
 
-逐步模拟，输入结束之后才开始模拟
+​		将`hand`写入`carpet`；`hand`不清空。
+
+**copyfrom:** 判定`para`是否超范围；判定carpet是不是空的；把`carpet`内容赋给`hand` 
+
+**add：** 判定`hand`是否为空；判定`para`是否超范围；判定`carpet`是否为空；
+
+​		执行`hand+=carpet`
+
+**sub：** 判定`hand`是否为空；判定`para`是否超范围；判定`carpet`是否为空；
+
+​		执行`hand+=carpet`
+
+**jump：** 先判定那个指令是否存在；是否在jump之前；
+
+​		将实际试行的指令的index修改，实现指令跳转；若`inbox`为空，则不执行
+
+**jumpifzero：** 先判定参数是否正确；再判定指令是否存在；判定手里是否东西；再判定`hand`里面是否为0，若为0，执行`jump`
+
+**新加入指令**：相关说明请参考**自由创新关卡**部分
+
+**模拟：**输入结束之后进行逐步模拟
 
 #### 3. 返回SUCCESS和FAIL
 
-<div STYLE="page-break-after: always;"></div>
+
 </ol>
 
 ## 三、代码工程结构(前三关)
@@ -79,13 +110,19 @@ Level;关卡描述;inbox;outbox;carpet;hand;可以使用的指令
 │   └── mainwindow.ui
 ├── Game Info Files
 │   ├── gameinfo.txt
-│   ├── archive.txt
-│   └── nunchunk.txt
+│   └── archive.txt
+├── Playgame Files
+│   ├── level1.txt
+│   ├── level2.txt
+│   ├── level3.txt
+│   ├── level4.txt
+│   ├── level5.txt
+│   └── nunchunk.txt (有更详细的解法解读)
 ```
 
 ### 1.编译运行说明
 
-参见 cmake 文件
+参见`cmake`文件，您可能需要进行适当修改以确保适配您的平台环境。
 
 ### 2. 程序结构及主要函数类
 
@@ -248,7 +285,7 @@ Level;关卡描述;inbox;outbox;carpet;hand;可以使用的指令
 接受输入流，根据`;`分隔键值对，储存信息。
 
 **存档**：游戏结束后（点击退出按钮`MainWindow::buttonExitClicked()`被调用），会将关卡完成状态写入存档文件`archive.txt`中。
-<div STYLE="page-break-after: always;"></div>
+
 </ol>
 
 ## 四、游戏界面设计
@@ -259,9 +296,9 @@ Level;关卡描述;inbox;outbox;carpet;hand;可以使用的指令
 
 ![alt text](WelcomePage.png)
 
-首页中间是游戏名称，其下分为三个按钮：PLAYGAME——选择关卡，LOADGAME——初始化游戏，EXIT——退出游戏。
+首页中间是游戏名称，其下分为三个按钮：`PLAYGAME`——选择关卡，`LOADGAME`——初始化游戏，`EXIT`——退出游戏。
 
-用户首先需要点击LOADGAME，分别加载levelinfo（关卡信息）和archive（游戏日志），也可选择autoload一键加载。随后点击back返回首页，然后点击PLAYGAME选择关卡。倘若没有初始化游戏就点击PLAYGAME则会出现“You've not loaded game info”的提示框。
+用户首先需要点击`LOADGAME`，分别加载`levelinfo`（关卡信息）和`archive`（游戏日志），也可选择`autoload`一键加载（**注意：**`autoload`识别与游戏程序同文件夹下名称为`levelinfo.txt`和`archive.txt`的文件，不能自由选择文件）。随后点击`BACK`返回首页，然后点击`PLAYGAME`选择关卡。倘若没有初始化游戏就点击`PLAYGAME`则会出现`You've not loaded game info`的提示框。
 
 ![alt text](noloadwarning.png)
 
@@ -291,6 +328,8 @@ OutboxBar：输出传送带，随着每一步指令的读取实时更新。
 
 机器人程序：用户在此处输入完整指令后点击START运行测试。
 
+Play via File: 用户在此处可以选择文件输入形式。
+
 START：点击后界面进入单步模拟
 
 Step by Step：用户可以随时点击模拟下一步
@@ -318,7 +357,7 @@ Fail：
 + 用户可以选择restart尝试重玩游戏
 
 关卡选择界面上的是否通过状态也会立即更新。
-<div STYLE="page-break-after: always;"></div>
+
 </ol>
 
 ## 五、游戏测试（前三关）
@@ -338,7 +377,7 @@ Fail：
 
 ![alt text](failwronganswer.png)
 
-<div STYLE="page-break-after: always;"></div>
+
 </ol>
 
 ## 六、自由创新关卡
@@ -347,8 +386,7 @@ Fail：
 ### 1.关卡背景
 <ol>
 第四第五关灵感来源于第十二周oj题目：哼哼哈兮。第四关提供固定的样例输入，希望用户运用肉眼观察法找到最大武力值。第五关则由特殊到一般，样例输入是随机生成的，希望用户能够写出程序实现哼哼哈兮的完整解法。
-
-在Human Resource Machine能够支持的操作框架下，这类似于一个原始汇编程序的写作，需要用户进行手动的内存管理和调用。
+​	在Human Resource Machine能够支持的操作框架下，这类似于一个原始汇编程序的写作，需要用户进行手动的内存管理和调用。
 </ol>
 
 ### 2.关卡内容介绍
@@ -414,7 +452,7 @@ hand+ 233
 add 1
 outbox
 ```
-第五关见`nunchunk.txt`文件，有比较详细的说明。
+第五关见`nunchunk.txt`文件，有详细的说明。
 
 </ol>
 
@@ -422,11 +460,11 @@ outbox
 <ol>
 一方面，由于针对“哼哼哈兮”关卡重绘了有多`carpet`的页面，因此许多页面和函数都重写了有`nunchunk`后缀的版本。
 
-主要针对新操作指令加入了许多判定与报错逻辑。
+​	另一方面，针对新操作指令加入了许多判定、报错、鲁棒性与兼容性逻辑。
 
 </ol>
 
-<div STYLE="page-break-after: always;"></div>
+
 </ol>
 
 ## 七、小组分工
