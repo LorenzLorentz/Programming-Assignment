@@ -25,3 +25,6 @@ CMakeFiles/
 *.pro.user
 *.qrc.depends
 *.autosave
+
+# 忽略视频文件
+*.mov
