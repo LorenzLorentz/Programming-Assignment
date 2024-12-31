@@ -10,9 +10,11 @@
 
 **视频链接：https://cloud.tsinghua.edu.cn/f/26a813345ebd45a9a0d5/**
 
-**1. 若使用非Mac平台运行，可能会出现字体格式不匹配现象。可以选用后缀为windows的ui文件。**
+**1. 若使用非Mac平台运行，可能会出现字体格式不匹配现象。您可以考虑选用关键字为`windows`的`ui`文件。**
 
-**2. 运行前，需要将`mainwindow.cpp`程序第30，235，1597行的图片地址更新为本机机器人gif图片地址，第761，1086，1240行的图片地址更新为本机烟花gif图片地址。注意：使用相对地址可能无法正常读取。**
+**2. 您可能需要对`cmake`文件进行适当修改来适配您的编译环境。**
+
+**3. 运行前，需要将`mainwindow.cpp`程序第30，235，1597行的图片地址更新为本机机器人gif图片地址，第761，1086，1240行的图片地址更新为本机烟花`gif`图片地址。注意：使用相对地址可能无法正常读取。**
 
 </ol>
 
@@ -107,7 +109,7 @@
 │   ├── main.cpp
 │   ├── mainwindow.cpp
 │   ├── nunchunk.cpp
-│   └── mainwindow.ui
+├── mainwindow.ui
 ├── Game Info Files
 │   ├── gameinfo.txt
 │   └── archive.txt
@@ -118,6 +120,10 @@
 │   ├── level4.txt
 │   ├── level5.txt
 │   └── nunchunk.txt (有更详细的解法解读)
+├── Report
+│   ├── HRM游戏制作报告.md
+│   ├── HRM游戏制作报告.pdf
+│   └── md文件依赖的图片
 ```
 
 ### 1.编译运行说明
