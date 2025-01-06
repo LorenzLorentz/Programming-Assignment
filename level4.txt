@@ -1,0 +1,18 @@
+inbox
+inbox
+inbox
+inbox
+inbox
+inbox
+copyto 1
+inbox
+copyto 2
+inbox
+copyto 3
+add 1
+copyto 1
+copyfrom 3
+add 3
+hand+ 233
+add 1
+outbox

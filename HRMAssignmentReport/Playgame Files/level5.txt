@@ -1,0 +1,162 @@
+inbox
+copyto 1;2
+inbox
+copyto 2;2
+hand= 1
+copyto 1;1
+jump 8
+copyfrom 1;1
+sub 1;2
+jumpifpos 23
+copyfrom 1;1
+copyto 2;1 p1
+hand0
+hand+ 3
+copyto 2;1 p2
+inbox
+copyto 2;1 c
+copyfrom 1;1
+hand+
+copyto 1;1
+hand0
+jump 8
+hand= 1
+copyto 1;1
+jump 26
+copyfrom 1;1
+sub 1;2
+jumpifpos 40
+copyfrom 1;1
+copyto 3;1 p1
+hand0
+hand+ 4
+copyto 3;1 p2
+inbox
+copyto 3;1 c
+copyfrom 1;1
+hand+
+copyto 1;1
+jump 26
+hand= 1
+copyto 1;1
+jump 43
+copyfrom 1;1
+sub 2;2
+jumpifpos 57
+copyfrom 1;1
+copyto 4;1 p1
+hand0
+hand+ 5
+copyto 4;1 p2
+hand0 
+copyto 4;1 c
+copyfrom 1;1
+hand+ 1
+copyto 1;1
+jump 43
+hand= 1
+copyto 1;1
+jump 60
+copyfrom 1;1               
+sub 1;2
+jumpifpos 140
+copyfrom 1;1
+copyto 4;1 p1
+hand0
+hand+ 3
+copyto 4;1 p2
+copyfrom 4;1 c
+copyto 2;1
+jump 71
+copyfrom 2;1
+sub 2;2
+jumpifpos 136
+hand0
+copyto 3;2
+hand0
+hand+ 1
+copyto 3;1
+jump 80
+copyfrom 3;1
+times 4;1 c
+sub 2;1
+jumpifpos 132
+hand0
+copyfrom 3;1
+jump 141
+copyto 4;2
+copyfrom 1;1
+copyto 5;1 p1
+hand0 
+hand+ 4
+copyto 5;1 p2
+copyfrom 5;1 c
+times 3;1
+add 4;2
+copyto 4;2
+copyfrom 4;1 c
+times 3;1
+sub 2;1
+copyto 5;2
+hand= 1 
+sub 5;2
+copyto 6;1 p1
+hand0
+hand+ 5
+copyto 6;1 p2
+copyfrom 6;1 c
+add 4;2
+copyto 4;2
+sub 3;2
+jumpifpos 130
+copyfrom 3;2
+copyto 3;2
+copyfrom 2;1
+copyto 6;1 p1
+hand0
+hand+ 5
+copyto 6;1 p2
+copyfrom 6;1 c
+sub 3;2
+jumpifneg 128
+copyfrom 6;1 c
+copyto 6;1 c
+copyfrom 3;1
+hand+
+copyto 3;1
+jump 77
+copyfrom 3;2
+jump 123
+copyfrom 4;2
+jump 113
+copyfrom 2;1
+hand+
+copyto 2;1
+jump 71
+copyfrom 1;1
+hand+
+copyto 1;1
+jump 60
+jump 156
+copyto 6;2
+hand0
+copyto 5;2
+jump 148
+copyfrom 5;2
+hand* 233
+jump 87
+copyfrom 6;2
+hand/ 2
+copyto 6;2
+add 5;2
+copyto 5;2
+copyfrom 6;2
+jumpifzero 145
+jump 148
+copyfrom 2;2
+copyto 1;1
+hand0
+hand+ 5
+copyto 1;1 p2 
+copyfrom 1;1 c 
+outbox

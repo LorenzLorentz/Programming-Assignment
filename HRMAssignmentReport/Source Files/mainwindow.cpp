@@ -1,4 +1,4 @@
-    #include "mainwindow.h"
+#include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "game.h"
 #include <QDebug>
@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QMovie *currentMovie1=ui->labelWelcomeMovieRobot->movie();
     if(!currentMovie1) {
-        movieRobot=new QMovie("movieRobot.gif");
+        movieRobot=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieRobot.gif");
         if(!movieRobot->isValid()) {
             qDebug()<<"GIF failed to load. Error code:"<<movieRobot->lastError();
         } else {
@@ -232,7 +232,7 @@ void MainWindow::buttonBackClicked() {
 void MainWindow::buttonBackWelcomepageClicked(){
     QMovie *currentMovie1=ui->labelWelcomeMovieRobot->movie();
     if(!currentMovie1) {
-        movieRobot=new QMovie("movieRobot.gif");
+        movieRobot=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieRobot.gif");
         if(!movieRobot->isValid()) {
             qDebug()<<"GIF failed to load. Error code:"<<movieRobot->lastError();
         } else {
@@ -758,7 +758,7 @@ void MainWindow::updateProcessingState() {
 
                 QMovie *currentMovie2=ui->labelSuccessMovieFirework->movie();
                 if(!currentMovie2) {
-                    firework=new QMovie("movieFirework.gif");
+                    firework=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieFirework.gif");
                     if(!firework->isValid()) {
                         qDebug()<<"GIF failed to load. Error code:"<<firework->lastError();
                     } else {
@@ -1083,7 +1083,7 @@ void MainWindow::updateProcessingState() {
 
                 QMovie *currentMovie2=ui->labelSuccessMovieFirework->movie();
                 if(!currentMovie2) {
-                    firework=new QMovie("movieFirework.gif");
+                    firework=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieFirework.gif");
                     if(!firework->isValid()) {
                         qDebug()<<"GIF failed to load. Error code:"<<firework->lastError();
                     } else {
@@ -1237,7 +1237,7 @@ void MainWindow::skiptoend(){
 
         QMovie *currentMovie2=ui->labelSuccessMovieFirework->movie();
         if(!currentMovie2) {
-            firework=new QMovie("movieFirework.gif");
+            firework=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieFirework.gif");
             if(!firework->isValid()) {
                 qDebug()<<"GIF failed to load. Error code:"<<firework->lastError();
             } else {
@@ -1594,7 +1594,7 @@ void MainWindow::loadandback(){
 
     QMovie *currentMovie1=ui->labelWelcomeMovieRobot->movie();
     if(!currentMovie1) {
-        movieRobot=new QMovie("movieRobot.gif");
+        movieRobot=new QMovie("/Users/lorenzlorentz/HRM/build/Desktop_Qt_5_15_17_for_macOS_Universal-Debug/movieRobot.gif");
         if(!movieRobot->isValid()) {
             qDebug()<<"GIF failed to load. Error code:"<<movieRobot->lastError();
         } else {
